@@ -1,17 +1,25 @@
 {
   "name": "ruoyi-cloud-vue3",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.6"
+    "axios": "^0.21.4",
+    "element-plus": "^1.1.0-beta.12",
+    "vue": "^3.2.6",
+    "vue-router": "^4.0.11",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.1",
     "@vue/compiler-sfc": "^3.2.6",
-    "vite": "^2.5.4"
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^7.18.0",
+    "sass": "^1.41.1",
+    "vite": "^2.5.4",
+    "vite-plugin-element-plus": "^0.0.12"
   }
 }
