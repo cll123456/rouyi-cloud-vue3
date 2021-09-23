@@ -189,6 +189,14 @@
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.2.11.tgz"
   integrity sha512-ovfXAsSsCvV9JVceWjkqC/7OF5HbgLOtCWjCIosmPGG8lxbPuavhIxRH1dTx4Dg9xLgRTNLvI3pVxG4ItQZekg==
 
+"@vueuse/core@^6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-6.4.1.tgz#21416997a23bfb4924a5082ed6fa959027f80d04"
+  integrity sha512-FRFeEPVq77gcMZP0mCloJY+lyHJaUQmUMaPp5fBds3fs/BbkAt7HTMMizFKHWDVjbmA20vBOjmC9tTnfD+DdEA==
+  dependencies:
+    "@vueuse/shared" "6.4.1"
+    vue-demi "*"
+
 "@vueuse/core@~6.1.0":
   version "6.1.0"
   resolved "https://registry.npmjs.org/@vueuse/core/-/core-6.1.0.tgz"
@@ -201,6 +209,13 @@
   version "6.1.0"
   resolved "https://registry.npmjs.org/@vueuse/shared/-/shared-6.1.0.tgz"
   integrity sha512-teW0TUQryGnEprHeOI6oH8NPVJBirknxksEiNCtdEjIi8W7JSTg8JPO+e1XlGI6ly24NDlDXUDYaHJayiaXjuw==
+  dependencies:
+    vue-demi "*"
+
+"@vueuse/shared@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-6.4.1.tgz#5bc84be107cead84e11c21d2c57b1e9f2c376975"
+  integrity sha512-zsaYxxZwACQbMmGg+UBjPUVemi325sDdnnB0mn+PNizE0fVC57B+vbLgdj45NBmr6P4nw6a0Y2rMupebwDWsdw==
   dependencies:
     vue-demi "*"
 

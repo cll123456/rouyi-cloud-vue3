@@ -1,3 +1,4 @@
+/**清除浮动**/
 @mixin clearfix {
   &:after {
     content: "";
@@ -6,6 +7,7 @@
   }
 }
 
+/**滚动条样式**/
 @mixin scrollBar {
   &::-webkit-scrollbar-track-piece {
     background: #d3dce6;
@@ -21,6 +23,7 @@
   }
 }
 
+/**相对定位**/
 @mixin relative {
   position: relative;
   width: 100%;
