@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import VitePluginElementPlus from 'vite-plugin-element-plus'
+import viteSvgIcons from 'vite-plugin-svg-icons';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -14,6 +15,12 @@ export default defineConfig(({ mode }) => {
         // 的文档注释
         // useSource: true
         format: mode === 'development' ? 'esm' : 'cjs',
+      }),
+      // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入
+      viteSvgIcons({
+        // 配置路劲在你的src里的svg存放文件
+        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
+        symbolId: 'icon-[dir]-[name]',
       })
     ],
     resolve: {
@@ -29,7 +36,7 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: 'http://vue.ruoyi.vip',//代理到官网地址
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          rewrite: (p) => p.replace(/^\/api/, '')
         }
       },
     },

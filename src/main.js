@@ -9,14 +9,17 @@ import router from './router'
 // 引入store
 import store from './store'
 import Cookies from 'js-cookie'
+import 'vite-plugin-svg-icons/register';; // 引入所有的svg图标
+import SvgIcon from './components/SvgIcon/index.vue'
 
 const app = createApp(App);
 
 // 使用element-plus 并且设置全局的大小
-app.use(ElementPlus,{
+app.use(ElementPlus, {
   size: Cookies.get('size') || 'medium'
 })
 
 app.use(router)
 app.use(store)
+app.component('svg-icon', SvgIcon)
 app.mount('#app')

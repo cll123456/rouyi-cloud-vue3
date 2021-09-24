@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { Notification, MessageBox, Message } from 'element-plus'
-// import store from '@/store'
+import store from '@/store'
 import { getToken } from './auth'
 import errorCode from './errorCode'
 import { tansParams } from "@/utils/ruoyi";
 import { PUBLIC_PATH } from '../config/commonConfig'
-
+ff
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
