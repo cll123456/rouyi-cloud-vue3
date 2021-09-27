@@ -4,6 +4,7 @@ import { computed, watchEffect } from "vue";
 import { useStore } from "vuex";
 import AppMain from './components/AppMain.vue';
 import Sidebar from './components/Sidebar/index.vue'
+import Navbar from './components/Navbar/index.vue';
 
 /**
  * store
@@ -92,7 +93,7 @@ const handleClickOutside = () => {
     <sidebar class="sidebar-container"/>
     <div :class="{ hasTagsView: needTagsView }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <!-- <navbar /> -->
+        <navbar />
         <!-- <tags-view v-if="needTagsView" /> -->
       </div>
       <app-main />

@@ -1,8 +1,23 @@
 <script setup>
 import { useStore } from "vuex"
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { computed } from 'vue'
+import RuoYiGit from './../../../components/Ruoyi/Git/index.vue'
+import RuoYiDoc from './../../../components/Ruoyi/Doc/index.vue'
+import Screenfull from './../../../components/Screenfull/index.vue'
+import avatar from './../../../assets/images/profile.jpg'
+import SizeSelect from './../../../components/SizeSelect/index.vue'
+import { CaretBottom } from '@element-plus/icons'
 
+/**
+ * 仓库对象
+ */
 const store = useStore();
+
+/**
+ * getter 数据
+ */
+const getterData = computed(() => store.getters)
 /**
  * 打开或者折叠左侧菜单
  */
@@ -42,8 +57,9 @@ const logout = () => {
     <!-- <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav" /> -->
 
     <div class="right-menu">
-      <template v-if="device !== 'mobile'">
+      <template v-if="getterData.device !== 'mobile'">
         <!-- <search id="header-search" class="right-menu-item" /> -->
+        <el-button>c测试 </el-button>
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
@@ -52,31 +68,38 @@ const logout = () => {
         <el-tooltip content="文档地址" effect="dark" placement="bottom">
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
-
-        <!-- <screenfull id="screenfull" class="right-menu-item hover-effect" /> -->
-
+        <!-- 当前布局大小设置组件 -->
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <!-- <size-select id="size-select" class="right-menu-item hover-effect" /> -->
+          <size-select id="size-select" class="right-menu-item hover-effect" />
+        </el-tooltip>
+
+        <el-tooltip content="是否全屏" effect="dark" placement="bottom">
+          <screenfull id="screenfull" class="right-menu-item hover-effect" />
         </el-tooltip>
       </template>
-
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/user/profile">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item @click.native="setting = true">
-            <span>布局设置</span>
-          </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
-            <span>退出登录</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <div class="avatar-container">
+        <el-dropdown class="right-menu-item hover-effect" trigger="click">
+          <div class="avatar-wrapper">
+            <img :src="avatar" class="user-avatar" />
+            <el-icon>
+              <caret-bottom />
+            </el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <router-link to="/user/profile">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+              </router-link>
+              <el-dropdown-item @click.native="getterData.setting = true">
+                <span>布局设置</span>
+              </el-dropdown-item>
+              <el-dropdown-item divided @click.native="logout">
+                <span>退出登录</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +143,7 @@ const logout = () => {
     float: right;
     height: 100%;
     line-height: 50px;
+    display: flex;
 
     &:focus {
       outline: none;
@@ -145,6 +169,7 @@ const logout = () => {
 
     .avatar-container {
       margin-right: 30px;
+      margin-left: 10px;
 
       .avatar-wrapper {
         margin-top: 5px;
@@ -157,7 +182,7 @@ const logout = () => {
           border-radius: 10px;
         }
 
-        .el-icon-caret-bottom {
+        i {
           cursor: pointer;
           position: absolute;
           right: -20px;

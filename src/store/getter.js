@@ -20,17 +20,77 @@ const getters = {
    * @returns 
    */
   device: state => state.app.device,
-  // visitedViews: state => state.tagsView.visitedViews,
-  // cachedViews: state => state.tagsView.cachedViews,
-  // token: state => state.user.token,
-  // avatar: state => state.user.avatar,
-  // name: state => state.user.name,
-  // introduction: state => state.user.introduction,
-  // roles: state => state.user.roles,
-  // permissions: state => state.user.permissions,
-  // permission_routes: state => state.permission.routes,
-  // topbarRouters:state => state.permission.topbarRouters,
-  // defaultRoutes:state => state.permission.defaultRoutes,
-  // sidebarRouters:state => state.permission.sidebarRouters,
+  /**
+   * 不需要缓存的页面 
+   * @param {*} state 
+   * @returns 
+   */
+  visitedViews: state => state.tagsView.visitedViews,
+  /**
+   * 缓存的页面
+   * @param {*} state 
+   * @returns 
+   */
+  cachedViews: state => state.tagsView.cachedViews,
+  /**
+   * token
+   * @param {*} state 
+   * @returns 
+   */
+  token: state => state.user.token,
+  /**
+   * 头像
+   * @param {*} state 
+   * @returns 
+   */
+  avatar: state => state.user.avatar,
+  /**
+   * 用户名称
+   * @param {*} state 
+   * @returns 
+   */
+  name: state => state.user.name,
+  /**
+   * 个人简介
+   * @param {*} state 
+   * @returns 
+   */
+  introduction: state => state.user.introduction,
+  /**
+   * 角色
+   * @param {*} state 
+   * @returns 
+   */
+  roles: state => state.user.roles,
+  /**
+   * 权限
+   * @param {*} state 
+   * @returns 
+   */
+  permissions: state => state.user.permissions,
+  /**
+   * 权限路由
+   * @param {*} state 
+   * @returns 
+   */
+  permission_routes: state => state.permission.routes,
+  /**
+   * topbar 路由
+   * @param {*} state 
+   * @returns 
+   */
+  topbarRouters:state => state.permission.topbarRouters,
+  /**
+   * 默认路由
+   * @param {*} state 
+   * @returns 
+   */
+  defaultRoutes:state => state.permission.defaultRoutes,
+  /**
+   * 侧边栏路由
+   * @param {*} state 
+   * @returns 
+   */
+  sidebarRouters:state => state.permission.sidebarRouters,
 }
 export default getters
