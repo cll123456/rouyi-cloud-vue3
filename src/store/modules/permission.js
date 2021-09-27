@@ -1,10 +1,10 @@
-// import { constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
-// import Layout from '@/layout/index'
+import Layout from '@/layout/index.vue'
 // import ParentView from '@/components/ParentView';
 // import InnerLink from '@/layout/components/InnerLink'
 
-const constantRoutes = [];
+
 const permission = {
   state: {
     /**
@@ -78,15 +78,15 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
     }
     if (route.component) {
       // Layout ParentView 组件特殊处理
-      // if (route.component === 'Layout') {
-      //   route.component = Layout
+      if (route.component === 'Layout') {
+        route.component = Layout
       // } else if (route.component === 'ParentView') {
       //   route.component = ParentView
       // } else if (route.component === 'InnerLink') {
       //   route.component = InnerLink
-      // } else {
-      //   route.component = loadView(route.component)
-      // }
+      } else {
+        route.component = loadView(route.component)
+      }
     }
     if (route.children != null && route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children, route, type)
@@ -123,7 +123,7 @@ function filterChildren(childrenMap, lastRouter = false) {
 }
 
 export const loadView = (view) => { // 路由懒加载
-  return (resolve) => require([`@/views/${view}`], resolve)
+  return () => import(`@/views/${view}`)
 }
 
 export default permission

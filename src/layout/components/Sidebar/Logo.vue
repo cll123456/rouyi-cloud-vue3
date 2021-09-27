@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import variable from './../../../assets/styles/variables.scss';
+import variable from './../../../assets/styles/variables.module.scss';
 import logo from './../../../assets/logo/logo.png'
 import { useStore } from 'vuex';
 

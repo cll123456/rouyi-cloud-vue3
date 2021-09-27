@@ -8,6 +8,7 @@ import Screenfull from './../../../components/Screenfull/index.vue'
 import avatar from './../../../assets/images/profile.jpg'
 import SizeSelect from './../../../components/SizeSelect/index.vue'
 import { CaretBottom } from '@element-plus/icons'
+import Hamburger from './../../../components/Hamburger/index.vue'
 
 /**
  * 仓库对象
@@ -46,12 +47,12 @@ const logout = () => {
 </script>
 <template>
   <div class="navbar">
-    <!-- <hamburger
+    <hamburger
       id="hamburger-container"
-      :is-active="sidebar.opened"
+      :is-active="getterData.sidebar.opened"
       class="hamburger-container"
       @toggleClick="toggleSideBar"
-    />-->
+    />
 
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav" /> -->
     <!-- <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav" /> -->
@@ -67,13 +68,13 @@ const logout = () => {
         <el-tooltip content="文档地址" effect="dark" placement="bottom">
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
-        <!-- 当前布局大小设置组件 -->
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
 
         <el-tooltip content="是否全屏" effect="dark" placement="bottom">
           <screenfull id="screenfull" class="right-menu-item hover-effect" />
+        </el-tooltip>
+        <!-- 当前布局大小设置组件 -->
+        <el-tooltip content="布局大小" effect="dark" placement="bottom">
+          <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
       </template>
       <div class="avatar-container">
@@ -167,8 +168,7 @@ const logout = () => {
     }
 
     .avatar-container {
-      margin-right: 30px;
-      margin-left: 10px;
+      margin-right: 40px;
 
       .avatar-wrapper {
         margin-top: 5px;

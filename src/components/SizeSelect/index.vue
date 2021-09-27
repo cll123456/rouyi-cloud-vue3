@@ -42,7 +42,7 @@ const refreshView = async () => {
 
   const { fullPath } = route
 
-   instance.ctx.$nextTick(() => {
+  instance.ctx.$nextTick(() => {
     router.replace({
       //  这个需要设置redirecct的原因
       path: '/redirect' + fullPath
@@ -67,7 +67,7 @@ const handleSetSize = (size) => {
 <template>
   <div>
     <el-dropdown trigger="click" @command="handleSetSize">
-      <div>
+      <div class="size-icon--style">
         <svg-icon class-name="size-icon" icon-class="size" />
       </div>
       <template #dropdown>
@@ -89,4 +89,9 @@ const handleSetSize = (size) => {
 </template>
 
 <style lang='scss' scoped>
+.size-icon--style {
+  font-size: 18px;
+  line-height: 50px;
+  padding-right: 7px;
+}
 </style>

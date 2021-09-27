@@ -104,8 +104,10 @@ const handleLogin = () => {
       }
       // 调用action的登录方法
       store.dispatch("Login", loginForm.value).then(() => {
-        router.push({ path: redirect.value || "/" }).catch(() => { });
+        console.log(2222222222122)
+        router.push({ path: redirect.value || "/" });
       }).catch(() => {
+        console.log('reject')
         loading.value = false;
         // 重新获取验证码
         if (captchaOnOff.value) {

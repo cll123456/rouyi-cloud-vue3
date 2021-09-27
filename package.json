@@ -13,6 +13,7 @@
     "element-plus": "^1.1.0-beta.12",
     "js-cookie": "^3.0.1",
     "jsencrypt": "^3.2.1",
+    "nprogress": "^0.2.0",
     "vue": "^3.2.6",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"

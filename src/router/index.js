@@ -59,7 +59,7 @@ export const constantRoutes = [
     redirect: 'index',
     children: [
       {
-        path: 'index',
+        path: '/index',
         component: () => import('@/views/index/index.vue'),
         name: 'Index',
         meta: { title: '首页', icon: 'dashboard', affix: true }

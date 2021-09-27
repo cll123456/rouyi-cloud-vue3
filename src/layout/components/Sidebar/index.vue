@@ -1,9 +1,9 @@
 <script setup>
 import Logo from "./Logo.vue";
 import { computed, ref } from 'vue';
-import variable from './../../../assets/styles/variables.scss';
-import { useStore } from 'vuex';
-import SidebarItem from "./SidebarItem.vue";
+import variable from './../../../assets/styles/variables.module.scss';
+import { useStore } from 'vuex'; 
+import SidebarItem from "./SidebarItem.vue"; 
 import { useRoute } from "vue-router";
 
 /**
@@ -36,22 +36,12 @@ const activeMenu = computed(() => {
   return path;
 })
 
-const sidebarRouters = ref([
+/**
+ * 获取左侧菜单的路由
+ */
+const sidebarRouters = store.getters.sidebarRouters;
 
-  {
-    path: 'index',
-    component: (resolve) => require(['@/views/index'], resolve),
-    name: 'Index',
-    meta: { title: '首页', icon: 'dashboard', affix: true }
-  },
-  {
-    path: 'profile',
-    component: (resolve) => require(['@/views/system/user/profile/index'], resolve),
-    name: 'Profile',
-    meta: { title: '个人中心', icon: 'user' }
-  }
-
-])
+console.log(sidebarRouters,'------sidebarRouters')
 
 </script>
 

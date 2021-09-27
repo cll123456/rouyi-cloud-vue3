@@ -32,7 +32,7 @@ export function refreshToken() {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/system/user/getInfo',
+    url: '/getInfo',
     method: 'get'
   })
 }
@@ -40,7 +40,7 @@ export function getInfo() {
 // 退出方法
 export function logout() {
   return request({
-    url: '/auth/logout',
+    url: '/logout',
     method: 'delete'
   })
 }
