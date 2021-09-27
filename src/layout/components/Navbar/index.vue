@@ -59,7 +59,6 @@ const logout = () => {
     <div class="right-menu">
       <template v-if="getterData.device !== 'mobile'">
         <!-- <search id="header-search" class="right-menu-item" /> -->
-        <el-button>c测试 </el-button>
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />

@@ -43,11 +43,10 @@ const refreshView = async () => {
   const { fullPath } = route
 
    instance.ctx.$nextTick(() => {
-     console.log(2324234)
     router.replace({
       //  这个需要设置redirecct的原因
-      // path: '/redirect' + fullPath
-      path: fullPath
+      path: '/redirect' + fullPath
+      // path: fullPath
     })
   })
 }
