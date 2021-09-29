@@ -5,6 +5,9 @@ import ParentView from '@/components/ParentView/index.vue';
 // import InnerLink from '@/layout/components/InnerLink'
 import User from './../../views/system/user/index.vue'
 
+const modules = import.meta.glob('./../../views/*/*/*.vue')
+
+console.log(modules)
 const permission = {
   state: {
     /**
@@ -80,8 +83,8 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
       // Layout ParentView 组件特殊处理
       if (route.component === 'Layout') {
         route.component = Layout
-        } else if (route.component === 'ParentView') {
-          route.component = ParentView
+      } else if (route.component === 'ParentView') {
+        route.component = ParentView
         // } else if (route.component === 'InnerLink') {
         //   route.component = InnerLink
       } else {
@@ -122,11 +125,20 @@ function filterChildren(childrenMap, lastRouter = false) {
   return children
 }
 
-export const loadView = (view) => { // 路由懒加载
-  
-
-  return User;
-  // return () =>import(/* @vite-ignore */`@/views/${view}.vue`);
+/**
+ * // 路由懒加载
+ * @param {*} view 
+ * @returns 
+ */
+export const loadView = (view) => {
+  let res = User;
+  for (const path in modules) {
+    const dir = path.split('views/')[1].split('.vue')[0];
+    if (dir === view) {
+      res = () => modules[path]();
+    }
+  }
+  return res;
 }
 
 export default permission
