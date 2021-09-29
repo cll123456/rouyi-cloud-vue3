@@ -1,9 +1,9 @@
 import { constantRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
 import Layout from '@/layout/index.vue'
-// import ParentView from '@/components/ParentView';
+import ParentView from '@/components/ParentView/index.vue';
 // import InnerLink from '@/layout/components/InnerLink'
-
+import User from './../../views/system/user/index.vue'
 
 const permission = {
   state: {
@@ -40,7 +40,7 @@ const permission = {
       // 顶部导航菜单默认添加统计报表栏指向首页
       const index = [{
         path: 'index',
-        meta: { title: '统计报表', icon: 'dashboard'}
+        meta: { title: '统计报表', icon: 'dashboard' }
       }]
       state.topbarRouters = routes.concat(index);
     },
@@ -80,10 +80,10 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
       // Layout ParentView 组件特殊处理
       if (route.component === 'Layout') {
         route.component = Layout
-      // } else if (route.component === 'ParentView') {
-      //   route.component = ParentView
-      // } else if (route.component === 'InnerLink') {
-      //   route.component = InnerLink
+        } else if (route.component === 'ParentView') {
+          route.component = ParentView
+        // } else if (route.component === 'InnerLink') {
+        //   route.component = InnerLink
       } else {
         route.component = loadView(route.component)
       }
@@ -123,7 +123,10 @@ function filterChildren(childrenMap, lastRouter = false) {
 }
 
 export const loadView = (view) => { // 路由懒加载
-  return () => import(`@/views/${view}`)
+  
+
+  return User;
+  // return () =>import(/* @vite-ignore */`@/views/${view}.vue`);
 }
 
 export default permission

@@ -4,6 +4,7 @@ import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
+import { isExternal } from './utils/validate'
 
 /**
  * 配置进度条，不需要小圈圈 
@@ -32,18 +33,22 @@ router.beforeEach((to, from, next) => {
         // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(() => {
           store.dispatch('GenerateRoutes').then(accessRoutes => {
-            console.log(accessRoutes,'--=---accessRoutes')
             // 根据roles权限生成可访问的路由表
-            router.addRoute(accessRoutes) // 动态添加可访问路由表
-            console.log(router.getRoutes())
+            accessRoutes.forEach(r => {
+              if (!isExternal(r.path) || r.path !== 'http://ruoyi.vip') {
+                // // 动态添加可访问路由表
+                router.addRoute(r)
+              }
+            })
+            // router.addRoute(accessRoutes) 
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         }).catch(err => {
-            store.dispatch('LogOut').then(() => {
-              ElMessage.error(err)
-              next({ path: '/' })
-            })
+          store.dispatch('LogOut').then(() => {
+            ElMessage.error(err)
+            next({ path: '/' })
           })
+        })
       } else {
         next()
       }

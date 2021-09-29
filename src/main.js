@@ -9,7 +9,7 @@ import router from './router'
 // 引入store
 import store from './store'
 import Cookies from 'js-cookie'
-import 'vite-plugin-svg-icons/register';; // 引入所有的svg图标
+import 'vite-plugin-svg-icons/register'; // 引入所有的svg图标
 import SvgIcon from './components/SvgIcon/index.vue'
 // 判断当前登录
 import './permission'

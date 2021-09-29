@@ -21,7 +21,8 @@ const props = defineProps({
 
 <template>
   <svg-icon v-if="props.icon" :icon-class="props.icon" />
-  <span v-if="props.title" slot="title">{{ props.title }}</span>
+
+  <span v-if="props.title">{{ props.title }}</span>
 </template>
 
 <style lang='scss' scoped>

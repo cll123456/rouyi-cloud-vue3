@@ -1,10 +1,8 @@
 <script setup>
-import * as SidebarItem from './SidebarItem.vue';
 import Item from './Item.vue';
 import AppLink from './Link.vue';
 import { ref } from 'vue';
 import { isExternal } from '../../../utils/validate';
-
 const props = defineProps({
   /**
    * 路由对象
@@ -77,9 +75,23 @@ const resolvePath = (routePath, routeQuery) => {
   }
   if (routeQuery) {
     let query = JSON.parse(routeQuery);
-    return { path: props.basePath + routePath, query: query }
+    return { path: getNormalPath(props.basePath + '/' + routePath), query: query }
   }
-  return props.basePath + routePath
+  return getNormalPath(props.basePath + '/' + routePath)
+}
+
+/**
+ * 获取正常的路径
+ */
+const getNormalPath = (p) => {
+  if (p.length === 0 || !p || p == 'undefined') {
+    return p
+  };
+  let res = p.replaceAll('//', '/')
+  if (res[res.length - 1] === '/') {
+    return res.slice(0, res.length - 1)
+  }
+  return res;
 }
 
 </script>
@@ -103,7 +115,7 @@ const resolvePath = (routePath, routeQuery) => {
     </template>
 
     <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
+      <template #title>
         <item
           v-if="props.item.meta"
           :icon="props.item.meta && props.item.meta.icon"
@@ -117,7 +129,7 @@ const resolvePath = (routePath, routeQuery) => {
         :item="child"
         :base-path="resolvePath(child.path)"
         class="nest-menu"
-      />
+      ></sidebar-item>
     </el-sub-menu>
   </div>
 </template>

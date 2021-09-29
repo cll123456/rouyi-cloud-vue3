@@ -3,7 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import VitePluginElementPlus from 'vite-plugin-element-plus'
 import viteSvgIcons from 'vite-plugin-svg-icons';
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
@@ -21,7 +20,7 @@ export default defineConfig(({ mode }) => {
         // 配置路劲在你的src里的svg存放文件
         iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
         symbolId: 'icon-[dir]-[name]',
-      })
+      }),
     ],
     resolve: {
       alias: {
