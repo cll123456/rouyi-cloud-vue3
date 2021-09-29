@@ -1,5 +1,4 @@
 <script setup>
-import Item from './Item.vue';
 import AppLink from './Link.vue';
 import { ref } from 'vue';
 import { isExternal } from '../../../utils/validate';
@@ -104,24 +103,22 @@ const getNormalPath = (p) => {
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path, onlyOneChild.query)">
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
-          :class="{ 'submenu-title-noDropdown': !isNest }"
+          :class="{ 'submenu-title-noDropdown': !props.isNest }"
         >
-          <item
-            :icon="onlyOneChild.meta.icon || (props.item.meta && props.item.meta.icon)"
-            :title="onlyOneChild.meta.title"
+          <svg-icon
+            :icon-class="onlyOneChild.meta.icon || (props.item.meta && props.item.meta.icon)"
           />
+          <template #title>{{ onlyOneChild.meta.title }}</template>
         </el-menu-item>
       </app-link>
     </template>
 
     <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template #title>
-        <item
-          v-if="props.item.meta"
-          :icon="props.item.meta && props.item.meta.icon"
-          :title="props.item.meta.title"
-        />
+      <template v-if="props.item.meta" #title>
+        <svg-icon :icon-class="props.item.meta && props.item.meta.icon" />
+        <span>{{ props.item.meta.title }}</span>
       </template>
+
       <sidebar-item
         v-for="child in props.item.children"
         :key="child.path"

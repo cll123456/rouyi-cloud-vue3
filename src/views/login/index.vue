@@ -7,7 +7,7 @@ import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
 /**
- * 二维码地址
+ * 验证码地址
  */
 const codeUrl = ref("")
 /**
@@ -104,10 +104,8 @@ const handleLogin = () => {
       }
       // 调用action的登录方法
       store.dispatch("Login", loginForm.value).then(() => {
-        console.log(2222222222122)
         router.push({ path: redirect.value || "/" });
       }).catch(() => {
-        console.log('reject')
         loading.value = false;
         // 重新获取验证码
         if (captchaOnOff.value) {

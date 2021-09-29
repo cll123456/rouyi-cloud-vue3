@@ -11,7 +11,7 @@ const props = defineProps({
   collapse: {
     type: Boolean,
     required: true,
-    default: false
+    default: true
   }
 })
 

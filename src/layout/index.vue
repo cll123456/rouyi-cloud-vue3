@@ -61,7 +61,6 @@ const WIDTH = 992;
  * 监听窗口变化
  */
 watchEffect(() => {
-  console.log(width.value, device.value, sidebar.value.opened)
   // 一打开就是手机端并且侧边栏是打开着的
   if (device.value === 'mobile' && sidebar.value.opened) {
     store.dispatch('app/closeSideBar', { withoutAnimation: false })

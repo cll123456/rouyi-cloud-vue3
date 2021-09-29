@@ -2,8 +2,8 @@
 import Logo from "./Logo.vue";
 import { computed, ref } from 'vue';
 import variable from './../../../assets/styles/variables.module.scss';
-import { useStore } from 'vuex'; 
-import SidebarItem from "./SidebarItem.vue"; 
+import { useStore } from 'vuex';
+import SidebarItem from "./SidebarItem.vue";
 import { useRoute } from "vue-router";
 
 /**
@@ -22,7 +22,8 @@ const settings = computed(() => store.state.settings);
 /**
  * 是否折叠
  */
-const isCollapse = computed(() => store.state.app.sidebar.open);
+const isCollapse = computed(() => store.state.app.sidebar.opened);
+
 
 /**
  * 当前选中的菜单
@@ -41,7 +42,6 @@ const activeMenu = computed(() => {
  */
 const sidebarRouters = store.getters.sidebarRouters;
 
-console.log(sidebarRouters,'------sidebarRouters')
 
 </script>
 
@@ -50,11 +50,11 @@ console.log(sidebarRouters,'------sidebarRouters')
     :class="{ 'has-logo': settings.sidebarLogo }"
     :style="{ backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
   >
-    <logo v-if="settings.sidebarLogo" :collapse="isCollapse" />
+    <logo v-if="settings.sidebarLogo" :collapse="!isCollapse" />
     <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
+        :collapse="!isCollapse"
         :background-color="settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground"
         :text-color="settings.sideTheme === 'theme-dark' ? variables.menuColor : variables.menuLightColor"
         :unique-opened="true"
