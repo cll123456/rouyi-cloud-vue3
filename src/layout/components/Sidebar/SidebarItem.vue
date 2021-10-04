@@ -2,6 +2,7 @@
 import AppLink from './Link.vue';
 import { ref } from 'vue';
 import { isExternal } from '../../../utils/validate';
+import { getNormalPath } from '../../../utils/ruoyi';
 const props = defineProps({
   /**
    * 路由对象
@@ -77,20 +78,6 @@ const resolvePath = (routePath, routeQuery) => {
     return { path: getNormalPath(props.basePath + '/' + routePath), query: query }
   }
   return getNormalPath(props.basePath + '/' + routePath)
-}
-
-/**
- * 获取正常的路径
- */
-const getNormalPath = (p) => {
-  if (p.length === 0 || !p || p == 'undefined') {
-    return p
-  };
-  let res = p.replaceAll('//', '/')
-  if (res[res.length - 1] === '/') {
-    return res.slice(0, res.length - 1)
-  }
-  return res;
 }
 
 </script>

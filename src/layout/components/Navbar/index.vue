@@ -9,6 +9,8 @@ import avatar from './../../../assets/images/profile.jpg'
 import SizeSelect from './../../../components/SizeSelect/index.vue'
 import { CaretBottom } from '@element-plus/icons'
 import Hamburger from './../../../components/Hamburger/index.vue'
+import Breadcrumb from './../../../components/Breadcrumb/index.vue'
+import HeaderSearch from './../../../components/HeaderSearch/index.vue'
 
 /**
  * 仓库对象
@@ -54,12 +56,12 @@ const logout = () => {
       @toggleClick="toggleSideBar"
     />
 
-    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav" /> -->
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!getterData.topNav" />
     <!-- <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav" /> -->
 
     <div class="right-menu">
       <template v-if="getterData.device !== 'mobile'">
-        <!-- <search id="header-search" class="right-menu-item" /> -->
+        <header-search id="header-search" class="right-menu-item" />
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />

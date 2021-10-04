@@ -11,6 +11,7 @@
     "@vueuse/core": "^6.4.1",
     "axios": "^0.21.4",
     "element-plus": "^1.1.0-beta.12",
+    "fuse.js": "^6.4.6",
     "js-cookie": "^3.0.1",
     "jsencrypt": "^3.2.1",
     "nprogress": "^0.2.0",
