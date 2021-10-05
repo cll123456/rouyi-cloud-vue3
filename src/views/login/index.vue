@@ -49,6 +49,8 @@ const redirect = ref(undefined)
  */
 const instance = getCurrentInstance();
 
+console.log(instance, '-----instance')
+
 /**
  * 获取store
  */
@@ -125,7 +127,6 @@ getCookie();
 </script>
 <template>
   <div class="login">
-    
     <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">若依后台管理系统</h3>
       <el-form-item prop="username">
@@ -168,7 +169,7 @@ getCookie();
           style="width:100%;"
           @click.native.prevent="handleLogin"
         >
-          <span v-if="!loading"> 登 录 </span>
+          <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
         <div style="float: right;" v-if="register">

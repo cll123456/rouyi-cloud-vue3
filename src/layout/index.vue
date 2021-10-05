@@ -5,6 +5,7 @@ import { useStore } from "vuex";
 import AppMain from './components/AppMain.vue';
 import Sidebar from './components/Sidebar/index.vue'
 import Navbar from './components/Navbar/index.vue';
+import TagsView from "./components/tagsView/index.vue";
 
 /**
  * store
@@ -94,6 +95,7 @@ const handleClickOutside = () => {
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar />
         <!-- <tags-view v-if="needTagsView" /> -->
+        <tags-view  />
       </div>
       <app-main />
       <!-- <right-panel>

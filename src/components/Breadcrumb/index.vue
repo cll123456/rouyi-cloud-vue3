@@ -32,7 +32,6 @@ const isDashboard = (route) => {
 const getBreadcrumb = () => {
   // only show routes with meta.title
   let matched = route.matched.filter(item => item.meta && item.meta.title);
-  console.log(route)
   const first = matched[0]
   // 判断是否为首页
   if (!isDashboard(first)) {
