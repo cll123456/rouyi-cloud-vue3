@@ -3,9 +3,10 @@ import { ref, watch } from 'vue';
 import { useDict } from '../../../hooks/dict';
 import { treeselect } from '../../../api/system/dept';
 import RightToolbar from './../../../components/RightToolbar/index.vue'
-import { listUser } from '../../../api/system/user';
-import { addDateRange, parseTime } from '../../../utils/ruoyi';
+import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser } from '../../../api/system/user';
+import { addDateRange, download, parseTime } from '../../../utils/ruoyi';
 import pagination from './../../../components/Pagination/index.vue'
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 /**
  * 部门名称
@@ -130,6 +131,8 @@ const single = ref(true)
  * 选中多个进行删除
  */
 const multiple = ref(true)
+/**选中删除的id */
+const ids = ref([]);
 
 // 列信息
 const columns = ref([
@@ -153,7 +156,19 @@ const handleUpdate = () => { }
 /**
  * 删除
  */
-const handleDelete = () => { }
+const handleDelete = (row) => {
+   const userIds = row.userId || ids.value;
+   ElMessageBox.confirm('是否确认删除用户编号为"' + userIds + '"的数据项?', "警告", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning"
+   }).then(function () {
+      return delUser(userIds);
+   }).then(() => {
+      getList();
+      ElMessage.success("删除成功");
+   }).catch(() => { });
+}
 /**
  * 导入
  */
@@ -161,12 +176,66 @@ const handleImport = () => { }
 /**
  * 导出
  */
-const handleExport = () => { }
-
+const handleExport = () => {
+   ElMessageBox.confirm('是否确认导出所有用户数据项?', "警告", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning"
+   }).then(function () {
+      return exportUser(queryParams.value);
+   }).then(response => {
+      download(response.msg);
+   })
+}
+/**
+ * 用户状态修改 
+ */
+const handleStatusChange = (row) => {
+   let text = row.status === "0" ? "启用" : "停用";
+   ElMessageBox.confirm('确认要"' + text + '""' + row.userName + '"用户吗?', "警告", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning"
+   }).then(function () {
+      return changeUserStatus(row.userId, row.status);
+   }).then(() => {
+      ElMessage.success(text + "成功");
+   }).catch(function () {
+      row.status = row.status === "0" ? "1" : "0";
+   });
+}
+/**更多操作 */
+const handleCommand = (command, row) => {
+   switch (command) {
+      case "handleResetPwd":
+         handleResetPwd(row);
+         break;
+      case "handleAuthRole":
+         this.handleAuthRole(row);
+         break;
+      default:
+         break;
+   }
+}
+/** 重置密码按钮操作 */
+const handleResetPwd = (row) => {
+   ElMessageBox.prompt('请输入"' + row.userName + '"的新密码', "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消"
+   }).then(({ value }) => {
+      resetUserPwd(row.userId, value).then(response => {
+         ElMessage.success("修改成功，新密码是：" + value);
+      });
+   }).catch(() => { });
+}
 /**
  * 选择条数
  */
-const handleSelectionChange = (selection) => { }
+const handleSelectionChange = (selection) => {
+   ids.value = selection.map(item => item.userId);
+   single.value = selection.length != 1;
+   multiple.value = !selection.length;
+}
 
 // 初始化部门数据
 getTreeselect();
@@ -272,7 +341,7 @@ getList();
                      plain
                      icon="el-icon-plus"
                      @click="handleAdd"
-                     hasPermi="['system:user:add']"
+                     v-hasPermi="['system:user:add']"
                   >新增</el-button>
                </el-col>
                <el-col :span="1.5">
@@ -282,7 +351,7 @@ getList();
                      icon="el-icon-edit"
                      :disabled="single"
                      @click="handleUpdate"
-                     hasPermi="['system:user:edit']"
+                     v-hasPermi="['system:user:edit']"
                   >修改</el-button>
                </el-col>
                <el-col :span="1.5">
@@ -292,7 +361,7 @@ getList();
                      icon="el-icon-delete"
                      :disabled="multiple"
                      @click="handleDelete"
-                     hasPermi="['system:user:remove']"
+                     v-hasPermi="['system:user:remove']"
                   >删除</el-button>
                </el-col>
                <el-col :span="1.5">
@@ -301,7 +370,7 @@ getList();
                      plain
                      icon="el-icon-upload2"
                      @click="handleImport"
-                     hasPermi="['system:user:import']"
+                     v-hasPermi="['system:user:import']"
                   >导入</el-button>
                </el-col>
                <el-col :span="1.5">
@@ -310,7 +379,7 @@ getList();
                      plain
                      icon="el-icon-download"
                      @click="handleExport"
-                     hasPermi="['system:user:export']"
+                     v-hasPermi="['system:user:export']"
                   >导出</el-button>
                </el-col>
                <right-toolbar
@@ -394,21 +463,23 @@ getList();
                         type="text"
                         icon="el-icon-edit"
                         @click="handleUpdate(scope.row)"
-                        hasPermi="['system:user:edit']"
+                        v-hasPermi="['system:user:edit']"
                      >修改</el-button>
                      <el-button
                         v-if="scope.row.userId !== 1"
                         type="text"
                         icon="el-icon-delete"
                         @click="handleDelete(scope.row)"
-                        hasPermi="['system:user:remove']"
+                        v-hasPermi="['system:user:remove']"
                      >删除</el-button>
                      <el-dropdown
                         v-if="scope.row.userId !== 1"
                         @command="(command) => handleCommand(command, scope.row)"
-                        hasPermi="['system:user:resetPwd', 'system:user:edit']"
                      >
-                        <span class="el-dropdown-link">
+                        <span
+                           class="el-dropdown-link"
+                           v-hasPermi="['system:user:resetPwd', 'system:user:edit']"
+                        >
                            <i class="el-icon-d-arrow-right el-icon--right"></i>更多
                         </span>
                         <template #dropdown>
@@ -416,12 +487,12 @@ getList();
                               <el-dropdown-item
                                  command="handleResetPwd"
                                  icon="el-icon-key"
-                                 hasPermi="['system:user:resetPwd']"
+                                 v-hasPermi="['system:user:resetPwd']"
                               >重置密码</el-dropdown-item>
                               <el-dropdown-item
                                  command="handleAuthRole"
                                  icon="el-icon-circle-check"
-                                 hasPermi="['system:user:edit']"
+                                 v-hasPermi="['system:user:edit']"
                               >分配角色</el-dropdown-item>
                            </el-dropdown-menu>
                         </template>

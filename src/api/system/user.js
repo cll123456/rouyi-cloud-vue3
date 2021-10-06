@@ -100,6 +100,15 @@ export function updateUserPwd(oldPassword, newPassword) {
   })
 }
 
+// 导出用户
+export function exportUser(query) {
+  return request({
+    url: '/system/user/export', 
+    method: 'get',
+    params: query
+  })
+}
+
 // 用户头像上传
 export function uploadAvatar(data) {
   return request({
