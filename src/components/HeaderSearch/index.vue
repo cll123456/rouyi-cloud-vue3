@@ -155,7 +155,6 @@ const querySearch = (query) => {
 // 初始化搜索池
 onMounted(() => {
   searchPool.value = generateRoutes(routes.value);
-  console.log(searchPool.value)
 })
 
 // routes发生改变需要更新搜索池

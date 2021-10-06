@@ -47,7 +47,6 @@ const classObj = computed(() => ({
   mobile: device.value === 'mobile'
 }))
 
-console.log(classObj.value)
 
 /**
  * 获取当前窗口的大小
@@ -91,8 +90,10 @@ const handleClickOutside = () => {
       @click="handleClickOutside"
     />
     <sidebar class="sidebar-container"/>
-    <div :class="{ hasTagsView: needTagsView }" class="main-container">
-      <div :class="{ 'fixed-header': fixedHeader }">
+    <!-- <div :class="{ hasTagsView: needTagsView }" class="main-container"> -->
+    <div :class="{ hasTagsView: true }" class="main-container">
+      <div :class="{ 'fixed-header': true }">
+      <!-- <div :class="{ 'fixed-header': fixedHeader }"> -->
         <navbar />
         <!-- <tags-view v-if="needTagsView" /> -->
         <tags-view  />

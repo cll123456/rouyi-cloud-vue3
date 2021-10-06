@@ -7,7 +7,6 @@ import User from './../../views/system/user/index.vue'
 
 const modules = import.meta.glob('./../../views/*/*/*.vue')
 
-console.log(modules)
 const permission = {
   state: {
     /**

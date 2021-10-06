@@ -1,3 +1,5 @@
+
+
 /**
  * 通用js方法封装处理
  * Copyright (c) 2019 ruoyi
@@ -52,15 +54,6 @@ export function parseTime(time, pattern) {
   return time_str
 }
 
-/**
- * 表单重置
- * @param {*} refName 
- */
-export function resetForm(refName) {
-  if (this.$refs[refName]) {
-    this.$refs[refName].resetFields();
-  }
-}
 
 /**
  *   添加日期范围
