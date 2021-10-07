@@ -134,3 +134,13 @@ export function updateAuthRole(data) {
     params: data
   })
 }
+
+
+
+// 下载用户导入模板
+export function importUserTemplate() {
+  return request({
+    url: '/system/user/importTemplate',
+    method: 'get'
+  })
+}

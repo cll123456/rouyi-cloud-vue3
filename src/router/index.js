@@ -65,6 +65,19 @@ export const constantRoutes = [
         meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
+  },
+  {
+    path: '/system/user-auth',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'role/:userId(\\d+)',
+        component: () => import('@/views/system/user/authRole.vue'),
+        name: 'AuthRole',
+        meta: { title: '分配角色', activeMenu: '/system/user'}
+      }
+    ]
   }
 ];
 

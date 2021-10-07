@@ -3,11 +3,15 @@ import { ref, watch } from 'vue';
 import { useDict } from '../../../hooks/dict';
 import { treeselect } from '../../../api/system/dept';
 import RightToolbar from './../../../components/RightToolbar/index.vue'
-import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser } from '../../../api/system/user';
+import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser, importUserTemplate } from '../../../api/system/user';
 import { addDateRange, download, parseTime } from '../../../utils/ruoyi';
-import pagination from './../../../components/Pagination/index.vue'
+import Pagination from './../../../components/Pagination/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useRouter } from 'vue-router';
+import { getToken } from '../../../utils/auth';
+import { PUBLIC_PATH } from '../../../config/commonConfig';
 
+const router = useRouter();
 /**
  * 部门名称
  */
@@ -169,10 +173,7 @@ const handleDelete = (row) => {
       ElMessage.success("删除成功");
    }).catch(() => { });
 }
-/**
- * 导入
- */
-const handleImport = () => { }
+
 /**
  * 导出
  */
@@ -211,12 +212,18 @@ const handleCommand = (command, row) => {
          handleResetPwd(row);
          break;
       case "handleAuthRole":
-         this.handleAuthRole(row);
+         handleAuthRole(row);
          break;
       default:
          break;
    }
 }
+/**跳转角色分配 */
+const handleAuthRole = (row) => {
+   const userId = row.userId;
+   router.push("/system/user-auth/role/" + userId);
+}
+
 /** 重置密码按钮操作 */
 const handleResetPwd = (row) => {
    ElMessageBox.prompt('请输入"' + row.userName + '"的新密码', "提示", {
@@ -237,14 +244,65 @@ const handleSelectionChange = (selection) => {
    multiple.value = !selection.length;
 }
 
+
+/*** 用户导入参数 */
+const upload = ref({
+   // 是否显示弹出层（用户导入）
+   open: false,
+   // 弹出层标题（用户导入）
+   title: "",
+   // 是否禁用上传
+   isUploading: false,
+   // 是否更新已经存在的用户数据
+   updateSupport: 0,
+   // 设置上传的请求头部
+   headers: { Authorization: "Bearer " + getToken() },
+   // 上传的地址
+   url: PUBLIC_PATH + "system/user/importData"
+})
+/**upload ref */
+const uploadRef = ref(null);
+
+
+/**
+ * 导入
+ */
+const handleImport = () => {
+   upload.value.title = "用户导入";
+   upload.value.open = true;
+}
+/** 下载模板操作 */
+const importTemplate = () => {
+   importUserTemplate().then(response => {
+      download(response.msg);
+   });
+}
+/**文件上传中处理 */
+const handleFileUploadProgress = (event, file, fileList) => {
+   upload.value.isUploading = true;
+}
+// 文件上传成功处理
+const handleFileSuccess = (response, file, fileList) => {
+   upload.value.open = false;
+   upload.value.isUploading = false;
+   uploadRef.value.clearFiles();
+   ElMessageBox.alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
+   getList();
+}
+// 提交上传文件
+const submitFileForm = () => {
+   uploadRef.value.submit();
+}
+
+
 // 初始化部门数据
 getTreeselect();
-
 // 下拉框数据
 const { sys_normal_disable } = useDict('sys_normal_disable');
-
 // 初始化列表数据
 getList();
+
+
 
 </script>
 <template>
@@ -510,6 +568,48 @@ getList();
             />
          </el-col>
       </el-row>
+
+      <!-- 用户导入对话框 -->
+      <el-dialog :title="upload.title" v-model="upload.open" width="400px" append-to-body>
+         <el-upload
+            ref="uploadRef"
+            :limit="1"
+            accept=".xlsx, .xls"
+            :headers="upload.headers"
+            :action="upload.url + '?updateSupport=' + upload.updateSupport"
+            :disabled="upload.isUploading"
+            :on-progress="handleFileUploadProgress"
+            :on-success="handleFileSuccess"
+            :auto-upload="false"
+            drag
+         >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+               将文件拖到此处，或
+               <em>点击上传</em>
+            </div>
+            <template #tip>
+               <div class="el-upload__tip text-center">
+                  <div class="el-upload__tip">
+                     <el-checkbox v-model="upload.updateSupport" />是否更新已经存在的用户数据
+                  </div>
+                  <span>仅允许导入xls、xlsx格式文件。</span>
+                  <el-link
+                     type="primary"
+                     :underline="false"
+                     style="font-size:12px;vertical-align: baseline;"
+                     @click="importTemplate"
+                  >下载模板</el-link>
+               </div>
+            </template>
+         </el-upload>
+         <template #footer>
+            <div class="dialog-footer">
+               <el-button type="primary" @click="submitFileForm">确 定</el-button>
+               <el-button @click="upload.open = false">取 消</el-button>
+            </div>
+         </template>
+      </el-dialog>
    </div>
 </template>
 

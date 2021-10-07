@@ -5,7 +5,8 @@ import ParentView from '@/components/ParentView/index.vue';
 // import InnerLink from '@/layout/components/InnerLink'
 import User from './../../views/system/user/index.vue'
 
-const modules = import.meta.glob('./../../views/*/*/*.vue')
+// 匹配views里面所有的.vue文件
+const modules = import.meta.glob('./../../views/**/*.vue')
 
 const permission = {
   state: {
