@@ -1,15 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { useDict } from '../../../hooks/dict';
 import { treeselect } from '../../../api/system/dept';
 import RightToolbar from './../../../components/RightToolbar/index.vue'
-import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser, importUserTemplate } from '../../../api/system/user';
+import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser, importUserTemplate, getUser, updateUser, addUser } from '../../../api/system/user';
 import { addDateRange, download, parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { getToken } from '../../../utils/auth';
 import { PUBLIC_PATH } from '../../../config/commonConfig';
+import TreeSelect from './../../../components/TreeSelect/index.vue'
 
 const router = useRouter();
 /**
@@ -149,14 +150,7 @@ const columns = ref([
    { key: 6, label: `创建时间`, visible: true }
 ])
 
-/**
- * 新增
- */
-const handleAdd = () => { }
-/**
- * 修改
- */
-const handleUpdate = () => { }
+
 /**
  * 删除
  */
@@ -294,11 +288,160 @@ const submitFileForm = () => {
    uploadRef.value.submit();
 }
 
+/**用户新增和编辑的数据 */
+const operForm = ref({
+   // 弹出层标题
+   title: "",
+   // 部门树选项
+   deptOptions: undefined,
+   // 是否显示弹出层
+   open: false,
+   // 部门名称
+   deptName: undefined,
+   // 默认密码
+   initPassword: undefined,
+   // 岗位选项
+   postOptions: [],
+   // 角色选项
+   roleOptions: [],
+   // 表单参数
+   form: {
+      userId: undefined,
+      deptId: undefined,
+      userName: undefined,
+      nickName: undefined,
+      password: undefined,
+      phonenumber: undefined,
+      email: undefined,
+      sex: undefined,
+      status: "0",
+      remark: undefined,
+      postIds: [],
+      roleIds: []
+   },
+   // 规则
+   rules: {
+      userName: [
+         { required: true, message: "用户名称不能为空", trigger: "blur" },
+         { min: 2, max: 20, message: '用户名称长度必须介于 2 和 20 之间', trigger: 'blur' }
+      ],
+      nickName: [{ required: true, message: "用户昵称不能为空", trigger: "blur" }],
+      password: [
+         { required: true, message: "用户密码不能为空", trigger: "blur" },
+         { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' }],
+      email: [{
+         type: "email",
+         message: "'请输入正确的邮箱地址",
+         trigger: ["blur", "change"]
+      }],
+      phonenumber: [{
+         pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+         message: "请输入正确的手机号码",
+         trigger: "blur"
+      }]
+   }
+})
+/**用户表单的ref */
+const operFormRef = ref(null);
 
+/**初始化部门数据 */
+const initTreeData = () => {
+   // 判断部门的数据是否存在，存在不获取，不存在则获取
+   if (operForm.value.deptOptions === undefined) {
+      treeselect().then(response => {
+         operForm.value.deptOptions = response.data;
+      });
+   }
+}
+
+/**重置操作表单 */
+const resetOperForm = () => {
+   operForm.value.form = {
+      userId: undefined,
+      deptId: undefined,
+      userName: undefined,
+      nickName: undefined,
+      password: undefined,
+      phonenumber: undefined,
+      email: undefined,
+      sex: undefined,
+      status: "0",
+      remark: undefined,
+      postIds: [],
+      roleIds: []
+   };
+   nextTick(() => {
+      // 重置表单
+      if (operFormRef.value) {
+         operFormRef.value.resetFields();
+      }
+
+   })
+}
+/**
+ * 新增
+ */
+const handleAdd = () => {
+   resetOperForm();
+   initTreeData();
+   // 获取用户的岗位,角色等信息
+   getUser().then(response => {
+      operForm.value.postOptions = response.posts;
+      operForm.value.roleOptions = response.roles;
+      operForm.value.open = true;
+      operForm.value.title = "添加用户";
+      operForm.value.form.password = operForm.value.initPassword;
+   })
+}
+/**
+ * 修改
+ */
+const handleUpdate = (row) => {
+   resetOperForm();
+   initTreeData();
+   const userId = row.userId || ids.value;
+   // 获取用户的岗位,角色等信息
+   getUser(userId).then(response => {
+      operForm.value.form = response.data;
+      operForm.value.postOptions = response.posts;
+      operForm.value.roleOptions = response.roles;
+      operForm.value.form.postIds = response.postIds;
+      operForm.value.form.roleIds = response.roleIds;
+      operForm.value.open = true;
+      operForm.value.title = "修改用户";
+      operForm.value.form.password = "";
+   });
+}
+
+/**提交操作表单 */
+const submitForm = () => {
+   operFormRef.value.validate(valid => {
+      if (valid) {
+         if (operForm.value.form.userId != undefined) {
+            updateUser(operForm.value.form).then(response => {
+               ElMessage.success("修改成功");
+               operForm.value.open = false;
+               getList();
+            });
+         } else {
+            addUser(operForm.value.form).then(response => {
+               ElMessage.success("新增成功");
+               operForm.value.open = false;
+               getList();
+            });
+         }
+      }
+   });
+}
+/**关闭操作表单弹框 */
+const cancel = () => {
+   operForm.value.open = false;
+   resetOperForm();
+}
 // 初始化部门数据
 getTreeselect();
 // 下拉框数据
-const { sys_normal_disable } = useDict('sys_normal_disable');
+const { sys_normal_disable, sys_user_sex } = useDict('sys_normal_disable', 'sys_user_sex');
 // 初始化列表数据
 getList();
 
@@ -607,6 +750,154 @@ getList();
             <div class="dialog-footer">
                <el-button type="primary" @click="submitFileForm">确 定</el-button>
                <el-button @click="upload.open = false">取 消</el-button>
+            </div>
+         </template>
+      </el-dialog>
+
+      <!-- 添加或修改参数配置对话框 -->
+      <el-dialog :title="operForm.title" v-model="operForm.open" width="600px" append-to-body>
+         <el-form
+            :model="operForm.form"
+            :rules="operForm.rules"
+            ref="operFormRef"
+            label-width="80px"
+         >
+            <el-row>
+               <el-col :span="12">
+                  <el-form-item label="用户昵称" prop="nickName">
+                     <el-input
+                        v-model="operForm.form.nickName"
+                        placeholder="请输入用户昵称"
+                        maxlength="30"
+                     />
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item label="归属部门" prop="deptId">
+                     <tree-select
+                        v-model:value="operForm.form.deptId"
+                        :options="operForm.deptOptions"
+                        placeholder="请选择归属部门"
+                        :objMap="{
+                           value: 'id',
+                           label: 'label',
+                           children: 'children'
+                        }"
+                     />
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="12">
+                  <el-form-item label="手机号码" prop="phonenumber">
+                     <el-input
+                        v-model="operForm.form.phonenumber"
+                        placeholder="请输入手机号码"
+                        maxlength="11"
+                     />
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item label="邮箱" prop="email">
+                     <el-input v-model="operForm.form.email" placeholder="请输入邮箱" maxlength="50" />
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="12">
+                  <el-form-item
+                     v-if="operForm.form.userId == undefined"
+                     label="用户名称"
+                     prop="userName"
+                  >
+                     <el-input
+                        v-model="operForm.form.userName"
+                        placeholder="请输入用户名称"
+                        maxlength="30"
+                     />
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item
+                     v-if="operForm.form.userId == undefined"
+                     label="用户密码"
+                     prop="password"
+                  >
+                     <el-input
+                        v-model="operForm.form.password"
+                        placeholder="请输入用户密码"
+                        type="password"
+                        maxlength="20"
+                        show-password
+                     />
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="12">
+                  <el-form-item label="用户性别">
+                     <el-select v-model="operForm.form.sex" placeholder="请选择">
+                        <el-option
+                           v-for="dict in sys_user_sex"
+                           :key="dict.value"
+                           :label="dict.label"
+                           :value="dict.value"
+                        ></el-option>
+                     </el-select>
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item label="状态">
+                     <el-radio-group v-model="operForm.form.status">
+                        <el-radio
+                           v-for="dict in sys_normal_disable"
+                           :key="dict.value"
+                           :label="dict.value"
+                        >{{ dict.label }}</el-radio>
+                     </el-radio-group>
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="12">
+                  <el-form-item label="岗位">
+                     <el-select v-model="operForm.form.postIds" multiple placeholder="请选择">
+                        <el-option
+                           v-for="item in operForm.postOptions"
+                           :key="item.postId"
+                           :label="item.postName"
+                           :value="item.postId"
+                           :disabled="item.status == 1"
+                        ></el-option>
+                     </el-select>
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item label="角色">
+                     <el-select v-model="operForm.form.roleIds" multiple placeholder="请选择">
+                        <el-option
+                           v-for="item in operForm.roleOptions"
+                           :key="item.roleId"
+                           :label="item.roleName"
+                           :value="item.roleId"
+                           :disabled="item.status == 1"
+                        ></el-option>
+                     </el-select>
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="24">
+                  <el-form-item label="备注">
+                     <el-input v-model="operForm.form.remark" type="textarea" placeholder="请输入内容"></el-input>
+                  </el-form-item>
+               </el-col>
+            </el-row>
+         </el-form>
+         <template #footer>
+            <div class="dialog-footer">
+               <el-button type="primary" @click="submitForm">确 定</el-button>
+               <el-button @click="cancel">取 消</el-button>
             </div>
          </template>
       </el-dialog>
