@@ -108,3 +108,12 @@ export function authUserSelectAll(data) {
     params: data
   })
 }
+
+// 导出角色
+export function exportRole(query) {
+  return request({
+    url: '/system/role/export',
+    method: 'get',
+    params: query
+  })
+}
