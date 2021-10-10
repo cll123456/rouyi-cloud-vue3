@@ -125,6 +125,7 @@ watch(valueId, () => {
 <template>
   <div class="el-tree-select">
     <el-select
+      style="width: 100%"
       v-model="valueId"
       ref="selectRef"
       :filterable="true"
@@ -158,11 +159,6 @@ watch(valueId, () => {
   background-color: #fff;
   height: auto;
 }
-
-// .el-scrollbar {
-//   max-height: 274px;
-//   overflow-y: auto;
-// }
 
 .el-select-dropdown__item.selected {
   font-weight: normal;
