@@ -19,7 +19,6 @@ const values = computed(() => {
   }
 })
 
-console.log(values.value,'-----', props.options)
 </script>
 <template>
   <div>

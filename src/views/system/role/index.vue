@@ -9,7 +9,6 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { roleMenuTreeselect, treeselect as menuTreeselect } from '../../../api/system/menu';
 import { treeselect as deptTreeselect, roleDeptTreeselect } from "../../../api/system/dept";
-import { compileScript } from '@vue/compiler-sfc';
 
 /**queryForm ref */
 const queryFormRef = ref(null);

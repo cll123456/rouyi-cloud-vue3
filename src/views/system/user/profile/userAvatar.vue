@@ -14,7 +14,6 @@ const options = ref({
    img: store.getters.avatar || avatar
 })
 
-console.log(options.value.img,'-----options---')
 // todo 图片裁剪还没有完成
 const editCropper = () => {
 
