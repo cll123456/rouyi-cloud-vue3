@@ -14,7 +14,7 @@ const iconName = ref('');
 
 /**iconllist */
 const iconList = ref(icons);
-const emit = defineEmits('selected');
+const emit = defineEmits(['selected']);
 
 const filterIcons = () => {
   iconList.value = icons

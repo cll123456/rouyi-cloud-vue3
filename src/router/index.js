@@ -105,7 +105,20 @@ export const constantRoutes = [
         meta: { title: '分配用户', activeMenu: '/system/role' }
       }
     ]
-  }
+  },
+  {
+    path: '/system/dict-data',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index/:dictId(\\d+)',
+        component: () => import('@/views/system/dict/data.vue'),
+        name: 'Data',
+        meta: { title: '字典数据', activeMenu: '/system/dict' }
+      }
+    ]
+  },
 ];
 
 const router = createRouter({

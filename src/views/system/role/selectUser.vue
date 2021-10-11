@@ -13,7 +13,7 @@ const props = defineProps({
       type: [Number, String]
    }
 })
-const emit = defineEmits('ok');
+const emit = defineEmits(['ok']);
 /**queryForm ref */
 const queryFormRef = ref(null);
 /**查询参数 */

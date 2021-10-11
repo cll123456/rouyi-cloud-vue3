@@ -44,7 +44,7 @@ const selectRef = ref(null);
 /**tree ref */
 const treeRef = ref(null);
 /**向上分发 */
-const emit = defineEmits('update:value');
+const emit = defineEmits(['update:value']);
 
 // 初始值
 const valueId = computed({
