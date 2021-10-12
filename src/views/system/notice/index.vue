@@ -313,7 +313,7 @@ getList();
                </el-col>
                <el-col :span="24">
                   <el-form-item label="内容">
-                     <!-- todo 这个地方需要换成富文本框 -->
+                     <!-- todo 这个地方可以换成富文本框 -->
                      <el-input
                         :rows="2"
                         type="textarea"
