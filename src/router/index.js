@@ -119,6 +119,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/monitor/job-log',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/monitor/job/log'),
+        name: 'JobLog',
+        meta: { title: '调度日志', activeMenu: '/monitor/job' }
+      }
+    ]
+  },
 ];
 
 const router = createRouter({

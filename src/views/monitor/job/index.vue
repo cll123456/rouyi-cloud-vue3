@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import Pagination from './../../../components/Pagination/index.vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useDict } from '../../../hooks/dict';
-import { download, parseTime, addDateRange, selectDictLabel } from '../../../utils/ruoyi';
+import { download, parseTime, selectDictLabel } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
 import { listJob, getJob, delJob, addJob, updateJob, runJob, changeJobStatus, exportJob } from '../../../api/monitor/job';
 import { useRouter } from 'vue-router';
@@ -163,7 +163,6 @@ const handleRun = (row) => {
 const handleView = (row) => {
    getJob(row.jobId).then(response => {
       form.value = response.data;
-      console.log(form.value, '--=-----form.value')
       openView.value = true;
    });
 }
