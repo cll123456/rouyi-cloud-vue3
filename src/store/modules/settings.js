@@ -1,6 +1,6 @@
 import defaultSettings from '../../config/settings.js'
 
-const { sideTheme, showSettings, topNav, tagsView, fixedHeader, sidebarLogo, dynamicTitle } = defaultSettings
+const { sideTheme, menuBgColor, menuTextColor, headerTextColor, showSettings, topNav, tagsView, fixedHeader, sidebarLogo, dynamicTitle } = defaultSettings
 /**
  * 布局设置
  */
@@ -19,6 +19,18 @@ const state = {
    * 侧边栏主题
    */
   sideTheme: storageSetting.sideTheme || sideTheme,
+  /**
+   * 菜单背景颜色
+   */
+  menuBgColor: storageSetting.menuBgColor || menuBgColor,
+  /**
+   * 菜单文本颜色
+   */
+  menuTextColor: storageSetting.menuTextColor || menuTextColor,
+  /**
+   * 头部文本颜色
+   */
+  headerTextColor: storageSetting.headerTextColor || headerTextColor,
   /**
    * 显示设置按钮
    */

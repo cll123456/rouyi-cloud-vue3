@@ -6,6 +6,18 @@ export default {
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    */
   sideTheme: 'theme-dark',
+  /**
+   * 菜单背景颜色
+   */
+  menuBgColor: 'rgba(0,0,0,.70)',
+  /**
+   * 菜单文本颜色
+   */
+  menuTextColor: '#bfcbd9',
+  /**
+   * 头部文本颜色
+   */
+  headerTextColor: '#ffffff',
 
   /**
    * 是否系统布局配置

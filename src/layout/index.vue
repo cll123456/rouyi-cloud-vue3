@@ -6,6 +6,7 @@ import AppMain from './components/AppMain.vue';
 import Sidebar from './components/Sidebar/index.vue'
 import Navbar from './components/Navbar/index.vue';
 import TagsView from "./components/tagsView/index.vue";
+import Settings from './components/Settings/index.vue';
 
 /**
  * store
@@ -99,9 +100,7 @@ const handleClickOutside = () => {
         <tags-view  />
       </div>
       <app-main />
-      <!-- <right-panel>
         <settings />
-      </right-panel>-->
     </div>
   </div>
 </template>

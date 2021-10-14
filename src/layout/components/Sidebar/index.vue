@@ -48,15 +48,15 @@ const sidebarRouters = store.getters.sidebarRouters;
 <template>
   <div
     :class="{ 'has-logo': settings.sidebarLogo }"
-    :style="{ backgroundColor: settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+    :style="{ backgroundColor: settings.menuBgColor}"
   >
     <logo v-if="settings.sidebarLogo" :collapse="!isCollapse" />
     <el-scrollbar :class="settings.sideTheme" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="!isCollapse"
-        :background-color="settings.sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground"
-        :text-color="settings.sideTheme === 'theme-dark' ? variables.menuColor : variables.menuLightColor"
+        :background-color="settings.menuBgColor"
+        :text-color="settings.menuTextColor"
         :unique-opened="true"
         :active-text-color="settings.theme"
         :collapse-transition="false"

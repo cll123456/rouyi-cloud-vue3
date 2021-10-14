@@ -29,13 +29,18 @@ const title = ref('若依管理系统');
  * 左侧的风格
  */
 const sideTheme = computed(() => store.state.settings.sideTheme);
+
+/**
+ * 系统设置
+ */
+const settings = computed(() => store.state.settings);
 </script>
 
 <template>
   <div
     class="sidebar-logo-container"
     :class="{ 'collapse': props.collapse }"
-    :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }"
+    :style="{ backgroundColor:settings.menuBgColor}"
   >
     <transition name="sidebarLogoFade">
       <router-link v-if="props.collapse" key="collapse" class="sidebar-logo-link" to="/">
@@ -43,14 +48,14 @@ const sideTheme = computed(() => store.state.settings.sideTheme);
         <h1
           v-else
           class="sidebar-title"
-          :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }"
+          :style="{ color: settings.headerTextColor }"
         >{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo" />
         <h1
           class="sidebar-title"
-          :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }"
+          :style="{ color:settings.headerTextColor }"
         >{{ title }}</h1>
       </router-link>
     </transition>
