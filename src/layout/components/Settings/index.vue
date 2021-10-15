@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import variable from './../../../assets/styles/variables.module.scss';
+import originElementPlus from 'element-plus/theme-chalk/index.css'
+import axios from 'axios';
 
 /**
  * 颜色变量
@@ -26,6 +28,35 @@ const sideTheme = ref(store.state.settings.sideTheme);
  */
 const storeSettings = computed(() => store.state.settings);
 
+/**自定义颜色form */
+const customForm = ref({
+  menuBgColor: '',
+  menuTextColor: '',
+  headerTextColor: '',
+})
+/**自定义颜色 ref */
+const customFormRef = ref(null);
+/**展示自定义主题的弹框 */
+const showCustomDia = ref(false);
+/**打开自定义颜色弹框 */
+const openCustomDia = () => {
+  customForm.value = {
+    menuBgColor: storeSettings.value.menuBgColor,
+    menuTextColor: storeSettings.value.menuTextColor,
+    headerTextColor: storeSettings.value.headerTextColor
+  }
+  showCustomDia.value = true;
+}
+/**改变主题 */
+const changeTheme = () => {
+  handleTheme('theme-custom',
+    {
+      menuBgColor: customForm.value.menuBgColor,
+      menuTextColor: customForm.value.menuTextColor,
+      headerTextColor: customForm.value.menuTextColor,
+    });
+  showCustomDia.value = false;
+}
 
 /**选择主题 */
 const handleTheme = (val, menuStyleObj) => {
@@ -45,8 +76,18 @@ const handleTheme = (val, menuStyleObj) => {
   }
   sideTheme.value = val;
 
-
 }
+/**自定义颜色的数组 */
+const predefineColors = ref([
+  '#409EFF',
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585',
+])
 
 const saveSettingToLocal = (key, value) => {
   let defaultSettings = {
@@ -64,14 +105,32 @@ const saveSettingToLocal = (key, value) => {
   // 把配置好的风格存入localStoreage
 
 }
+/**当主题发生改变，请求在线的网站，生成颜色 */
+watch(theme, (val) => {
+  console.log(val, '--------val-=-=-=-=')
+  genColorOnline(val)
+})
+/**在线生成颜色 */
+const genColorOnline = (primaryColor) => {
+  const xhr = new XMLHttpRequest()
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      console.log(xhr.responseText,'-=-----=-=-=xhr.responseText')
+    }
+  }
+  xhr.open('GET', 'https://app.uibakery.io/api/painter/support?primary=' + primaryColor)
+  xhr.send()
+}
+
 </script>
 <template>
   <div>
     <el-drawer v-model="showSettings" :withHeader="false" direction="rtl" size="260px">
       <div class="setting-drawer-title">
-        <h3 class="drawer-title">经典主题风格设置</h3>
+        <h3 class="drawer-title">经典主题风格设置{{ showCustomDia }}</h3>
       </div>
       <div class="setting-drawer-block-checbox">
+        <!-- 暗色调 -->
         <div
           class="setting-drawer-block-checbox-item"
           @click="handleTheme('theme-dark',
@@ -106,6 +165,7 @@ const saveSettingToLocal = (key, value) => {
             </i>
           </div>
         </div>
+        <!-- 亮色调 -->
         <div
           class="setting-drawer-block-checbox-item"
           @click="handleTheme('theme-light',
@@ -140,11 +200,8 @@ const saveSettingToLocal = (key, value) => {
             </i>
           </div>
         </div>
-        <div
-          class="setting-drawer-block-checbox-item"
-          @click="handleTheme('theme-custom')"
-          title="自定义"
-        >
+        <!-- 自定义色调 -->
+        <div class="setting-drawer-block-checbox-item" @click="openCustomDia" title="自定义">
           <img class="custom-img" src="@/assets/images/customSlidePic.jpg" alt="light" />
           <div
             v-if="sideTheme === 'theme-custom'"
@@ -170,7 +227,34 @@ const saveSettingToLocal = (key, value) => {
           </div>
         </div>
       </div>
+      <div class="drawer-item">
+        <span>主题颜色</span>
+        <span class="comp-style">
+          <el-color-picker v-model="theme" :predefine="predefineColors" />
+        </span>
+      </div>
     </el-drawer>
+
+    <el-dialog :title="'自定义颜色'" width="400px" append-to-body v-model="showCustomDia">
+      <!-- 选择自定义颜色 -->
+      <el-form :model="customForm" ref="customFormRef" label-width="120px">
+        <el-form-item label="左侧菜单背景" prop="menuBgColor">
+          <el-color-picker v-model="customForm.menuBgColor" />
+        </el-form-item>
+        <el-form-item label="菜单标题颜色" prop="headerTextColor">
+          <el-color-picker v-model="customForm.headerTextColor" />
+        </el-form-item>
+        <el-form-item label="菜单字体颜色" prop="menuTextColor">
+          <el-color-picker v-model="customForm.menuTextColor" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="changeTheme">确 定</el-button>
+          <el-button @click="showCustomDia = false">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -221,6 +305,17 @@ const saveSettingToLocal = (key, value) => {
       font-weight: 700;
       font-size: 14px;
     }
+  }
+}
+
+.drawer-item {
+  color: rgba(0, 0, 0, 0.65);
+  padding: 12px 0;
+  font-size: 14px;
+
+  .comp-style {
+    float: right;
+    margin: -3px 8px 0px 0px;
   }
 }
 </style>

@@ -1,3 +1,4 @@
+import variable from './../assets/styles/variables.module.scss';
 /**
  * 系统配置
  */
@@ -9,15 +10,15 @@ export default {
   /**
    * 菜单背景颜色
    */
-  menuBgColor: 'rgba(0,0,0,.70)',
+  menuBgColor: variable.menuBackground,
   /**
    * 菜单文本颜色
    */
-  menuTextColor: '#bfcbd9',
+  menuTextColor: variable.menuColor,
   /**
    * 头部文本颜色
    */
-  headerTextColor: '#ffffff',
+  headerTextColor: variable.logoTitleColor,
 
   /**
    * 是否系统布局配置
