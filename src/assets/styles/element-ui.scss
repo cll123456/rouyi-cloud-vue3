@@ -82,3 +82,7 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+
+.el-dropdown .el-dropdown-link{
+  color: var(--el-color-primary) !important;
+}

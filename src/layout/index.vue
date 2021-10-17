@@ -128,12 +128,9 @@ onMounted(() => {
     />
     <sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: tagsView }" class="main-container">
-      <!-- <div :class="{ hasTagsView: true }" class="main-container"> -->
-      <!-- <div :class="{ 'fixed-header': true }"> -->
       <div :class="{ 'fixed-header': fixedHeader }">
         <navbar @settingLayout="settingLayout" />
         <tags-view v-if="tagsView" />
-        <!-- <tags-view /> -->
       </div>
       <app-main />
       <settings ref="settingRef" />

@@ -130,7 +130,7 @@ getCookie();
     <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">若依后台管理系统</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model="loginForm.username" size="large" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
@@ -140,6 +140,7 @@ getCookie();
           type="password"
           auto-complete="off"
           placeholder="密码"
+          size="large"
           show-password
           @keyup.enter.native="handleLogin"
         >
@@ -150,6 +151,7 @@ getCookie();
         <el-input
           v-model="loginForm.code"
           auto-complete="off"
+          size="large"
           placeholder="验证码"
           style="width: 63%"
           @keyup.enter.native="handleLogin"
