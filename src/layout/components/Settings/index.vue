@@ -248,9 +248,7 @@ const settingTheme = (curThemes, newThemes) => {
     if (Object.hasOwnProperty.call(curThemes, key)) {
       // 获取原样式的所有样式数组和最新的进行替换
       const originColorArrs = getElColor(curThemes[key].split('#')[1]);
-      console.log(originColorArrs,'========originColorArrs' + key)
       const newColorArrs = getElColor(newThemes[key].split('#')[1]);
-        console.log(newColorArrs,'========newColorArrs' + key)
       // 更新样式
       originColorArrs.forEach((color, index) => {
         newSyles = newSyles.replace(new RegExp(color, 'ig'), newColorArrs[index])
