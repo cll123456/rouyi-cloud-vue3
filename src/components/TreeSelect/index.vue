@@ -153,7 +153,7 @@ watch(valueId, () => {
 </template>
 
 <style lang='scss' scoped>
-@import "./../../assets/styles/element-variables.scss";
+@import "./../../assets/styles/variables.module.scss";
 .el-scrollbar .el-scrollbar__view .el-select-dropdown__item {
   padding: 0;
   background-color: #fff;

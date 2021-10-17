@@ -37,7 +37,13 @@ export default defineConfig(({ mode }) => {
           target: 'http://vue.ruoyi.vip',//代理到官网地址
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/api/, '')
-        }
+        },
+        // 配置获取在线主题的网络请求
+        '/onlineColor': {
+          target: 'https://app.uibakery.io/api',//代理到官网地址
+          changeOrigin: true,
+          rewrite: (p) => p.replace(/^\/onlineColor/, '')
+        },
       },
     },
   }

@@ -21,6 +21,27 @@ export default {
   headerTextColor: variable.logoTitleColor,
 
   /**
+   * 网页主要颜色
+   */
+   primaryColor: variable.primaryColor,
+   /**
+    * 网页成功颜色
+    */
+   successColor: variable.successColor,
+   /**
+    * 网页danger颜色
+    */
+   dangerColor: variable.dangerColor,
+   /**
+    * 网页info颜色
+    */
+   infoColor: variable.infoColor,
+   /**
+    * 网页warning也拿
+    */
+   warningColor: variable.warningColor,
+
+  /**
    * 是否系统布局配置
    */
   showSettings: false,

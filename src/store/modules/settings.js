@@ -1,6 +1,20 @@
 import defaultSettings from '../../config/settings.js'
 
-const { sideTheme, menuBgColor, menuTextColor, headerTextColor, showSettings, topNav, tagsView, fixedHeader, sidebarLogo, dynamicTitle } = defaultSettings
+const { warningColor,
+  infoColor,
+  dangerColor,
+  successColor,
+  primaryColor,
+  sideTheme,
+  menuBgColor,
+  menuTextColor,
+  headerTextColor,
+  showSettings,
+  topNav,
+  tagsView,
+  fixedHeader,
+  sidebarLogo,
+  dynamicTitle } = defaultSettings
 /**
  * 布局设置
  */
@@ -14,7 +28,23 @@ const state = {
   /**
    * 网页的主题颜色
    */
-  theme: storageSetting.theme || '#409EFF',
+  theme: storageSetting.theme || primaryColor,
+  /**
+   * 网页成功颜色
+   */
+  successColor: storageSetting.theme || successColor,
+  /**
+   * 网页danger颜色
+   */
+  dangerColor: storageSetting.theme || dangerColor,
+  /**
+   * 网页info颜色
+   */
+  infoColor: storageSetting.theme || infoColor,
+  /**
+   * 网页warning也拿
+   */
+  warningColor: storageSetting.theme || warningColor,
   /**
    * 侧边栏主题
    */

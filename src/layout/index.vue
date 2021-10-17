@@ -1,13 +1,13 @@
 <script setup>
 import { useWindowSize } from "@vueuse/core";
-import { computed, watchEffect } from "vue";
+import { computed, watchEffect, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import AppMain from './components/AppMain.vue';
 import Sidebar from './components/Sidebar/index.vue'
 import Navbar from './components/Navbar/index.vue';
 import TagsView from "./components/tagsView/index.vue";
 import Settings from './components/Settings/index.vue';
-
+import defaultSettings from './../config/settings'
 /**
  * store
  */
@@ -31,7 +31,7 @@ const device = computed(() => store.state.app.device);
 /**
  * 是否需要tagsview tab
  */
-const needTagsView = computed(() => store.state.settings.needTagsView);
+const tagsView = computed(() => store.state.settings.tagsView);
 
 /**
  * 固定头部
@@ -81,6 +81,42 @@ watchEffect(() => {
 const handleClickOutside = () => {
   store.dispatch('app/closeSideBar', { withoutAnimation: false })
 }
+
+const settingRef = ref(null);
+
+/**打开setting layou */
+const settingLayout = () => {
+  settingRef.value.openSetting();
+}
+
+onMounted(() => {
+  // 判断本地中的主题是否和element一致，如果不一致，需要设置主题
+  const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || {};
+  const { warningColor,
+    infoColor,
+    dangerColor,
+    successColor,
+    primaryColor } = defaultSettings
+
+  if (Object.keys(storageSetting).length > 0
+    && storageSetting.theme
+    && storageSetting.theme !== primaryColor) {
+    // 设置主题
+    settingRef.value.settingTheme({
+      theme: primaryColor,
+      dangerColor: dangerColor,
+      warningColor: warningColor,
+      infoColor: infoColor,
+      successColor: successColor,
+    }, {
+      theme: storageSetting.theme,
+      dangerColor: storageSetting.dangerColor,
+      warningColor: storageSetting.warningColor,
+      infoColor: storageSetting.infoColor,
+      successColor: storageSetting.successColor,
+    })
+  }
+})
 </script>
 
 <template>
@@ -90,17 +126,17 @@ const handleClickOutside = () => {
       class="drawer-bg"
       @click="handleClickOutside"
     />
-    <sidebar class="sidebar-container"/>
-    <!-- <div :class="{ hasTagsView: needTagsView }" class="main-container"> -->
-    <div :class="{ hasTagsView: true }" class="main-container">
-      <div :class="{ 'fixed-header': true }">
-      <!-- <div :class="{ 'fixed-header': fixedHeader }"> -->
-        <navbar />
-        <!-- <tags-view v-if="needTagsView" /> -->
-        <tags-view  />
+    <sidebar class="sidebar-container" />
+    <div :class="{ hasTagsView: tagsView }" class="main-container">
+      <!-- <div :class="{ hasTagsView: true }" class="main-container"> -->
+      <!-- <div :class="{ 'fixed-header': true }"> -->
+      <div :class="{ 'fixed-header': fixedHeader }">
+        <navbar @settingLayout="settingLayout" />
+        <tags-view v-if="tagsView" />
+        <!-- <tags-view /> -->
       </div>
       <app-main />
-        <settings />
+      <settings ref="settingRef" />
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup>
 import { useStore } from "vuex"
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { computed } from 'vue'
+import { computed, getCurrentInstance } from 'vue'
 import RuoYiGit from './../../../components/Ruoyi/Git/index.vue'
 import RuoYiDoc from './../../../components/Ruoyi/Doc/index.vue'
 import Screenfull from './../../../components/Screenfull/index.vue'
@@ -20,7 +20,9 @@ const store = useStore();
 /**
  * getter 数据
  */
-const getterData = computed(() => store.getters)
+const getterData = computed(() => store.getters);
+
+const emits = defineEmits(['settingLayout'])
 /**
  * 打开或者折叠左侧菜单
  */
@@ -45,6 +47,13 @@ const logout = () => {
       location.href = '/index';
     })
   }).catch(() => { });
+}
+
+/**
+ * 打开设置
+ */
+const settingLayout = () => {
+  emits('settingLayout');
 }
 </script>
 <template>
@@ -92,7 +101,7 @@ const logout = () => {
               <router-link to="/user/profile">
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
-              <el-dropdown-item @click.native="getterData.setting = true">
+              <el-dropdown-item @click.native="settingLayout">
                 <span>布局设置</span>
               </el-dropdown-item>
               <el-dropdown-item divided @click.native="logout">

@@ -4,7 +4,9 @@ import { useStore } from 'vuex';
 import variable from './../../../assets/styles/variables.module.scss';
 import originElementPlus from 'element-plus/theme-chalk/index.css'
 import axios from 'axios';
-
+import { ELEMENT_SPECIAL_ID } from '../../../config/commonConfig';
+import { getElColor } from '../../../utils/ruoyi';
+import { ElLoading, ElMessage } from 'element-plus';
 /**
  * 颜色变量
  */
@@ -13,7 +15,7 @@ const variables = computed(() => variable);
 const store = useStore();
 
 /**展示抽屉 */
-const showSettings = ref(true);
+const showSettings = ref(false);
 /**
  * 当前的主题颜色
  */
@@ -88,8 +90,23 @@ const predefineColors = ref([
   '#1e90ff',
   '#c71585',
 ])
+/** 当前的主题颜色 */
+const curThemes = ref({
+  theme: storeSettings.value.theme,
+  dangerColor: storeSettings.value.dangerColor,
+  warningColor: storeSettings.value.warningColor,
+  infoColor: storeSettings.value.infoColor,
+  successColor: storeSettings.value.successColor,
+})
 
-const saveSettingToLocal = (key, value) => {
+/**把数据存入localstorage */
+const saveSettingToLocal = () => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: '正在保存主题,玩命加载中……',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
   let defaultSettings = {
     "topNav": storeSettings.value.topNav,
     "tagsView": storeSettings.value.tagsView,
@@ -97,30 +114,167 @@ const saveSettingToLocal = (key, value) => {
     "sidebarLogo": storeSettings.value.sidebarLogo,
     "dynamicTitle": storeSettings.value.dynamicTitle,
     "sideTheme": storeSettings.value.sideTheme,
-    "theme": storeSettings.value.theme,
     "menuBgColor": storeSettings.value.menuBgColor,
     "menuTextColor": storeSettings.value.menuTextColor,
     "headerTextColor": storeSettings.value.headerTextColor,
+    "theme": storeSettings.value.theme,
+    "dangerColor": storeSettings.value.dangerColor,
+    "warningColor": storeSettings.value.warningColor,
+    "infoColor": storeSettings.value.infoColor,
+    "successColor": storeSettings.value.successColor,
   };
   // 把配置好的风格存入localStoreage
-
+  localStorage.setItem("layout-setting", JSON.stringify(defaultSettings));
+  loading.close();
+  showSettings.value = false;
 }
+const resetSetting = () => {
+  ElLoading.service({
+    lock: true,
+    text: "正在清除设置缓存并刷新，请稍后...",
+    spinner: "el-icon-loading",
+    background: "rgba(0, 0, 0, 0.7)"
+  });
+  localStorage.removeItem("layout-setting")
+  setTimeout("window.location.reload()", 1000)
+}
+/**是否需要tagview */
+const tagsView = computed({
+  get: () => storeSettings.value.tagsView,
+  set: (val) => {
+    store.dispatch('settings/changeSetting', {
+      key: 'tagsView',
+      value: val
+    })
+  }
+})
+/**是否需要固定头部 */
+const fixedHeader = computed({
+  get: () => storeSettings.value.fixedHeader,
+  set: (val) => {
+    store.dispatch('settings/changeSetting', {
+      key: 'fixedHeader',
+      value: val
+    })
+  }
+})
+/**是否需要侧边栏的logo */
+const sidebarLogo = computed({
+  get: () => storeSettings.value.sidebarLogo,
+  set: (val) => {
+    store.dispatch('settings/changeSetting', {
+      key: 'sidebarLogo',
+      value: val
+    })
+  }
+})
+/**是否需要侧边栏的动态网页的title */
+const dynamicTitle = computed({
+  get: () => storeSettings.value.dynamicTitle,
+  set: (val) => {
+    store.dispatch('settings/changeSetting', {
+      key: 'dynamicTitle',
+      value: val
+    })
+  }
+})
+
 /**当主题发生改变，请求在线的网站，生成颜色 */
 watch(theme, (val) => {
-  console.log(val, '--------val-=-=-=-=')
   genColorOnline(val)
 })
 /**在线生成颜色 */
-const genColorOnline = (primaryColor) => {
-  const xhr = new XMLHttpRequest()
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      console.log(xhr.responseText,'-=-----=-=-=xhr.responseText')
+const genColorOnline = (color) => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: '正在获取在线主题,玩命加载中……',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  axios({
+    url: '/onlineColor/painter/support',
+    method: 'get',
+    params: {
+      primary: color.split('#')[1]
+    }
+  }).then(res => {
+    //  这里获取到的是一个数组，数组里面结构如下
+    /**
+     * danger: (9) ['#FDD4D2', '#FBA7AB', '#F3798C', '#E7567B', '#D82463', '#B91A61', '#9B125D', '#7D0B55', '#67064F']
+    info: (9) ['#CDF0FD', '#9CDCFB', '#69C0F5', '#43A3EC', '#0B79E0', '#085DC0', '#0545A1', '#033181', '#02226B']
+    primary: (9) ['#FCCFD9', '#F9A0BD', '#EE6EA5', '#DD4897', '#C71585', '#AB0F80', '#8F0A78', '#73066B', '#5D045F']
+    success: (9) ['#EBFBD4', '#D4F7AA', '#B0E97B', '#8AD357', '#5AB728', '#419D1D', '#2D8314', '#1B6A0C', '#0F5707']
+    warning: (9) ['#FFF4CC', '#FFE699', '#FFD466', '#FFC23F', '#FFA500', '#DB8500', '#B76900', '#934F00', '#7A3D00']F
+     */
+    // 判断当前的primary颜色下标，获取danger, info, success, warning
+    const primaryIndex = res.data.primary.indexOf(color);
+    /**需要替换el的主题 */
+    const newThemes = {
+      theme: color,
+      dangerColor: res.data.danger[primaryIndex],
+      warningColor: res.data.warning[primaryIndex],
+      infoColor: res.data.info[primaryIndex],
+      successColor: res.data.success[primaryIndex],
+    }
+
+    //设置颜色
+    settingTheme(curThemes.value, newThemes);
+    loading.close();
+    ElMessage.success('设置成功！')
+
+    // 保存到store中
+    for (const key in newThemes) {
+      if (Object.hasOwnProperty.call(newThemes, key)) {
+        store.dispatch('settings/changeSetting', {
+          key: key,
+          value: newThemes[key]
+        })
+      }
+    }
+  }).catch(err => {
+    loading.close();
+    ElMessage.error('获取在线主题失败，请检查网络！！！')
+  })
+}
+
+/**
+ * 设置主题
+ */
+const settingTheme = (curThemes, newThemes) => {
+  // 需要生成的新的样式
+  let newSyles = originElementPlus;
+  // 把当前样式和需要替换的样式直接替换
+  for (const key in curThemes) {
+    if (Object.hasOwnProperty.call(curThemes, key)) {
+      // 获取原样式的所有样式数组和最新的进行替换
+      const originColorArrs = getElColor(curThemes[key].split('#')[1]);
+      const newColorArrs = getElColor(newThemes[key].split('#')[1]);
+      // 更新样式
+      originColorArrs.forEach((color, index) => {
+        newSyles = newSyles.replace(new RegExp(color, 'ig'), newColorArrs[index])
+      })
     }
   }
-  xhr.open('GET', 'https://app.uibakery.io/api/painter/support?primary=' + primaryColor)
-  xhr.send()
+  // 判断当前是否存在自定义的样式
+  let styleTag = document.getElementById(ELEMENT_SPECIAL_ID);
+  // 如果不存在直接创建一个style
+  if (!styleTag) {
+    styleTag = document.createElement('style')
+    styleTag.setAttribute('id', ELEMENT_SPECIAL_ID)
+    document.head.appendChild(styleTag)
+  }
+  // 找出所有的颜色
+  styleTag.innerText = newSyles;
 }
+
+const openSetting = () => {
+  showSettings.value = true;
+}
+/**对外暴露一个方法，来设置主题 */
+defineExpose({
+  settingTheme,
+  openSetting,
+})
 
 </script>
 <template>
@@ -233,6 +387,49 @@ const genColorOnline = (primaryColor) => {
           <el-color-picker v-model="theme" :predefine="predefineColors" />
         </span>
       </div>
+      <el-divider />
+
+      <h3 class="drawer-title">系统布局配置</h3>
+
+      <!-- <div class="drawer-item">
+        <span>开启 TopNav</span>
+        <span class="comp-style">
+          <el-switch v-model="topNav" class="drawer-switch" />
+        </span>
+      </div>-->
+
+      <div class="drawer-item">
+        <span>开启 Tags-Views</span>
+        <span class="comp-style">
+          <el-switch v-model="tagsView" class="drawer-switch" />
+        </span>
+      </div>
+
+      <div class="drawer-item">
+        <span>固定 Header</span>
+        <span class="comp-style">
+          <el-switch v-model="fixedHeader" class="drawer-switch" />
+        </span>
+      </div>
+
+      <div class="drawer-item">
+        <span>显示 Logo</span>
+        <span class="comp-style">
+          <el-switch v-model="sidebarLogo" class="drawer-switch" />
+        </span>
+      </div>
+
+      <div class="drawer-item">
+        <span>动态标题</span>
+        <span class="comp-style">
+          <el-switch v-model="dynamicTitle" class="drawer-switch" />
+        </span>
+      </div>
+
+      <el-divider />
+
+      <el-button type="primary" plain icon="el-icon-document-add" @click="saveSettingToLocal">保存配置</el-button>
+      <el-button plain icon="el-icon-refresh" @click="resetSetting">重置配置</el-button>
     </el-drawer>
 
     <el-dialog :title="'自定义颜色'" width="400px" append-to-body v-model="showCustomDia">
