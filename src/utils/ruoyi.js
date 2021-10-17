@@ -5,6 +5,7 @@
  * Copyright (c) 2019 ruoyi
  */
 import { PUBLIC_PATH } from './../config/commonConfig'
+import { hsl2rgb, rgb2EleColor, rgb2hsl } from './color'
 
 const baseURL = PUBLIC_PATH
 
@@ -297,9 +298,8 @@ export function getElColor(themeColor) {
       return `#${red}${green}${blue}`
     }
   }
-
   /**
-   * 通过模糊值来生成颜色
+   * 生成scss mix的函数颜色
    * @param {*} color 
    * @param {*} shade 
    * @returns 
@@ -320,10 +320,32 @@ export function getElColor(themeColor) {
     return `#${red}${green}${blue}`
   }
 
+  /**
+   * 生成scss darken 的函数颜色
+   * @param {*} color 
+   * @param {*} shade 
+   * @returns 
+   */
+  const darkenColor = (color, shade) => {
+    let red = parseInt(color.slice(0, 2), 16)
+    let green = parseInt(color.slice(2, 4), 16)
+    let blue = parseInt(color.slice(4, 6), 16)
+
+    // 将rgb转化成hsl
+    const [h, s, l] = rgb2hsl(red, green, blue);
+    // 将l降低10%并且转换成rgb
+    const [r, g, b] = hsl2rgb(h, s, l - shade)
+
+    return rgb2EleColor(`rgb(${r},${g},${b})`)
+  }
+
   const clusters = [themeColor]
   for (let i = 0; i <= 9; i++) {
     clusters.push(tintColor(themeColor, Number((i / 10).toFixed(2))))
   }
+  // 按钮点击active的mix样式
   clusters.push(shadeColor(themeColor, 0.1))
+  // 按钮点击active的darken样式
+  clusters.push(darkenColor(themeColor, 0.1))
   return clusters
 }
