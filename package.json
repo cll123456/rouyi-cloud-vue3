@@ -1,6 +1,7 @@
 {
   "name": "ruoyi-cloud-vue3",
   "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

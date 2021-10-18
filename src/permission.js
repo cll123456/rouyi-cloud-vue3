@@ -5,6 +5,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
 import { isExternal } from './utils/validate'
+import { useDynamicTitle } from './hooks/dynamicTitle'
 
 /**
  * 配置进度条，不需要小圈圈 
@@ -24,6 +25,7 @@ router.beforeEach((to, from, next) => {
   // token存在
   if (getToken()) {
     to.meta.title && store.dispatch('settings/setTitle', to.meta.title)
+    to.meta.title && useDynamicTitle();
     /* has token*/
     if (to.path === '/login') {
       next({ path: '/' })

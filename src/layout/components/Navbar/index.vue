@@ -1,7 +1,7 @@
 <script setup>
 import { useStore } from "vuex"
 import { ElMessageBox, ElMessage } from 'element-plus'
-import { computed, getCurrentInstance } from 'vue'
+import { computed } from 'vue'
 import RuoYiGit from './../../../components/Ruoyi/Git/index.vue'
 import RuoYiDoc from './../../../components/Ruoyi/Doc/index.vue'
 import Screenfull from './../../../components/Screenfull/index.vue'

@@ -7,6 +7,7 @@ import axios from 'axios';
 import { ELEMENT_SPECIAL_ID } from '../../../config/commonConfig';
 import { getElColor } from '../../../utils/ruoyi';
 import { ElLoading, ElMessage } from 'element-plus';
+import { useDynamicTitle } from '../../../hooks/dynamicTitle';
 /**
  * 颜色变量
  */
@@ -158,6 +159,7 @@ const fixedHeader = computed({
     })
   }
 })
+
 /**是否需要侧边栏的logo */
 const sidebarLogo = computed({
   get: () => storeSettings.value.sidebarLogo,
@@ -168,6 +170,8 @@ const sidebarLogo = computed({
     })
   }
 })
+
+
 /**是否需要侧边栏的动态网页的title */
 const dynamicTitle = computed({
   get: () => storeSettings.value.dynamicTitle,
@@ -176,8 +180,11 @@ const dynamicTitle = computed({
       key: 'dynamicTitle',
       value: val
     })
+    // 动态设置网页标题
+    useDynamicTitle()
   }
 })
+
 
 /**当主题发生改变，请求在线的网站，生成颜色 */
 watch(theme, (val) => {
@@ -279,9 +286,9 @@ defineExpose({
 </script>
 <template>
   <div>
-    <el-drawer v-model="showSettings" :withHeader="false" direction="rtl" size="260px">
+    <el-drawer v-model="showSettings" :withHeader="false" direction="rtl" size="300px">
       <div class="setting-drawer-title">
-        <h3 class="drawer-title">经典主题风格设置{{ showCustomDia }}</h3>
+        <h3 class="drawer-title">经典主题风格设置</h3>
       </div>
       <div class="setting-drawer-block-checbox">
         <!-- 暗色调 -->
