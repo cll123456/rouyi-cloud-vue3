@@ -120,8 +120,8 @@ const goToPage = (url) => {
          <el-col :span="8" class="card-box" style="padding-right: 0px;">
             <el-card class="box-card">
                <template #header>
-                  <div class="card-header">
-                     <span>涉及技术便捷入口</span>
+                  <div class="card-header" >
+                     <span>涉及技术便捷入口</span> 
                   </div>
                </template>
                <div class="content" style="height: auto;">
