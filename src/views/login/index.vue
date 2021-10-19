@@ -49,7 +49,6 @@ const redirect = ref(undefined)
  */
 const instance = getCurrentInstance();
 
-console.log(instance, '-----instance')
 
 /**
  * 获取store
@@ -128,9 +127,15 @@ getCookie();
 <template>
   <div class="login">
     <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">若依后台管理系统——VUE3JS</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" size="large" type="text" auto-complete="off" placeholder="账号">
+        <el-input
+          v-model="loginForm.username"
+          size="large"
+          type="text"
+          auto-complete="off"
+          placeholder="账号"
+        >
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
@@ -181,7 +186,7 @@ getCookie();
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2021 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright ©2021.</span>
     </div>
   </div>
 </template>
@@ -198,7 +203,11 @@ getCookie();
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #707070;
+  // color: #707070;
+  background: linear-gradient(to right, var(--el-color-danger), var(--el-color-primary));
+  -webkit-background-clip: text;
+  color: transparent;
+  font-weight: bold;
 }
 
 .login-form {

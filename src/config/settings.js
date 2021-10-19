@@ -6,7 +6,7 @@ export default {
   /**
    * 网页标题
    */
-  title: '偌依V3',
+  title: '若依V3',
   /**
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    */
