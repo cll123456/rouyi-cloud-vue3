@@ -2,7 +2,6 @@
 import { ElLoading } from 'element-plus';
 import { ref } from 'vue';
 import { getCache } from '../../../api/monitor/cache';
-import { listJobLog } from '../../../api/monitor/jobLog';
 import * as echarts from 'echarts';
 
 const cache = ref([]);
