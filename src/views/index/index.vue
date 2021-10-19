@@ -26,6 +26,7 @@ const goToPage = (url) => {
    <div class="app-container">
       <el-row>
          <el-col :span="16">
+            <!-- 致谢 -->
             <el-card class="box-card">
                <template #header>
                   <div class="card-header">
@@ -99,6 +100,7 @@ const goToPage = (url) => {
                </el-row>
             </el-card>
             <el-divider></el-divider>
+            <!-- 项目简介 -->
             <el-card class="box-card">
                <template #header>
                   <div class="card-header">
@@ -118,16 +120,48 @@ const goToPage = (url) => {
             </el-card>
          </el-col>
          <el-col :span="8" class="card-box" style="padding-right: 0px;">
+            <!-- 涉及技术便捷入口 -->
             <el-card class="box-card">
                <template #header>
-                  <div class="card-header" >
-                     <span>涉及技术便捷入口</span> 
+                  <div class="card-header">
+                     <span>涉及技术便捷入口</span>
                   </div>
                </template>
                <div class="content" style="height: auto;">
                   <template v-for="(item,index) in links" :key="item.title">
-                     <el-button @click="goToPage(item.href)" plain class="tags-style" :type="tags[index % tags.length]">{{ item.title }}</el-button>
+                     <el-button
+                        @click="goToPage(item.href)"
+                        plain
+                        class="tags-style"
+                        :type="tags[index % tags.length]"
+                     >{{ item.title }}</el-button>
                   </template>
+               </div>
+            </el-card>
+            <el-divider></el-divider>
+            <!-- gitup项目展示 -->
+            <a class="img-pro--container" href="https://github.com/cll123456/rouyi-cloud-vue3">
+               <img
+                  src="https://camo.githubusercontent.com/e15ae1323307f9d5429b354629acc5865b8e39cd70eddc66400f4bd3a18501c0/68747470733a2f2f6769746875622d726561646d652d73746174732e76657263656c2e6170702f6170692f70696e2f3f757365726e616d653d636c6c313233343536267265706f3d726f7579692d636c6f75642d76756533"
+               />
+            </a>
+            <el-divider></el-divider>
+            <!-- 贡献者 -->
+            <el-card class="box-card">
+               <template #header>
+                  <div class="card-header">
+                     <span>贡献者</span>
+                  </div>
+               </template>
+               <div class="content" style="height: auto;">
+                  <div class="card-title person">
+                     <img src="https://avatars.githubusercontent.com/u/41314419?s=48&v=4" />
+                     <el-link
+                        type="primary"
+                        :underline="false"
+                        href="https://github.com/cll123456"
+                     >twinkle</el-link>
+                  </div>
                </div>
             </el-card>
          </el-col>
@@ -156,6 +190,17 @@ const goToPage = (url) => {
       }
    }
 
+   .person {
+      justify-content: start;
+      cursor: pointer;
+      img {
+         height: 40px;
+         vertical-align: middle;
+         border-radius: 50%;
+         margin-right: 10px;
+      }
+   }
+
    .content {
       color: rgba(0, 0, 0, 0.45);
       height: 66px;
@@ -163,7 +208,7 @@ const goToPage = (url) => {
       font-size: 14px;
       margin-bottom: 20px;
 
-      .tags-style{
+      .tags-style {
          margin: 5px;
          font-size: 16px;
          cursor: pointer;
@@ -173,6 +218,13 @@ const goToPage = (url) => {
    .footer {
       display: flex;
       justify-content: space-between;
+   }
+}
+
+.img-pro--container {
+   cursor: pointer;
+   img {
+      width: 100%;
    }
 }
 </style>
