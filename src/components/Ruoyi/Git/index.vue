@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-const url = ref('https://gitee.com/y_project/RuoYi-Cloud');
+const url = ref('https://github.com/cll123456/rouyi-cloud-vue3');
 
 /**
  * 跳转到gitUp页面

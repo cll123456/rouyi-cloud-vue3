@@ -199,7 +199,7 @@ const genColorOnline = (color) => {
     background: 'rgba(0, 0, 0, 0.7)',
   })
   axios({
-    url: '/onlineColor/painter/support',
+    url: '/onlineColor/api/painter/support',
     method: 'get',
     params: {
       primary: color.split('#')[1]

@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import VitePluginElementPlus from 'vite-plugin-element-plus'
 import viteSvgIcons from 'vite-plugin-svg-icons';
+import viteCompression from 'vite-plugin-compression';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   return {
@@ -21,7 +22,10 @@ export default defineConfig(({ mode }) => {
         iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
         symbolId: 'icon-[dir]-[name]',
       }),
+      // 启动gzip压缩
+      viteCompression()
     ],
+    base: './',//打包路径
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src')//设置别名
@@ -40,7 +44,7 @@ export default defineConfig(({ mode }) => {
         },
         // 配置获取在线主题的网络请求
         '/onlineColor': {
-          target: 'https://app.uibakery.io/api',//代理到官网地址
+          target: 'https://app.uibakery.io/',//代理到官网地址
           changeOrigin: true,
           rewrite: (p) => p.replace(/^\/onlineColor/, '')
         },

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, getCurrentInstance } from 'vue';
+import { ref } from 'vue';
 import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
@@ -44,10 +44,6 @@ const register = ref(false)
  * 重定向
  */
 const redirect = ref(undefined)
-/**
- * 获取当前实例
- */
-const instance = getCurrentInstance();
 
 
 /**
@@ -84,12 +80,13 @@ const getCookie = () => {
     rememberMe: rememberMe === undefined ? false : Boolean(rememberMe)
   };
 }
+const loginFormRef = ref(null);
 
 /**
  * 登录按钮
  */
 const handleLogin = () => {
-  instance.ctx.$refs.loginFormRef.validate(valid => {
+  loginFormRef.value.validate(valid => {
     if (valid) {
       loading.value = true;
       // 勾选了需要记住密码设置在cookie中设置记住用户明和名命
