@@ -1,6 +1,6 @@
 <script setup>
 import { ElMessage } from 'element-plus';
-import { ref, computed, getCurrentInstance, nextTick } from 'vue';
+import { ref, computed, nextTick,getCurrentInstance  } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
@@ -21,6 +21,10 @@ const route = useRoute();
  */
 const router = useRouter();
 /**
+ * 获取当前实例
+ */
+const {proxy} = getCurrentInstance();
+/**
  * size options
  */
 const sizeOptions = ref([
@@ -29,10 +33,7 @@ const sizeOptions = ref([
   { label: 'Small', value: 'small' },
   { label: 'Mini', value: 'mini' }
 ])
-/**
- * 当前上下文
- */
-const instance = getCurrentInstance();
+
 /**
  * 刷新页面
  */
@@ -42,7 +43,7 @@ const refreshView = async () => {
 
   const { fullPath } = route
 
-  instance.ctx.$nextTick(() => {
+  nextTick(() => {
     router.replace({
       //  这个需要设置redirecct的原因
       path: '/redirect' + fullPath
@@ -54,7 +55,7 @@ const refreshView = async () => {
  * 处理当前元素的大小
  */
 const handleSetSize = (size) => {
-  instance.appContext.config.globalProperties.$ELEMENT.size = size;
+  proxy.$ELEMENT.size = size;
   store.dispatch('app/setSize', size)
   refreshView()
   ElMessage({

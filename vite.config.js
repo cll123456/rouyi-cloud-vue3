@@ -25,7 +25,6 @@ export default defineConfig(({ mode }) => {
       // 启动gzip压缩
       viteCompression()
     ],
-    base: './',//打包路径
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src')//设置别名

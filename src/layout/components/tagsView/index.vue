@@ -12,7 +12,7 @@ const visible = ref(false);
 /**
  * 获取当前的实例
  */
-const instance = getCurrentInstance();
+const {proxy} = getCurrentInstance();
 
 /**
  * 右键菜单距离顶部距离
@@ -147,7 +147,6 @@ const addTags = () => {
  * 移动到当前选中的tag
  */
 const moveToCurrentTag = () => {
-  // const tag = instance.ctx.$refs.tag;
   nextTick(() => {
     for (const r of visitedViews.value) {
       if (r.path === route.path) {
@@ -247,8 +246,8 @@ const toLastView = (visitedViews, view) => {
  */
 const openMenu = (tag, e) => {
   const menuMinWidth = 105
-  const offsetLeft = instance.ctx.$el.getBoundingClientRect().left // container margin left
-  const offsetWidth = instance.ctx.$el.offsetWidth // container width
+  const offsetLeft = proxy.$el.getBoundingClientRect().left // container margin left
+  const offsetWidth = proxy.$el.offsetWidth // container width
   const maxLeft = offsetWidth - menuMinWidth // left boundary
   const l = e.clientX - offsetLeft + 15 // 15: margin right
 

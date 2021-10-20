@@ -14,7 +14,7 @@ const store = useStore();
 /**
  * 获取当前的实例
  */
-const instance = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 /**
  * 向上分发方法
  */
@@ -22,7 +22,7 @@ const emits = defineEmits()
 /**
  * 获取滚动内部的实例
  */
-const scrollWrapper = computed(() => instance.ctx.$refs.scrollContainer.$refs.wrap);
+const scrollWrapper = computed(() => proxy.$refs.scrollContainer.$refs.wrap);
 
 /**
  * 每一次滚动的距离
@@ -48,7 +48,7 @@ const visitedViews = computed(() => store.state.tagsView.visitedViews);
  * 滚动目标
  */
 const moveToTarget = (currentTag) => {
-  const $container = instance.ctx.$refs.scrollContainer.$el
+  const $container = proxy.$refs.scrollContainer.$el
   const $containerWidth = $container.offsetWidth
   const $scrollWrapper = scrollWrapper.value;
 
