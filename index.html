@@ -1,13 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>若依V3</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>若依V3</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    #loading-wrapper {
+      width: 100%;
+      height: 100%;
+      background-color: #080915;
+
+    }
+
+
+
+    .loader {
+      left: 50%;
+      top: 50%;
+      margin-left: -30px;
+      margin-top: -30px;
+      animation: stars-rotate-reverse 2s ease infinite;
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .text{
+      text-align: center;
+      position: relative;
+      top: 50%;
+      color: #fff;
+    }
+
+    .loader-star {
+      position: absolute;
+    }
+
+    .loader-star polygon {
+      fill: #d500f9 !important;
+    }
+
+    .loader .star1 {
+      top: 0px;
+      right: -7px;
+    }
+
+    .loader .star2 {
+      right: 9px;
+      top: -12px;
+      position: absolute;
+      transform: scale(0.8);
+      animation: stars-catch 2s 0.1s ease infinite;
+    }
+
+    .loader .star3 {
+      right: 27px;
+      top: -11px;
+      position: absolute;
+      transform: scale(0.7);
+      animation: stars-catch 2s 0.15s ease infinite;
+    }
+
+    .loader .star4 {
+      right: 41px;
+      top: -2px;
+      position: absolute;
+      transform: scale(0.6);
+      animation: stars-catch 2s 0.2s ease infinite;
+    }
+
+
+
+    .loader .star5 {
+      right: 47px;
+      top: 10px;
+      position: absolute;
+      transform: scale(0.5);
+      -webkit-animation: stars-catch 2s 0.25s ease infinite;
+      animation: stars-catch 2s 0.25s ease infinite;
+    }
+
+
+    .loader .star6 {
+      right: 47px;
+      top: 21px;
+      position: absolute;
+      transform: scale(0.4);
+      animation: stars-catch 2s 0.3s ease infinite;
+    }
+
+    @keyframes stars-catch {
+      75% {
+        top: -2px;
+        right: -11px;
+        opacity: 0;
+      }
+    }
+
+    @keyframes stars-rotate-reverse {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <div id="loading-wrapper">
+    <div class="loader">
+      <svg class="loader-star star1" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+      <svg class="loader-star star2" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+      <svg class="loader-star star3" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+      <svg class="loader-star star4" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+      <svg class="loader-star star5" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+      <svg class="loader-star star6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+        viewBox="0 0 23.172 23.346" xml:space="preserve">
+        <polygon
+          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+        </polygon>
+      </svg>
+    </div>
+    <div class="text">
+      玩命加载中……
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>
