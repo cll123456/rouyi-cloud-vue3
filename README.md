@@ -37,4 +37,4 @@ const goto = () => {
 #  实现效果
 
 
-![效果1](./docs/assets/pic1.png)![效果2](./docs/assets/pic2.png)![效果3](./docs/assets/pic3.png)![效果4](./docs/assets/pic4.png)
+![效果1](http://ruoyi-doc.chenliangliang.top/assets/pic1.98440b2c.png)![效果2](http://ruoyi-doc.chenliangliang.top/assets/pic2.7cba0db8.png)![效果3](http://ruoyi-doc.chenliangliang.top/assets/pic3.5f0b6e9d.png)![效果4](http://ruoyi-doc.chenliangliang.top/assets/pic4.382d40d4.png)
