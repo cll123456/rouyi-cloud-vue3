@@ -9,3 +9,32 @@
 
 # 目前状况
 当前分支只提供`最简单`的`权限管理`，`系统管理`等，方便需要的同学去使用。后面会单独开发有用的组件库，方便大家去使用，欢迎大家star 
+
+# 代码风格
+
+```js
+<script setup>
+import { ref } from 'vue';
+const url = ref('xxxx');
+
+/**
+ * 跳转到gitUp页面
+ */
+const goto = () => {
+  window.open(url.value)
+}
+</script>
+<template>
+  <div>
+    <svg-icon icon-class="question" @click="goto" />
+  </div>
+</template>
+
+<style lang='scss' scoped>
+</style>
+```
+
+#  实现效果
+
+
+![效果1](./docs/assets/pic1.png)![效果2](./docs/assets/pic2.png)![效果3](./docs/assets/pic3.png)![效果4](./docs/assets/pic4.png)
