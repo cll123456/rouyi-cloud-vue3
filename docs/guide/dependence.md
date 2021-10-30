@@ -18,6 +18,7 @@ sidebarDepth: 2
     "js-cookie": "^3.0.1",                    # 使用cookie
     "jsencrypt": "^3.2.1",                    # 用于加密保存密码
     "nprogress": "^0.2.0",                    # 用于网站的进度条
+    "vue-cropper": "^1.0.2",                  # 用于图片裁剪
     "vue": "^3.2.20",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"

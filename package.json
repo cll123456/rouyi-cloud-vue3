@@ -1,6 +1,6 @@
 {
   "name": "ruoyi-cloud-vue3",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
@@ -21,6 +21,7 @@
     "jsencrypt": "^3.2.1",
     "nprogress": "^0.2.0",
     "vue": "^3.2.20",
+    "vue-cropper": "^1.0.2",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"
   },
