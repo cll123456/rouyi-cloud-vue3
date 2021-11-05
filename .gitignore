@@ -1,6 +1,14 @@
 node_modules
 .DS_Store
 /dist
+dist
 dist-ssr
 *.local
 .vscode
+.idea/workspace.xml
+.idea/vcs.xml
+.gitignore
+yarn.lock
+.idea/modules.xml
+.idea/RuoYi-Cloud-Vue3.iml
+.gitignore

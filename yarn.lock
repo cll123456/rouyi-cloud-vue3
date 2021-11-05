@@ -2702,6 +2702,11 @@ vitepress@^0.20.0:
     vite "^2.6.5"
     vue "^3.2.19"
 
+vue-cropper@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-cropper/-/vue-cropper-1.0.2.tgz#61eb2080cb654da2cdcd905c4c6885f87d7d3921"
+  integrity sha512-ZD1kl8OMMrDXJOS1ZRdnohh2BFfYjTeq+r7+yAahydQvrVOKbzXixx6f8LCoMjB+AgAf5BXnlWsZxmu964wJYA==
+
 vue-demi@*:
   version "0.11.4"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
