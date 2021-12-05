@@ -14,7 +14,8 @@
     "@vitejs/plugin-legacy": "^1.6.3",
     "eslint": "^8.4.0",
     "eslint-plugin-vue": "^8.1.1",
-    "sass": "^1.44.0",
+    "sass": "1.32.6",
+    "unplugin-vue2-script-setup": "^0.8.1",
     "vite": "^2.6.14",
     "vite-plugin-svg-icons": "^1.0.5",
     "vite-plugin-vue2": "^1.9.0",
@@ -22,8 +23,16 @@
   },
   "dependencies": {
     "@vue/composition-api": "^1.4.1",
+    "@vueuse/core": "^7.1.2",
     "axios": "^0.24.0",
+    "echarts": "^5.2.2",
+    "element-ui": "^2.15.6",
+    "fuse.js": "^6.4.6",
+    "js-cookie": "^3.0.1",
+    "jsencrypt": "^3.2.1",
+    "nprogress": "^0.2.0",
     "vue": "^2.6.14",
+    "vue-cropper": "^0.5.8",
     "vue-router": "^3.5.3",
     "vuex": "^3.6.2"
   }
