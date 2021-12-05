@@ -1,0 +1,30 @@
+{
+  "name": "RuoYi-Cloud-Vue3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/cll123456/rouyi-cloud-vue3.git",
+  "author": "cll123456 <2642137848@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^1.6.3",
+    "eslint": "^8.4.0",
+    "eslint-plugin-vue": "^8.1.1",
+    "sass": "^1.44.0",
+    "vite": "^2.6.14",
+    "vite-plugin-svg-icons": "^1.0.5",
+    "vite-plugin-vue2": "^1.9.0",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^1.4.1",
+    "axios": "^0.24.0",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.3",
+    "vuex": "^3.6.2"
+  }
+}
