@@ -1,10 +1,10 @@
 <script setup>
-import { ref, watchEffect } from "@vue/composition-api";
+import { ref, watchEffect,getCurrentInstance } from "@vue/composition-api";
 import router from '@/router';
 /**
  * 路由对象
  */
-const route = router.currentRoute; 
+const {proxy} = getCurrentInstance();
 
 /**
  * 路由实例
@@ -31,7 +31,7 @@ const isDashboard = (route) => {
  */
 const getBreadcrumb = () => {
   // only show routes with meta.title
-  let matched = route.matched.filter(item => item.meta && item.meta.title);
+  let matched = proxy.$route.matched.filter(item => item.meta && item.meta.title);
   const first = matched[0]
   // 判断是否为首页
   if (!isDashboard(first)) {
@@ -58,7 +58,7 @@ const handleLink = (item) => {
  * 监听路由变化，重新获取面包屑数据
  */
 watchEffect(() => {
-  if (route.path.startsWith('/redirect/')) {
+  if (proxy.$route.path.startsWith('/redirect/')) {
     return
   }
   getBreadcrumb()

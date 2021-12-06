@@ -1,11 +1,10 @@
 <script setup>
 import ScrollPane from './ScrollPane.vue'
-import { ref, computed, getCurrentInstance, nextTick, onMounted, watch } from '@vue/composition-api'
+import { ref, computed, getCurrentInstance, nextTick, onMounted, watch, watchEffect } from '@vue/composition-api'
 import store from '@/store';
 import router from '@/router';
 import { getNormalPath } from '../../../utils/ruoyi';
 
-const route = router.currentRoute;
 
 /**
  * 是否右键打开菜单选项
@@ -14,7 +13,7 @@ const visible = ref(false);
 /**
  * 获取当前的实例
  */
-const {proxy} = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 
 /**
  * 右键菜单距离顶部距离
@@ -56,7 +55,7 @@ const theme = computed(() => store.state.settings.theme);
  * 当前选中的tag
  */
 const isActive = (r) => {
-  return r.path === route.path
+  return r.path === proxy.$route.path
 }
 /**
  * 当前选中的tag样式
@@ -138,9 +137,9 @@ const initTags = () => {
  * 添加一个tag
  */
 const addTags = () => {
-  const { name } = route
+  const { name } = proxy.$route;
   if (name) {
-    store.dispatch('tagsView/addView', route)
+    store.dispatch('tagsView/addView', proxy.$route)
   }
   return false
 }
@@ -150,11 +149,11 @@ const addTags = () => {
 const moveToCurrentTag = () => {
   nextTick(() => {
     for (const r of visitedViews.value) {
-      if (r.path === route.path) {
+      if (r.path === proxy.$route.path) {
         scrollPaneRef.value.moveToTarget(r);
         // when query is different then update
-        if (r.fullPath !== route.fullPath) {
-          store.dispatch('tagsView/updateVisitedView', route)
+        if (r.fullPath !== proxy.$route.fullPath) {
+          store.dispatch('tagsView/updateVisitedView', proxy.$route.path)
         }
       }
     }
@@ -188,7 +187,7 @@ const closeSelectedTag = (view) => {
  */
 const closeRightTags = () => {
   store.dispatch('tagsView/delRightTags', selectedTag.value).then(visitedViews => {
-    if (!visitedViews.find(i => i.fullPath === route.fullPath)) {
+    if (!visitedViews.find(i => i.fullPath === proxy.$route.fullPath)) {
       toLastView(visitedViews)
     }
   })
@@ -199,7 +198,7 @@ const closeRightTags = () => {
  */
 const closeLeftTags = () => {
   store.dispatch('tagsView/delLeftTags', selectedTag.value).then(visitedViews => {
-    if (!visitedViews.find(i => i.fullPath === route.fullPath)) {
+    if (!visitedViews.find(i => i.fullPath === proxy.$route.fullPath)) {
       toLastView(visitedViews)
     }
   })
@@ -218,7 +217,8 @@ const closeOthersTags = () => {
  */
 const closeAllTags = (view) => {
   store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
-    if (affixTags.value.some(tag => tag.path === route.path)) {
+    console.log(visitedViews,'-------=visitedViews==-----')
+    if (affixTags.value.some(tag => tag.path === proxy.$route.path)) {
       return
     }
     toLastView(visitedViews, view)
@@ -281,15 +281,25 @@ onMounted(() => {
   initTags()
   addTags()
 })
-const curPath = computed(() => route.path);
+
 /**
  * 路由发生变化，需要修改当前选中tag
  */
-// console.log(route,'-------=-----')
-watch(curPath, () => {
-  addTags()
-  moveToCurrentTag()
+
+watchEffect(() => {
+  if (proxy.$route) {
+    addTags();
+    moveToCurrentTag();
+  }
+
+  // console.log(proxy.$route,'-----=---')
+
 })
+
+// watch(proxy.$route.path, () => {
+//   addTags()
+//   moveToCurrentTag()
+// })
 
 /**
  * 打开的右侧菜单注册事件，关闭取消事件

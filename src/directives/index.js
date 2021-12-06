@@ -1,6 +1,14 @@
-import hasPermi from "./hasPermi";
+import hasPermi from './hasPermi';
 
-//  注册权限
-export default function installDirective(app){
-  app.directive('hasPermi',hasPermi)
+// 注册指令
+
+const install = function(Vue) {
+  Vue.directive('hasPermi', hasPermi)
 }
+
+if (window.Vue) {
+  window['hasPermi'] = hasPermi
+  Vue.use(install); // eslint-disable-line
+}
+
+export default install

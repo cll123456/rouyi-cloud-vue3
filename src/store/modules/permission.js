@@ -2,8 +2,9 @@ import { constantRoutes } from '@/router'
 import { getRouters } from '@/api/menu'
 import Layout from '@/layout/index.vue'
 import ParentView from '@/components/ParentView/index.vue';
+import { isExternal } from '../../utils/validate';
 // import InnerLink from '@/layout/components/InnerLink'
-import User from './../../views/system/user/index.vue'
+// import User from './../../views/system/user/index.vue'
 
 // 匹配views里面所有的.vue文件
 const modules = import.meta.glob('./../../views/**/*.vue')
@@ -61,6 +62,7 @@ const permission = {
           const rdata = JSON.parse(JSON.stringify(res.data))
           const sidebarRoutes = filterAsyncRouter(sdata)
           const rewriteRoutes = filterAsyncRouter(rdata, false, true)
+          console.log(sidebarRoutes,'------------=====----sidebarRoutes')
           rewriteRoutes.push({ path: '/*', redirect: '/404', hidden: true })
           commit('SET_ROUTES', rewriteRoutes)
           commit('SET_SIDEBAR_ROUTERS', constantRoutes.concat(sidebarRoutes))
@@ -88,7 +90,7 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
         // } else if (route.component === 'InnerLink') {
         //   route.component = InnerLink
       } else {
-        route.component = loadView(route.component)
+        route.component = loadView(route.component);
       }
     }
     if (route.children != null && route.children && route.children.length) {
@@ -131,7 +133,7 @@ function filterChildren(childrenMap, lastRouter = false) {
  * @returns 
  */
 export const loadView = (view) => {
-  let res = User;
+  let res ;
   for (const path in modules) {
     const dir = path.split('views/')[1].split('.vue')[0];
     if (dir === view) {

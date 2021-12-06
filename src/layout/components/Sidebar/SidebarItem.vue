@@ -5,7 +5,7 @@ export default {
 </script>
 <script setup>
 import AppLink from './Link.vue';
-import { ref,computed } from '@vue/composition-api';
+import { ref } from '@vue/composition-api';
 import { isExternal } from '../../../utils/validate';
 import { getNormalPath } from '../../../utils/ruoyi';
 import SvgIcon from '@/components/SvgIcon/index.vue';
@@ -45,19 +45,29 @@ const onlyOneChild = ref({});
  * 是否需要展示chilren
  */
 const hasOneShowingChild = (children = [], parent) => {
+  // 如果是外链，直接返回当前的路径 todo 缺少考虑，外链嵌套在系统中
+  if(isExternal(parent.path)) {
+     onlyOneChild.value = parent;
+     return true;
+  }
 
   if (!children) {
     children = [];
+    return false
   }
+
+
+  // 去掉隐藏的菜单
   const showingChildren = children.filter(item => {
     if (item.hidden) {
       return false
     } else {
       // Temp set(will be used if only has one showing child)
-      // onlyOneChild.value = item
+      onlyOneChild.value = item;
       return true
     }
   })
+
 
   // When there is only one child router, the child router is displayed by default
   if (showingChildren.length === 1) {
@@ -66,7 +76,8 @@ const hasOneShowingChild = (children = [], parent) => {
 
   // Show parent if there are no child router to display
   if (showingChildren.length === 0) {
-    // onlyOneChild.value = { ...parent, path: '', noShowingChildren: true }
+    onlyOneChild.value = { ...parent, path: '', noShowingChildren: true };
+
     return true
   }
 
@@ -76,11 +87,12 @@ const hasOneShowingChild = (children = [], parent) => {
 /**
  * 返回路径
  */
-const resolvePath =  (routePath, routeQuery) => {
+const resolvePath = (routePath, routeQuery) => {
   if (isExternal(routePath)) {
     return routePath
   }
   if (isExternal(props.basePath)) {
+
     return props.basePath
   }
   if (routeQuery) {
@@ -110,8 +122,6 @@ const resolvePath =  (routePath, routeQuery) => {
       </app-link>
     </template>
 
-    
-
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template v-if="props.item.meta" slot="title">
         <svg-icon :icon-class="props.item.meta && props.item.meta.icon" />
@@ -120,7 +130,7 @@ const resolvePath =  (routePath, routeQuery) => {
 
       <sidebar-item
         v-for="(child,index) in props.item.children"
-        :key="resolvePath(child.path)"
+        :key="child.path"
         :is-nest="true"
         :item="child"
         :base-path="resolvePath(child.path)"
