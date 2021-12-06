@@ -5,8 +5,6 @@ import store from '@/store';
 import router from '@/router';
 import { getNormalPath } from '../../../utils/ruoyi';
 
-
-
 const route = router.currentRoute;
 
 /**
@@ -101,21 +99,21 @@ const isLastView = () => {
 /**
  * 获取需要固定的tag
  */
-const filterAffixTags = (routes, basePath = '') => {
+const filterAffixTags = (rs, basePath = '') => {
   let tags = []
-  routes.forEach(route => {
-    if (route.meta && route.meta.affix) {
-      const p = route.path.length > 0 && route.path[0] === '/' ? route.path : '/' + route.path;
+  rs.forEach(r => {
+    if (r.meta && r.meta.affix) {
+      const p = r.path.length > 0 && r.path[0] === '/' ? r.path : '/' + r.path;
       const tagPath = getNormalPath(basePath + '/' + p)
       tags.push({
         fullPath: tagPath,
         path: tagPath,
-        name: route.name,
-        meta: { ...route.meta }
+        name: r.name,
+        meta: { ...r.meta }
       })
     }
-    if (route.children) {
-      const tempTags = filterAffixTags(route.children, route.path)
+    if (r.children) {
+      const tempTags = filterAffixTags(r.children, r.path)
       if (tempTags.length >= 1) {
         tags = [...tags, ...tempTags]
       }
@@ -283,10 +281,12 @@ onMounted(() => {
   initTags()
   addTags()
 })
+const curPath = computed(() => route.path);
 /**
  * 路由发生变化，需要修改当前选中tag
  */
-watch(route, () => {
+// console.log(route,'-------=-----')
+watch(curPath, () => {
   addTags()
   moveToCurrentTag()
 })

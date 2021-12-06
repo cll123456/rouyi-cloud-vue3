@@ -4,7 +4,7 @@ import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
 import store from '@/store/index.js';
-import router from '@/router/index' 
+import router from '@/router/index'
 import SvgIcon from '@/components/SvgIcon/index.vue';
 
 /**
@@ -94,7 +94,10 @@ const handleLogin = () => {
       }
       // 调用action的登录方法
       store.dispatch("Login", loginForm.value).then(() => {
-        router.push({ path: redirect.value || "/" });
+        router.push({ path: redirect.value || "/" }).catch(() => { }); // eslint-disable-line
+        // 这里加上catch的原因
+        // permission.js里的next({ ...to, replace: true })会被认为是一个失败的navigation
+        //（虽然能导航成功，但不再是原来的to），所以login里的push()返回一个rejected Promise。
       }).catch(() => {
         loading.value = false;
         // 重新获取验证码
@@ -181,8 +184,6 @@ getCookie();
 </template>
 
 <style lang='scss' scoped>
-
-
 .login {
   display: flex;
   justify-content: center;

@@ -42,7 +42,6 @@ router.beforeEach((to, from, next) => {
                 router.addRoute(r)
               }
             })
-            // router.addRoute(accessRoutes) 
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成
           })
         }).catch(err => {

@@ -127,7 +127,9 @@ onMounted(() => {
     />
     <sidebar class="sidebar-container" />
     <div :class="{ hasTagsView: tagsView }" class="main-container">
+      <!-- <div :class="{ hasTagsView: true }" class="main-container"> -->
       <div :class="{ 'fixed-header': fixedHeader }">
+        <!-- <div :class="{ 'fixed-header': true }"> -->
         <navbar @settingLayout="settingLayout" />
         <tags-view v-if="tagsView" />
       </div>
@@ -140,7 +142,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 @import "./../assets/styles/mixin.scss";
 @import "./../assets/styles/variables.module.scss";
-
 .app-wrapper {
   @include clearfix;
   position: relative;
