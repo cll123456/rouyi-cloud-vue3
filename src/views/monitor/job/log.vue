@@ -6,8 +6,6 @@ import { Message, MessageBox } from 'element-ui';
 import { useDict } from '../../../hooks/dict';
 import { download, parseTime, addDateRange } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
- 
-import { useRoute, useRouter } from 'vue-router';
 import { listJobLog, delJobLog, cleanJobLog, exportJobLog } from '../../../api/monitor/jobLog';
 
 // 遮罩层

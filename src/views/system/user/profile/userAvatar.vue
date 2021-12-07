@@ -1,6 +1,5 @@
 <script setup>
 import {ref, getCurrentInstance} from '@vue/composition-api';
-import {useStore} from 'vuex';
 import avatar from './../../../../assets/images/profile.jpg'
 // import 'vue-cropper/dist/index.css'
 // import {VueCropper} from "vue-cropper";

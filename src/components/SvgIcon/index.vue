@@ -1,7 +1,6 @@
 <script setup>
-import { computed } from "@vue/composition-api";
+import { computed ,ref} from "@vue/composition-api";
 import { isExternal } from "../../utils/validate";
-
 
 
 const props = defineProps({
@@ -59,7 +58,7 @@ const svgClass = computed(() => {
     class="svg-external-icon svg-icon"
   />
   <svg v-else :class="svgClass" aria-hidden="true">
-    <use :href="iconName" />
+    <use :xlink:href="iconName" />
   </svg>
 </template>
 

@@ -6,7 +6,7 @@ import { parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue';
 import DictTag from './../../../components/DictTag/index.vue';
 import selectUser from './selectUser.vue';
-import { useRoute, useRouter } from 'vue-router';
+ 
  
 import RightToolbar from './../../../components/RightToolbar/index.vue';
 import { allocatedUserList, authUserCancel, authUserCancelAll } from '../../../api/system/role';

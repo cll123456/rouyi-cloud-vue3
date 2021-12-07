@@ -1,8 +1,8 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-
-const route = router.currentRoute;
 import router from '@/router';
+const route = router.currentRoute;
+
+
 const { params, query } = route
 const { path } = params
 router.replace({ path: '/' + path, query })
