@@ -1,18 +1,22 @@
 <script setup>
-import router from '@/router';
-const key = router.currentRoute.path;
+import { computed, getCurrentInstance } from '@vue/composition-api';
+import store from '@/store';
+
+const { proxy } = getCurrentInstance();
+const key = computed(() => proxy.$route.path);
+
+const cachedViews = computed(() => store.state.tagsView.cachedViews);
 
 </script>
 
 <template>
   <section class="app-main">
-    <!-- <keep-alive :include="cachedViews"> -->
-    <router-view v-slot="{ Component }" :key="key">
-      <transition name="fade-transform" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-    <!-- </keep-alive> -->
+    <div>{{ cachedViews }}</div>
+    <transition name="fade-transform" mode="out-in">
+      <keep-alive :include="cachedViews">
+        <router-view :key="key"></router-view>
+      </keep-alive>
+    </transition>
   </section>
 </template>
 

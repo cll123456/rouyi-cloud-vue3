@@ -1,13 +1,13 @@
 <script setup>
-import ScrollPane from './ScrollPane.vue'
 import { ref, computed, getCurrentInstance, nextTick, onMounted, watch, watchEffect } from '@vue/composition-api'
 import store from '@/store';
 import router from '@/router';
 import { getNormalPath } from '../../../utils/ruoyi';
+import scrollPane from './ScrollPane.vue';
 
 
 /**
- * 是否右键打开菜单选项
+ * 是否右键打开菜单选项  
  */
 const visible = ref(false);
 /**
@@ -32,8 +32,6 @@ const selectedTag = ref({});
  */
 const affixTags = ref([]);
 
-
-
 /**
  * 当前需要展示的tags
  */
@@ -51,6 +49,11 @@ const scrollPaneRef = ref(null);
  * 获取当前主题
  */
 const theme = computed(() => store.state.settings.theme);
+
+/**
+ * 锁定是否需要添加flag,用于删除也会
+ */
+const lockFlag = ref(false);
 /**
  * 当前选中的tag
  */
@@ -176,8 +179,12 @@ const refreshSelectedTag = (view) => {
  * 关闭当前选中的tag
  */
 const closeSelectedTag = (view) => {
+  lockFlag.value = true;
   store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
     if (isActive(view)) {
+      setTimeout(() => {
+        lockFlag.value = false;
+      }, 0)
       toLastView(visitedViews, view)
     }
   })
@@ -216,11 +223,14 @@ const closeOthersTags = () => {
  * 关闭所有的tags
  */
 const closeAllTags = (view) => {
+  lockFlag.value = true;
   store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
-    console.log(visitedViews,'-------=visitedViews==-----')
     if (affixTags.value.some(tag => tag.path === proxy.$route.path)) {
       return
     }
+    setTimeout(() => {
+      lockFlag.value = false;
+    }, 0)
     toLastView(visitedViews, view)
   })
 }
@@ -277,29 +287,31 @@ const handleScroll = () => {
 /**
  * 挂载页面初始化tags
  */
-onMounted(() => {
-  initTags()
-  addTags()
-})
+// onMounted(() => {
+//   initTags()
+//   addTags()
+// })
+/**
+ * 第一次加载，页面初始化挂载
+ */
+const firstLoad = ref(true);
 
 /**
- * 路由发生变化，需要修改当前选中tag
+ * 路由发生变化，需要修改当前选中tag 
  */
 
 watchEffect(() => {
-  if (proxy.$route) {
+  if (proxy.$route && !lockFlag.value) {
+    if (firstLoad.value) {
+      //  挂载页面初始化tags
+      initTags()
+      addTags()
+      firstLoad.value = false;
+    }
     addTags();
     moveToCurrentTag();
   }
-
-  // console.log(proxy.$route,'-----=---')
-
 })
-
-// watch(proxy.$route.path, () => {
-//   addTags()
-//   moveToCurrentTag()
-// })
 
 /**
  * 打开的右侧菜单注册事件，关闭取消事件
@@ -314,28 +326,30 @@ watch(visible, (value) => {
 
 
 </script>
-
+   
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPaneRef" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link
-        v-for="tag in visitedViews"
-        :key="tag.path"
-        :data-path="tag.path"
-        :class="isActive(tag) ? 'active' : ''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        class="tags-view-item"
-        :style="activeStyle(tag)"
-        @click.middle.native="!isAffix(tag) ? closeSelectedTag(tag) : ''"
-        @contextmenu.prevent.native="openMenu(tag, $event)"
-      >
-        {{ tag.title }}
-        <span
-          v-if="!isAffix(tag)"
-          class="el-icon-close"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        />
-      </router-link>
+      <template slot="default">
+        <router-link
+          v-for="tag in visitedViews"
+          :key="tag.path"
+          :data-path="tag.path"
+          :class="isActive(tag) ? 'active' : ''"
+          :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+          class="tags-view-item"
+          :style="activeStyle(tag)"
+          @click.middle.native="!isAffix(tag) ? closeSelectedTag(tag) : ''"
+          @contextmenu.prevent.native="openMenu(tag, $event)"
+        >
+          {{ tag.title }}
+          <span
+            v-if="!isAffix(tag)"
+            class="el-icon-close"
+            @click.prevent.stop="closeSelectedTag(tag)"
+          />
+        </router-link>
+      </template>
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">

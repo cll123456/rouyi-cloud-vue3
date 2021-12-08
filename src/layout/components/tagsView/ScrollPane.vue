@@ -1,8 +1,5 @@
 <script setup>
 import { computed, ref, getCurrentInstance, onMounted, onBeforeUnmount } from '@vue/composition-api'
-/**
- * 仓库
- */
 import store from '@/store';
 
 /**
@@ -123,7 +120,7 @@ defineExpose({
     class="scroll-container"
     @wheel.native.prevent="handleScroll"
   >
-    <slot />
+    <slot name="default" />
   </el-scrollbar>
 </template>
 

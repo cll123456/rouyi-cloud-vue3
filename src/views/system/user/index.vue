@@ -1,3 +1,9 @@
+<script>
+export default{
+   name: 'User'
+}
+
+</script>
 <script setup>
 import { ref, watch, nextTick } from '@vue/composition-api';
 import { useDict } from '../../../hooks/dict';

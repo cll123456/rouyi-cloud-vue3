@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from '@vue/composition-api';
 
-onMounted(() => {
+onMounted(() => { 
   // document.getElementById('loading-wrapper').remove();
 })
 </script>
