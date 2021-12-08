@@ -1,17 +1,21 @@
+
+<script>
+export default{
+   name: 'AuthRole'
+}
+</script>
 <script setup>
 import { Message } from 'element-ui'
-import { ref,nextTick } from '@vue/composition-api';
- 
- 
+import { ref,nextTick, getCurrentInstance } from '@vue/composition-api';
 import { refreshToken } from '../../../api/login';
 import { getAuthRole, updateAuthRole } from '../../../api/system/user';
 import { parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue';
-
-/**仓库 */
 import store from '@/store'
-const router =  router.currentRouter;
-const route = router.currentRoute;
+import router from '@/router'
+
+const {proxy} = getCurrentInstance();
+
 /**遮罩层 */
 const loading = ref(true);
 /**分页信息*/
@@ -48,7 +52,7 @@ const getRowKey = (row) => {
 }
 /** 关闭按钮 */
 const close = () => {
-   store.dispatch("tagsView/delView", route);
+   store.dispatch("tagsView/delView", proxy.$route);
    router.push({ path: "/system/user" });
 }
 /** 提交按钮 */
@@ -62,7 +66,7 @@ const submitForm = () => {
 }
 /**初始化就需要执行的代码 */
 (() => {
-     const userId = route.params && route.params.userId;
+     const userId = proxy.$route.params && proxy.$route.params.userId;
     if (userId) {
       loading.value = true;
       getAuthRole(userId).then((response) => {

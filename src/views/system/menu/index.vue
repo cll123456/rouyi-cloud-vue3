@@ -1,3 +1,9 @@
+
+<script>
+export default{
+   name: 'Menu'
+}
+</script>
 <script setup>
 import { ref, nextTick } from '@vue/composition-api';
 import RightToolbar from './../../../components/RightToolbar/index.vue';

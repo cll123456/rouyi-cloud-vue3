@@ -1,3 +1,8 @@
+<script>
+export default{
+   name: 'Swagger'
+}
+</script>
 <script setup>
 import {ref} from '@vue/composition-api'
 import { PUBLIC_PATH } from '../../../config/commonConfig';

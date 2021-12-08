@@ -1,3 +1,8 @@
+<script>
+export default {
+  name: 'Cache'
+}
+</script>
 <script setup>
 import { Loading } from 'element-ui';
 import { ref } from '@vue/composition-api';
@@ -11,7 +16,7 @@ const commandstats = ref(null);
 const usedmemory = ref(null);
 
 const getList = () => {
-  const loading = ElLoading.service({
+  const loading = Loading.service({
     lock: true,
     text: '玩命加载中……',
     spinner: 'el-icon-loading',

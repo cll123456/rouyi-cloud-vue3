@@ -1,6 +1,11 @@
+<script>
+export default{
+   name: 'Data'
+}
+</script>
 <script setup>
 import RightToolbar from './../../../components/RightToolbar/index.vue';
-import { ref } from '@vue/composition-api';
+import { ref, getCurrentInstance } from '@vue/composition-api';
 import Pagination from './../../../components/Pagination/index.vue';
 import { Message, MessageBox } from 'element-ui';
 import { useDict } from '../../../hooks/dict';
@@ -9,10 +14,11 @@ import { download, parseTime } from '../../../utils/ruoyi';
 import { listType, getType } from '../../../api/system/dict/type';
 import { listData, getData, delData, addData, updateData, exportData } from '../../../api/system/dict/data';
  
+ const {proxy} = getCurrentInstance();
 
 /**queryFormRef ref */
 const queryFormRef = ref(null);
-const route = router.currentRoute;
+
 // 遮罩层
 const loading = ref(true);
 // 选中数组
@@ -225,7 +231,7 @@ const handleExport = () => {
 }
 
 
-getTypes(route.params && route.params.dictId);
+getTypes(proxy.$route.params && proxy.$route.params.dictId);
 getTypeList();
 const { sys_normal_disable } = useDict('sys_normal_disable');
 

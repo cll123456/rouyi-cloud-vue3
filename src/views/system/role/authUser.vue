@@ -1,3 +1,10 @@
+
+<script>
+export default {
+   name: 'AuthUser'
+}
+</script>
+
 <script setup>
 import { Message, MessageBox } from 'element-ui';
 import { ref } from '@vue/composition-api';
@@ -6,8 +13,8 @@ import { parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue';
 import DictTag from './../../../components/DictTag/index.vue';
 import selectUser from './selectUser.vue';
- 
- 
+
+
 import RightToolbar from './../../../components/RightToolbar/index.vue';
 import { allocatedUserList, authUserCancel, authUserCancelAll } from '../../../api/system/role';
 

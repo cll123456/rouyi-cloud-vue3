@@ -1,3 +1,8 @@
+<script>
+export default {
+  name: 'Index'
+}
+</script>
 <script setup>
 import { ref } from '@vue/composition-api';
 

@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'Druid'
+}
+</script>
+
 <script setup>
 import { ref } from '@vue/composition-api';
 import IframeComp from '../../../components/IframeComp/index.vue';
@@ -7,7 +13,7 @@ const url = ref(PUBLIC_PATH + 'druid/login.html');
 </script>
 <template>
    <div>
-      <iframe-comp v-model:src="url"></iframe-comp>
+      <iframe-comp :src="url"></iframe-comp>
    </div>
 </template>
 

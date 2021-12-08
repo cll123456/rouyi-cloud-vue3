@@ -1,3 +1,8 @@
+<script>
+export default{
+   name: 'Dict'
+}
+</script>
 <script setup>
 import RightToolbar from './../../../components/RightToolbar/index.vue';
 import { ref } from '@vue/composition-api';

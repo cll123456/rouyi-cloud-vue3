@@ -1,3 +1,8 @@
+<script>
+export default{
+   name: 'Dept'
+}
+</script>
 <script setup>
 import { ref, nextTick } from '@vue/composition-api';
 import RightToolbar from './../../../components/RightToolbar/index.vue';

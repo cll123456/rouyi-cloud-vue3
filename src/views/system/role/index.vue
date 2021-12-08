@@ -1,3 +1,8 @@
+<script>
+export default{
+   name: 'Role'
+}
+</script>
 <script setup>
 import { ref, nextTick } from '@vue/composition-api';
 import { addRole, changeRoleStatus, dataScope, delRole, exportRole, getRole, listRole, updateRole } from '../../../api/system/role';

@@ -1,3 +1,8 @@
+<script>
+export default{
+   name: 'Server'
+}
+</script>
 <script setup>
 import { ref } from '@vue/composition-api'
 import { getServer } from '../../../api/monitor/server';
