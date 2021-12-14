@@ -1,9 +1,10 @@
 <script setup>
 import router from '@/router';
-const route = router.currentRoute;
+import {getCurrentInstance} from '@vue/composition-api'
+const {proxy} = getCurrentInstance()
 
 
-const { params, query } = route
+const { params, query } = proxy.$route
 const { path } = params
 router.replace({ path: '/' + path, query })
 </script>

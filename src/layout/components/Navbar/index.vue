@@ -6,14 +6,9 @@ import RuoYiDoc from './../../../components/Ruoyi/Doc/index.vue'
 import Screenfull from './../../../components/Screenfull/index.vue'
 import avatar from './../../../assets/images/profile.jpg'
 import SizeSelect from './../../../components/SizeSelect/index.vue'
-// import { CaretBottom } from '@element-plus/icons'
 import Hamburger from './../../../components/Hamburger/index.vue'
 import Breadcrumb from './../../../components/Breadcrumb/index.vue'
 import HeaderSearch from './../../../components/HeaderSearch/index.vue'
-
-/**
- * 仓库对象
- */
 import store from '@/store'
 
 /**
@@ -69,7 +64,9 @@ const settingLayout = () => {
 
     <div class="right-menu">
       <template v-if="getterData.device !== 'mobile'">
-        <header-search id="header-search" class="right-menu-item" />
+        <el-tooltip content="菜单搜索" effect="dark" placement="bottom">
+          <header-search id="header-search" class="right-menu-item" />
+        </el-tooltip>
 
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
@@ -91,11 +88,9 @@ const settingLayout = () => {
         <el-dropdown class="right-menu-item hover-effect" trigger="click">
           <div class="avatar-wrapper">
             <img :src="avatar" class="user-avatar" />
-            <el-icon>
-              <caret-bottom />
-            </el-icon>
+            <i class="el-icon-caret-bottom"></i>
           </div>
-          <template #dropdown>
+          <template slot="dropdown">
             <el-dropdown-menu>
               <router-link to="/user/profile">
                 <el-dropdown-item>个人中心</el-dropdown-item>

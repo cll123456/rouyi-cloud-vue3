@@ -1,17 +1,13 @@
 <script setup>
 import Fuse from 'fuse.js'
-import { computed, ref, nextTick, onMounted, watchEffect, watch } from '@vue/composition-api'
+import { computed, ref, nextTick, onMounted, watchEffect, watch, getCurrentInstance } from '@vue/composition-api'
 import { getNormalPath } from '../../utils/ruoyi';
-/**
- * 路由实例
- */
 import router from '@/router';
-/**
- * 仓库
- */
 import store from '@/store'
-
 import SvgIcon from './../SvgIcon';
+
+
+const { proxy } = getCurrentInstance();
 /**
  * 当前搜索的内容
  */
@@ -57,9 +53,12 @@ const click = () => {
  * 关闭图标
  */
 const close = () => {
-  headerSearchSelectRef.value && headerSearchSelectRef.value.blur()
+  if (headerSearchSelectRef.value) {
+    headerSearchSelectRef.value.blur();
+  }
   options.value = []
   show.value = false
+
 }
 /**
  * 判断path是否是一个链接
@@ -77,6 +76,16 @@ const change = (val) => {
     const pindex = path.indexOf("http");
     window.open(path.substr(pindex, path.length), "_blank");
   } else {
+    // 如果当前路径就是，不需要跳转
+    if (proxy.$route.path === path) {
+      // 打开path 后置空属性
+      search.value = ''
+      options.value = []
+      nextTick(() => {
+        show.value = false
+      })
+      return
+    }
     router.push(path)
   }
 
@@ -179,6 +188,7 @@ watch(show, (value) => {
  * 每一次数据源发生改变，需要重新搜索
  */
 watch(searchPool, (list) => {
+  console.log(list, '----=---list')
   initFuse(list)
 })
 </script>
@@ -226,13 +236,13 @@ watch(searchPool, (list) => {
     display: inline-block;
     vertical-align: middle;
 
-    :deep(.el-input__inner) {
+    ::v-deep .el-input__inner {
       border-radius: 0;
       border: 0;
       padding-left: 0;
       padding-right: 0;
       box-shadow: none !important;
-      border-bottom: 1px solid #d9d9d9;
+      border-bottom: 1px solid #d9d9d9 !important;
       vertical-align: middle;
     }
   }
@@ -243,5 +253,15 @@ watch(searchPool, (list) => {
       margin-left: 10px;
     }
   }
+}
+
+:deep(.el-input) {
+  border-radius: 0;
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  box-shadow: none !important;
+  border-bottom: 1px solid #d9d9d9;
+  vertical-align: middle;
 }
 </style>

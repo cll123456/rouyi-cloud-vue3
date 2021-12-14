@@ -52,8 +52,8 @@ const svgClass = computed(() => {
 
 </script>
 <template>
-  <div v-if="isExternalIcon" :style="styleExternalIcon" class="svg-external-icon svg-icon" />
-  <svg v-else :class="svgClass" aria-hidden="true">
+  <div v-if="isExternalIcon"  v-on="$listeners" :style="styleExternalIcon" class="svg-external-icon svg-icon"  />
+  <svg v-else :class="svgClass" v-on="$listeners"  aria-hidden="true">
     <use :xlink:href="iconName" />
   </svg>
 </template>

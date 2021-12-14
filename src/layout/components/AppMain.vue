@@ -11,7 +11,6 @@ const cachedViews = computed(() => store.state.tagsView.cachedViews);
 
 <template>
   <section class="app-main">
-    <div>{{ cachedViews }}</div>
     <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
         <router-view :key="key"></router-view>

@@ -12,18 +12,15 @@ import router from '@/router';
  */
 import store from '@/store'
 /**
- * 当前的大小
- */
-const size = computed(() => store.getters.size);
-/***
- * 当前路由对象
- */
-const route = router.currentRoute;
-
-/**
  * 获取当前实例
  */
 const {proxy} = getCurrentInstance();
+/**
+ * 当前的大小
+ */
+const size = computed(() => store.getters.size);
+
+
 /**
  * size options
  */
@@ -39,9 +36,9 @@ const sizeOptions = ref([
  */
 const refreshView = async () => {
   // In order to make the cached page re-rendered
-  store.dispatch('tagsView/delAllCachedViews', route)
+  store.dispatch('tagsView/delAllCachedViews', proxy.$route)
 
-  const { fullPath } = route
+  const { fullPath } = proxy.$route
 
   nextTick(() => {
     router.replace({
