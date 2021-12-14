@@ -7,7 +7,6 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/assets/styles/index.scss';
-import 'vite-plugin-svg-icons/register';
 import directive from './directives/index' // directive
 
 Vue.use(ElementUI);
