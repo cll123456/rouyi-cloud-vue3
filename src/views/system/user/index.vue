@@ -387,7 +387,7 @@ const resetOperForm = () => {
 /**
  * 新增
  */
-const handleAdd = () => {
+const handleAdd = () => {   
    resetOperForm();
    initTreeData();
    // 获取用户的岗位,角色等信息
@@ -397,6 +397,7 @@ const handleAdd = () => {
       operForm.value.open = true;
       operForm.value.title = "添加用户";
       operForm.value.form.password = operForm.value.initPassword;
+      console.log(operForm.value,'------------operForm')
    })
 }
 /**
@@ -664,7 +665,7 @@ getList();
                   width="160"
                   class-name="small-padding fixed-width"
                >
-                  <template #default="scope">
+                  <template slot-scope="scope">
                      <el-button
                         v-if="scope.row.userId !== 1"
                         type="text"
@@ -719,7 +720,7 @@ getList();
       </el-row>
 
       <!-- 用户导入对话框 -->
-      <el-dialog :title="upload.title" v-model="upload.open" width="400px" append-to-body>
+      <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
          <el-upload
             ref="uploadRef"
             :limit="1"
@@ -761,7 +762,7 @@ getList();
       </el-dialog>
 
       <!-- 添加或修改参数配置对话框 -->
-      <el-dialog :title="operForm.title" v-model="operForm.open" width="600px" append-to-body>
+      <el-dialog :title="operForm.title" :visible.sync="operForm.open" width="600px" append-to-body>
          <el-form
             :model="operForm.form"
             :rules="operForm.rules"

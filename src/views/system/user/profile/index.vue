@@ -4,7 +4,7 @@ import { getUserProfile } from '../../../../api/system/user';
 import resetPwd from './resetPwd.vue';
 import userAvatar from './userAvatar.vue';
 import userInfo from './userInfo.vue';
-
+import SvgIcon from './../../../../components/SvgIcon/index.vue'
 /**
  * 用户信息
  */

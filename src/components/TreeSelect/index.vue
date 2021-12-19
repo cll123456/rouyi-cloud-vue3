@@ -164,17 +164,18 @@ watch(valueId, () => {
   font-weight: normal;
 }
 
-ul li  .el-tree .el-tree-node__content {
+ul li .el-tree .el-tree-node__content {
   height: auto;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-:deep(.el-tree-node__content:hover),
-:deep(.el-tree-node__content:active),
-:deep(.is-current > div:first-child),
-:deep(.el-tree-node__content:focus) {
+::v-deep .el-tree-node__content:hover,
+::v-deep .el-tree-node__content:active,
+::v-deep .is-current > div:first-child,
+::v-deep .el-tree-node__content:focus {
   background-color: mix(#fff, $--color-primary, 90%);
   color: $--color-primary;
 }
+
 </style>

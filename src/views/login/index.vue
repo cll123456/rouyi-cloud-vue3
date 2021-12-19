@@ -119,7 +119,7 @@ getCookie();
 <template>
   <div class="login">
     <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统——VUE3JS</h3>
+      <h3 class="title">若依后台管理系统——V2Composition</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"

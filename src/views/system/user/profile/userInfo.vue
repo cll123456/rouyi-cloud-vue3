@@ -1,9 +1,9 @@
 <script setup>
 import { Message } from 'element-ui'
-import { ref } from '@vue/composition-api';
- 
- 
+import { ref,getCurrentInstance } from '@vue/composition-api';
 import { updateUserProfile } from '../../../../api/system/user';
+import store from '@/store'
+import router from '@/router';
 
 const props = defineProps({
    user: {
@@ -11,9 +11,8 @@ const props = defineProps({
    }
 })
 
-import store from '@/store'
-import router from '@/router';
-const route = router.currentRoute;
+const {proxy} = getCurrentInstance();
+
 
 // 表单校验
 const rules = ref({
@@ -53,7 +52,7 @@ const submit = () => {
 
 /**关闭 */
 const close = () => {
-   store.dispatch("tagsView/delView", route);
+   store.dispatch("tagsView/delView", proxy.$route);
    router.push({ path: "/index" });
 }
 </script> 
