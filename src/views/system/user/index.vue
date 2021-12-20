@@ -13,7 +13,6 @@ import { changeUserStatus, listUser, exportUser, resetUserPwd, delUser, importUs
 import { addDateRange, download, parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue'
 import { Message, MessageBox } from 'element-ui';
- 
 import { getToken } from '../../../utils/auth';
 import { PUBLIC_PATH } from '../../../config/commonConfig';
 import TreeSelect from './../../../components/TreeSelect/index.vue'
@@ -131,6 +130,7 @@ const handleQuery = () => {
  */
 const resetQuery = () => {
    dateRange.value = [];
+   queryParams.value.deptId = undefined;
    queryFormRef.value.resetFields();
    handleQuery();
 }
@@ -397,7 +397,6 @@ const handleAdd = () => {
       operForm.value.open = true;
       operForm.value.title = "添加用户";
       operForm.value.form.password = operForm.value.initPassword;
-      console.log(operForm.value,'------------operForm')
    })
 }
 /**
@@ -591,7 +590,7 @@ getList();
                   >导出</el-button>
                </el-col>
                <right-toolbar
-                  v-model:showSearch="showSearch"
+                  :showSearch.sync="showSearch"
                   @queryTable="getList"
                   :columns="columns"
                ></right-toolbar>

@@ -69,7 +69,7 @@ for (let item in props.columns) {
 
 </script>
 <template>
-  <div class="top-right-btn">
+  <div class="top-right-btn" v-on="$listeners">
     <el-row>
       <el-tooltip
         class="item"
@@ -86,7 +86,7 @@ for (let item in props.columns) {
         <el-button circle icon="el-icon-menu" @click="showColumn()" />
       </el-tooltip>
     </el-row>
-    <el-dialog :title="title" v-model="open" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-transfer
         class="my-el-transfer"
         :titles="['显示', '隐藏']"
@@ -99,17 +99,17 @@ for (let item in props.columns) {
 </template>
 
 <style lang='scss' scoped>
-:deep(.el-transfer__button) {
-  border-radius: 50%;
-  padding: 12px;
-  display: block;
-  margin-left: 0px;
-}
-:deep(.el-transfer__button:first-child) {
-  margin-bottom: 10px;
-}
+// :deep(.el-transfer__button) {
+//   border-radius: 50%;
+//   padding: 12px;
+//   display: block;
+//   margin-left: 0px;
+// }
+// :deep(.el-transfer__button:first-child) {
+//   margin-bottom: 10px;
+// }
 
-.my-el-transfer {
-  text-align: center;
-}
+// .my-el-transfer {
+//   text-align: center;
+// }
 </style>

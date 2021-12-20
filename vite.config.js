@@ -14,11 +14,6 @@ export default {
 
     ScriptSetup({ /* options */ }),
     // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入
-    // viteSvgIcons({
-    //   // 配置路劲在你的src里的svg存放文件
-    //   iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/svg')],
-    //   symbolId: 'icon-[dir]-[name]',
-    // }),
     svgBuilder('./src/assets/icons/svg/'),
     legacy({
       targets: ['ie >= 11'],
@@ -42,6 +37,11 @@ export default {
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/api/, '')
       },
+      // '/api/prod-api': {
+      //   target: 'http://44.17.30.30:8846',//代理到官网地址
+      //   changeOrigin: true,
+      //   rewrite: (p) => p.replace(/^\/api\/prod-api/, '')
+      // },
       // 配置获取在线主题的网络请求
       '/onlineColor': {
         target: 'https://app.uibakery.io/',//代理到官网地址
