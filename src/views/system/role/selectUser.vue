@@ -79,7 +79,8 @@ const handleSelectUser = () => {
 // 对外暴露一个show方法
 defineExpose({
    show,
-})
+});
+
 const { sys_normal_disable } = useDict('sys_normal_disable');
 
 
@@ -87,7 +88,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
 <template>
    <div>
       <!-- 授权用户 -->
-      <el-dialog title="选择用户" v-model="visible" width="800px" top="5vh" append-to-body>
+      <el-dialog title="选择用户" :visible.sync="visible" width="800px" top="5vh" append-to-body>
          <el-form :model="queryParams" ref="queryFormRef" :inline="true">
             <el-form-item label="用户名称" prop="userName">
                <el-input

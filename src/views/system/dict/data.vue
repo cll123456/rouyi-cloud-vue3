@@ -375,7 +375,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
       />
 
       <!-- 添加或修改参数配置对话框 -->
-      <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+      <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
          <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="字典类型">
                <el-input v-model="form.dictType" :disabled="true" />

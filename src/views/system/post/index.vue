@@ -305,7 +305,7 @@ getList();
       />
 
       <!-- 添加或修改岗位对话框 -->
-      <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+      <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
          <el-form ref="formRef" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="岗位名称" prop="postName">
                <el-input v-model="form.postName" placeholder="请输入岗位名称" />

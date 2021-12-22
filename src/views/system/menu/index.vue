@@ -296,7 +296,7 @@ getList();
       </el-table>
 
       <!-- 添加或修改菜单对话框 -->
-      <el-dialog :title="title" v-model="open" width="680px" append-to-body>
+      <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
          <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
             <el-row>
                <el-col :span="24">
