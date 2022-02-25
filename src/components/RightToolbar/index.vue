@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-
+import {Menu,Refresh,Search} from '@element-plus/icons-vue'
 const props = defineProps({
   /**
    * 是否显示搜索条件
@@ -77,13 +77,13 @@ for (let item in props.columns) {
         :content="props.showSearch ? '隐藏搜索' : '显示搜索'"
         placement="top"
       >
-        <el-button circle icon="el-icon-search" @click="toggleSearch()" />
+        <el-button circle :icon="Search" @click="toggleSearch()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-        <el-button circle icon="el-icon-refresh" @click="refresh()" />
+        <el-button circle :icon="Refresh" @click="refresh()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="显隐列" placement="top" v-if="columns">
-        <el-button circle icon="el-icon-menu" @click="showColumn()" />
+        <el-button circle :icon="Menu" @click="showColumn()" />
       </el-tooltip>
     </el-row>
     <el-dialog :title="title" v-model="open" append-to-body>

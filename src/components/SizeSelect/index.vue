@@ -29,9 +29,8 @@ const {proxy} = getCurrentInstance();
  */
 const sizeOptions = ref([
   { label: 'Large', value: 'large' },
-  { label: 'Medium', value: 'medium' },
+  { label: 'Default', value: 'default' },
   { label: 'Small', value: 'small' },
-  { label: 'Mini', value: 'mini' }
 ])
 
 /**
@@ -55,7 +54,6 @@ const refreshView = async () => {
  * 处理当前元素的大小
  */
 const handleSetSize = (size) => {
-  proxy.$ELEMENT.size = size;
   store.dispatch('app/setSize', size)
   refreshView()
   ElMessage({

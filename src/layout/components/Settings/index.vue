@@ -8,12 +8,17 @@ import { ELEMENT_SPECIAL_ID } from '../../../config/commonConfig';
 import { getElColor } from '../../../utils/ruoyi';
 import { ElLoading, ElMessage } from 'element-plus';
 import { useDynamicTitle } from '../../../hooks/dynamicTitle';
+import { Refresh, DocumentAdd } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router';
+
 /**
  * 颜色变量
  */
 const variables = computed(() => variable);
 /**仓库*/
 const store = useStore();
+// 使用路由
+const router = useRouter();
 
 /**展示抽屉 */
 const showSettings = ref(false);
@@ -128,6 +133,7 @@ const saveSettingToLocal = () => {
   localStorage.setItem("layout-setting", JSON.stringify(defaultSettings));
   loading.close();
   showSettings.value = false;
+  setTimeout("window.location.reload()", 1000)
 }
 const resetSetting = () => {
   ElLoading.service({
@@ -188,8 +194,9 @@ const dynamicTitle = computed({
 
 /**当主题发生改变，请求在线的网站，生成颜色 */
 watch(theme, (val) => {
-  genColorOnline(val)
-})
+  genColorOnline(val);
+});
+
 /**在线生成颜色 */
 const genColorOnline = (color) => {
   const loading = ElLoading.service({
@@ -226,8 +233,12 @@ const genColorOnline = (color) => {
 
     //设置颜色
     settingTheme(curThemes.value, newThemes);
-    loading.close();
-    ElMessage.success('设置成功！')
+    // 关闭所有的页面，从新加载页面
+    store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
+      loading.close();
+      ElMessage.success('设置成功！')
+    })
+
 
     // 保存到store中
     for (const key in newThemes) {
@@ -435,8 +446,14 @@ defineExpose({
 
       <el-divider />
 
-      <el-button type="primary" plain icon="el-icon-document-add" @click="saveSettingToLocal">保存配置</el-button>
-      <el-button plain icon="el-icon-refresh" @click="resetSetting">重置配置</el-button>
+      <el-button
+        type="primary"
+        :color="theme"
+        plain
+        :icon="DocumentAdd"
+        @click="saveSettingToLocal"
+      >保存配置</el-button>
+      <el-button plain :icon="Refresh" @click="resetSetting">重置配置</el-button>
     </el-drawer>
 
     <el-dialog :title="'自定义颜色'" width="400px" append-to-body v-model="showCustomDia">
@@ -454,7 +471,7 @@ defineExpose({
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button type="primary" @click="changeTheme">确 定</el-button>
+          <el-button type="primary" :color="theme" @click="changeTheme">确 定</el-button>
           <el-button @click="showCustomDia = false">取 消</el-button>
         </div>
       </template>

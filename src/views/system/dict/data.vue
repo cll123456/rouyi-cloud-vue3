@@ -9,7 +9,7 @@ import { download, parseTime } from '../../../utils/ruoyi';
 import { listType, getType } from '../../../api/system/dict/type';
 import { listData, getData, delData, addData, updateData, exportData } from '../../../api/system/dict/data';
 import { useRoute } from 'vue-router';
-
+import { Sort, Search, Refresh, Plus, Delete, Edit, Download } from '@element-plus/icons-vue';
 /**queryFormRef ref */
 const queryFormRef = ref(null);
 const route = useRoute();
@@ -268,8 +268,8 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -278,7 +278,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:dict:add']"
             >新增</el-button>
@@ -287,7 +287,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['system:dict:edit']"
@@ -297,7 +297,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:dict:remove']"
@@ -307,7 +307,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['system:dict:export']"
             >导出</el-button>
@@ -342,17 +342,17 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
                <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
          </el-table-column>
-         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+         <el-table-column label="操作" width="140" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:dict:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:dict:remove']"
                >删除</el-button>

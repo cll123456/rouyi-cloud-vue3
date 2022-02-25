@@ -19,10 +19,14 @@ const { proxy } = getCurrentInstance();
  * 向上分发方法
  */
 const emits = defineEmits()
+
+
+
+const scrollContainer = ref(null);
 /**
  * 获取滚动内部的实例
  */
-const scrollWrapper = computed(() => proxy.$refs.scrollContainer.$refs.wrap);
+const scrollWrapper = computed(() => scrollContainer.value.$refs.wrap$);
 
 /**
  * 每一次滚动的距离

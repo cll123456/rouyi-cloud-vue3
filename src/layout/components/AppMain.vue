@@ -1,7 +1,11 @@
 <script setup>
+import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
-// const cachedViews =
+const store = useStore();
+const cachedViews = computed(() => store.getters.cachedViews);
+
 const router = useRoute();
 const key = router.path;
 
@@ -9,13 +13,13 @@ const key = router.path;
 
 <template>
   <section class="app-main">
-    <!-- <keep-alive :include="cachedViews"> -->
     <router-view v-slot="{ Component }" :key="key">
-      <transition name="fade-transform" mode="out-in">
-        <component :is="Component" />
-      </transition>
+      <keep-alive :include="cachedViews">
+        <transition name="fade-transform" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </keep-alive>
     </router-view>
-    <!-- </keep-alive> -->
   </section>
 </template>
 

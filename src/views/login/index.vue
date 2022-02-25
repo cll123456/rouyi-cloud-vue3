@@ -168,7 +168,6 @@ getCookie();
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
-          size="medium"
           type="primary"
           style="width:100%;"
           @click.native.prevent="handleLogin"
@@ -230,9 +229,9 @@ getCookie();
   color: #bfbfbf;
 }
 .login-code {
-  width: 33%;
+  width: 37%;
   height: 38px;
-  float: right;
+  text-align: right;
   img {
     cursor: pointer;
     vertical-align: middle;

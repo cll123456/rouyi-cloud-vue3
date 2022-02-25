@@ -6,7 +6,7 @@ import { useDict } from '../../../hooks/dict';
 import { parseTime } from '../../../utils/ruoyi';
 import Pagination from './../../../components/Pagination/index.vue';
 import DictTag from './../../../components/DictTag/index.vue';
-
+import {  Search, Refresh } from '@element-plus/icons-vue'
 const props = defineProps({
    // 角色编号
    roleId: {
@@ -106,8 +106,8 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
                />
             </el-form-item>
             <el-form-item>
-               <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-               <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+               <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+               <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
             </el-form-item>
          </el-form>
          <el-row>

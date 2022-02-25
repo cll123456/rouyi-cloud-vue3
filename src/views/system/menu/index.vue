@@ -9,7 +9,8 @@ import SvgIcon from './../../../components/SvgIcon/index.vue';
 import TreeSelect from './../../../components/TreeSelect/index.vue'
 import IconSelect from './../../../components/IconSelect/index.vue';
 import DictTag from './../../../components/DictTag/index.vue';
-
+import { Sort, Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue';
+import { ClickOutside as vClickOutside } from 'element-plus'
 const queryFormRef = ref(null);
 
 // 遮罩层
@@ -116,6 +117,10 @@ const selected = (name) => {
    form.value.icon = name;
    showChooseIcon.value = false;
 }
+// 关闭下拉图标框
+const onClickOutside = () => {
+  showChooseIcon.value = false;
+}
 /** 搜索按钮操作 */
 const handleQuery = () => {
    getList();
@@ -151,7 +156,7 @@ const handleUpdate = async (row) => {
    await getTreeselect();
    getMenu(row.menuId).then(response => {
       form.value = response.data;
-      form.value.orderNum = Number(form.value.orderNum);
+      form.value.orderNum = +form.value.orderNum;
       open.value = true;
       title.value = "修改菜单";
    });
@@ -217,8 +222,8 @@ getList();
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -227,13 +232,13 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:menu:add']"
             >新增</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button type="info" plain icon="el-icon-sort" @click="toggleExpandAll">展开/折叠</el-button>
+            <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
@@ -260,28 +265,33 @@ getList();
                <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
             </template>
          </el-table-column>
-         <el-table-column label="创建时间" align="center" prop="createTime">
+         <el-table-column label="创建时间" width="160" align="center" prop="createTime">
             <template #default="scope">
                <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
          </el-table-column>
-         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+         <el-table-column
+            label="操作"
+            align="center"
+            width="200"
+            class-name="small-padding fixed-width"
+         >
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:menu:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-plus"
+                  :icon="Plus"
                   @click="handleAdd(scope.row)"
                   v-hasPermi="['system:menu:add']"
                >新增</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:menu:remove']"
                >删除</el-button>
@@ -327,7 +337,13 @@ getList();
                      >
                         <icon-select ref="iconSelectRef" @selected="selected" />
                         <template #reference>
-                           <el-input v-model="form.icon" placeholder="点击选择图标" readonly>
+                           <el-input
+                              v-model="form.icon"
+                              placeholder="点击选择图标"
+                              readonly
+                              @click="showChooseIcon = true"
+                              v-click-outside="onClickOutside"
+                           >
                               <template #prefix>
                                  <svg-icon
                                     v-if="form.icon"
@@ -335,7 +351,9 @@ getList();
                                     class="el-input__icon"
                                     style="height: 32px;width: 16px;"
                                  />
-                                 <i v-else class="el-icon-search el-input__icon" />
+                                 <el-icon v-else class="el-input__icon">
+                                    <Search></Search>
+                                 </el-icon>
                               </template>
                            </el-input>
                         </template>

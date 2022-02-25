@@ -10,6 +10,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import RightToolbar from './../../../components/RightToolbar/index.vue';
 import { allocatedUserList, authUserCancel, authUserCancelAll } from '../../../api/system/role';
+import { Close, CircleClose, Search, Refresh, Plus } from '@element-plus/icons-vue'
 
 const queryFormRef = ref(null);
 
@@ -129,8 +130,8 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             />
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -139,7 +140,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="openSelectUser"
                v-hasPermi="['system:role:add']"
             >添加用户</el-button>
@@ -148,14 +149,14 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <el-button
                type="danger"
                plain
-               icon="el-icon-circle-close"
+               :icon="CircleClose"
                :disabled="multiple"
                @click="cancelAuthUserAll"
                v-hasPermi="['system:role:remove']"
             >批量取消授权</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button type="warning" plain icon="el-icon-close" @click="handleClose">关闭</el-button>
+            <el-button type="warning" plain :icon="Close" @click="handleClose">关闭</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
@@ -180,7 +181,7 @@ const { sys_normal_disable } = useDict('sys_normal_disable');
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-circle-close"
+                  :icon="CircleClose"
                   @click="cancelAuthUser(scope.row)"
                   v-hasPermi="['system:role:remove']"
                >取消授权</el-button>

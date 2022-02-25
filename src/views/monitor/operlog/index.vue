@@ -7,6 +7,9 @@ import { useDict } from '../../../hooks/dict';
 import { download, parseTime, addDateRange, selectDictLabel } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
 import { exportOperlog, list, delOperlog, cleanOperlog } from '../../../api/monitor/operlog';
+import { Sort, Search, Refresh, Plus, Delete, DeleteFilled, View,Download } from '@element-plus/icons-vue';
+
+
 
 /***queryForm ref */
 const queryFormRef = ref(null);
@@ -57,7 +60,7 @@ const getList = () => {
 }
 // 操作日志类型字典翻译
 const typeFormat = (row, column) => {
-   return selectDictLabel(sys_oper_type, row.businessType);
+   return selectDictLabel(sys_oper_type.value, row.businessType);
 }
 /** 搜索按钮操作 */
 const handleQuery = () => {
@@ -129,6 +132,7 @@ const handleExport = () => {
 
 }
 const { sys_oper_type, sys_common_status } = useDict('sys_oper_type', 'sys_common_status');
+
 getList();
 </script>
 <template>
@@ -192,7 +196,7 @@ getList();
             <el-date-picker
                v-model="dateRange"
                style="width: 240px"
-               value-format="yyyy-MM-dd"
+               value-format="YYYY-MM-DD"
                type="daterange"
                range-separator="-"
                start-placeholder="开始日期"
@@ -200,8 +204,8 @@ getList();
             ></el-date-picker>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -210,7 +214,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:operlog:remove']"
@@ -220,7 +224,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="DeleteFilled"
                @click="handleClean"
                v-hasPermi="['system:operlog:remove']"
             >清空</el-button>
@@ -229,7 +233,7 @@ getList();
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['system:operlog:export']"
             >导出</el-button>
@@ -291,7 +295,7 @@ getList();
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-view"
+                  :icon="View"
                   @click="handleView(scope.row, scope.index)"
                   v-hasPermi="['system:operlog:query']"
                >详细</el-button>

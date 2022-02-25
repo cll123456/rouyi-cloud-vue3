@@ -7,7 +7,7 @@ import { useDict } from '../../../hooks/dict';
 import DictTag from './../../../components/DictTag/index.vue';
 import { download, parseTime, addDateRange } from '../../../utils/ruoyi';
 import { listType, getType, delType, addType, updateType, refreshCache, exportType } from '../../../api/system/dict/type';
-
+import { Download, Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue';
 /**queryForm ref */
 const queryFormRef = ref(null);
 // 遮罩层
@@ -222,7 +222,7 @@ getList();
             <el-date-picker
                v-model="dateRange"
                style="width: 240px"
-               value-format="yyyy-MM-dd"
+               value-format="YYYY-MM-DD"
                type="daterange"
                range-separator="-"
                start-placeholder="开始日期"
@@ -230,8 +230,8 @@ getList();
             ></el-date-picker>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -240,7 +240,7 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:dict:add']"
             >新增</el-button>
@@ -249,7 +249,7 @@ getList();
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['system:dict:edit']"
@@ -259,7 +259,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:dict:remove']"
@@ -269,7 +269,7 @@ getList();
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['system:dict:export']"
             >导出</el-button>
@@ -278,7 +278,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-refresh"
+               :icon="Refresh"
                @click="handleRefreshCache"
                v-hasPermi="['system:dict:remove']"
             >刷新缓存</el-button>
@@ -317,13 +317,13 @@ getList();
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:dict:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:dict:remove']"
                >删除</el-button>

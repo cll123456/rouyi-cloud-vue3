@@ -7,7 +7,7 @@ import { handleTree, parseTime } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
 import TreeSelect from './../../../components/TreeSelect/index.vue'
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from '../../../api/system/dept';
-
+import { Sort, Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue';
 
 // 遮罩层
 const loading = ref(true);
@@ -187,7 +187,7 @@ getList();
             />
          </el-form-item>
          <el-form-item label="状态" prop="status">
-            <el-select v-model="queryParams.status" placeholder="部门状态" clearable size="small">
+            <el-select v-model="queryParams.status" placeholder="部门状态" clearable>
                <el-option
                   v-for="dict in sys_normal_disable"
                   :key="dict.value"
@@ -197,8 +197,8 @@ getList();
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search"  @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh"  @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -207,8 +207,7 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
-             
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:dept:add']"
             >新增</el-button>
@@ -217,8 +216,7 @@ getList();
             <el-button
                type="info"
                plain
-               icon="el-icon-sort"
-             
+               :icon="Sort"
                @click="toggleExpandAll"
             >展开/折叠</el-button>
          </el-col>
@@ -240,7 +238,7 @@ getList();
                <dict-tag :options="sys_normal_disable" :value="scope.row.status" />
             </template>
          </el-table-column>
-         <el-table-column label="创建时间" align="center" prop="createTime" width="200">
+         <el-table-column label="创建时间" align="center" prop="createTime" width="160">
             <template #default="scope">
                <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
@@ -248,24 +246,21 @@ getList();
          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
                <el-button
-                
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:dept:edit']"
                >修改</el-button>
                <el-button
-                
                   type="text"
-                  icon="el-icon-plus"
+                  :icon="Plus"
                   @click="handleAdd(scope.row)"
                   v-hasPermi="['system:dept:add']"
                >新增</el-button>
                <el-button
                   v-if="scope.row.parentId != 0"
-                
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:dept:remove']"
                >删除</el-button>
@@ -331,7 +326,7 @@ getList();
          </el-form>
          <template #footer>
             <div class="dialog-footer">
-               <el-button type="primary" @click="submitForm">确 定</el-button>
+               <el-button type="primary" @click="submitForm">确 定</el-button> 
                <el-button @click="cancel">取 消</el-button>
             </div>
          </template>

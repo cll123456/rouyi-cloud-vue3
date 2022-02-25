@@ -9,6 +9,7 @@ import DictTag from './../../../components/DictTag/index.vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { listJobLog, delJobLog, cleanJobLog, exportJobLog } from '../../../api/monitor/jobLog';
+import { View, Search, Refresh, Delete,DeleteFilled, Close, Download } from '@element-plus/icons-vue';
 
 // 遮罩层
 const loading = ref(true);
@@ -178,7 +179,7 @@ getList();
             <el-date-picker
                v-model="dateRange"
                style="width: 240px"
-               value-format="yyyy-MM-dd"
+               value-format="YYYY-MM-DD"
                type="daterange"
                range-separator="-"
                start-placeholder="开始日期"
@@ -186,8 +187,8 @@ getList();
             ></el-date-picker>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -196,7 +197,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['monitor:job:remove']"
@@ -206,7 +207,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="DeleteFilled"
                @click="handleClean"
                v-hasPermi="['monitor:job:remove']"
             >清空</el-button>
@@ -215,13 +216,13 @@ getList();
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['monitor:job:export']"
             >导出</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button type="warning" plain icon="el-icon-close" @click="handleClose">关闭</el-button>
+            <el-button type="warning" plain :icon="Close" @click="handleClose">关闭</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
@@ -261,7 +262,7 @@ getList();
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-view"
+                  :icon="View"
                   @click="handleView(scope.row)"
                   v-hasPermi="['monitor:job:query']"
                >详细</el-button>

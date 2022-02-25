@@ -7,7 +7,7 @@ import { useDict } from '../../../hooks/dict';
 import { download, parseTime } from '../../../utils/ruoyi';
 import { listPost, addPost, delPost, exportPost, getPost, updatePost } from '../../../api/system/post';
 import DictTag from './../../../components/DictTag/index.vue';
-
+import { Download, Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue';
 /**search form ref */
 const queryFormRef = ref(null);
 // 遮罩层
@@ -117,6 +117,7 @@ const handleUpdate = (row) => {
    const postId = row.postId || ids.value
    getPost(postId).then(response => {
       form.value = response.data;
+      form.value.postSort = +form.value.postSort;
       open.value = true;
       title.value = "修改岗位";
    });
@@ -210,8 +211,8 @@ getList();
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -220,7 +221,7 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:post:add']"
             >新增</el-button>
@@ -229,7 +230,7 @@ getList();
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['system:post:edit']"
@@ -239,7 +240,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:post:remove']"
@@ -249,7 +250,7 @@ getList();
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['system:post:export']"
             >导出</el-button>
@@ -277,13 +278,13 @@ getList();
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:post:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:post:remove']"
                >删除</el-button>

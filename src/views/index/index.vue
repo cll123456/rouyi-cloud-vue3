@@ -2,7 +2,7 @@
 import {ref} from 'vue';
 
 
-const tags = ref(['primary', 'success', 'info', 'warning', 'danger'])
+const tags = ref(['', 'success', 'info', 'warning', 'danger'])
 
 // 快捷入口
 const links = ref([
@@ -132,13 +132,12 @@ const goToPage = (url) => {
           </template>
           <div class="content" style="height: auto;">
             <template v-for="(item,index) in links" :key="item.title">
-              <el-button
+              <el-tag
                   @click="goToPage(item.href)"
-                  plain
                   class="tags-style"
                   :type="tags[index % tags.length]"
               >{{ item.title }}
-              </el-button>
+              </el-tag>
             </template>
           </div>
         </el-card>
@@ -227,7 +226,6 @@ const goToPage = (url) => {
 
     .tags-style {
       margin: 5px;
-      font-size: 16px;
       cursor: pointer;
     }
   }

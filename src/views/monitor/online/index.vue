@@ -1,11 +1,10 @@
 <script setup>
-import RightToolbar from './../../../components/RightToolbar/index.vue';
 import { ref } from 'vue';
 import Pagination from './../../../components/Pagination/index.vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { useDict } from '../../../hooks/dict';
-import { download, parseTime, addDateRange } from '../../../utils/ruoyi';
+import {  parseTime, } from '../../../utils/ruoyi';
 import { forceLogout, list as initData } from '../../../api/monitor/online';
+import {  Search, Refresh,Delete  } from '@element-plus/icons-vue';
 
 // 遮罩层
 const loading = ref(true)
@@ -79,8 +78,8 @@ getList();
             />
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
       <el-table
@@ -124,7 +123,7 @@ getList();
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleForceLogout(scope.row)"
                   v-hasPermi="['monitor:online:forceLogout']"
                >强退</el-button>

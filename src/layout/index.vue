@@ -8,6 +8,8 @@ import Navbar from './components/Navbar/index.vue';
 import TagsView from "./components/tagsView/index.vue";
 import Settings from './components/Settings/index.vue';
 import defaultSettings from './../config/settings'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import Cookies from 'js-cookie'
 /**
  * store
  */
@@ -117,25 +119,32 @@ onMounted(() => {
     })
   }
 })
+
+// 大小
+const size = computed(() => store.getters.size);
+
+
 </script>
 
 <template>
-  <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
-    <div
-      v-if="device === 'mobile' && sidebar.opened"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    />
-    <sidebar class="sidebar-container" />
-    <div :class="{ hasTagsView: tagsView }" class="main-container">
-      <div :class="{ 'fixed-header': fixedHeader }">
-        <navbar @settingLayout="settingLayout" />
-        <tags-view v-if="tagsView" />
+  <el-config-provider :locale="zhCn" :size="size">
+    <div :class="classObj" class="app-wrapper" :style="{ '--current-color': theme }">
+      <div
+        v-if="device === 'mobile' && sidebar.opened"
+        class="drawer-bg"
+        @click="handleClickOutside"
+      />
+      <sidebar class="sidebar-container" />
+      <div :class="{ hasTagsView: tagsView }" class="main-container">
+        <div :class="{ 'fixed-header': fixedHeader }">
+          <navbar @settingLayout="settingLayout" />
+          <tags-view v-if="tagsView" />
+        </div>
+        <app-main />
+        <settings ref="settingRef" />
       </div>
-      <app-main />
-      <settings ref="settingRef" />
     </div>
-  </div>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>

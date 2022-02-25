@@ -1,6 +1,6 @@
 <script setup>
 import { ElMessage } from 'element-plus';
-import { ref,nextTick } from 'vue';
+import { ref, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { refreshToken } from '../../../api/login';
@@ -10,7 +10,7 @@ import Pagination from './../../../components/Pagination/index.vue';
 
 /**仓库 */
 const store = useStore();
-const router =  useRouter();
+const router = useRouter();
 const route = useRoute();
 /**遮罩层 */
 const loading = ref(true);
@@ -62,23 +62,23 @@ const submitForm = () => {
 }
 /**初始化就需要执行的代码 */
 (() => {
-     const userId = route.params && route.params.userId;
-    if (userId) {
+   const userId = route.params && route.params.userId;
+   if (userId) {
       loading.value = true;
       getAuthRole(userId).then((response) => {
-        form.value = response.user;
-        roles.value = response.roles;
-        total.value = roles.value.length;
-        nextTick(() => {
-          roles.value.forEach((row) => {
-            if (row.flag) {
-              tableRef.value.toggleRowSelection(row);
-            }
-          });
-        });
-        loading.value = false;
+         form.value = response.user;
+         roles.value = response.roles;
+         total.value = roles.value.length;
+         nextTick(() => {
+            roles.value.forEach((row) => {
+               if (row.flag) {
+                  tableRef.value.toggleRowSelection(row);
+               }
+            });
+         });
+         loading.value = false;
       });
-    }
+   }
 })()
 
 </script>
@@ -89,12 +89,12 @@ const submitForm = () => {
          <el-row>
             <el-col :span="8" :offset="2">
                <el-form-item label="用户昵称" prop="nickName">
-                  <el-input v-model="form.nickName" disabled />
+                  <el-input v-model="form.nickName" readonly />
                </el-form-item>
             </el-col>
             <el-col :span="8" :offset="2">
-               <el-form-item label="登录账号" prop="phonenumber">
-                  <el-input v-model="form.userName" disabled />
+               <el-form-item label="登录账号" prop="phonenumber"> 
+                  <el-input v-model="form.userName" readonly />
                </el-form-item>
             </el-col>
          </el-row>
@@ -127,12 +127,10 @@ const submitForm = () => {
 
       <pagination v-show="total > 0" :total="total" :page.sync="pageNum" :limit.sync="pageSize" />
 
-      <el-form label-width="100px">
-         <el-form-item style="text-align: center;margin-left:-120px;margin-top:30px;">
-            <el-button type="primary" @click="submitForm()">提交</el-button>
-            <el-button @click="close()">返回</el-button>
-         </el-form-item>
-      </el-form>
+      <div style="display: flex;justify-content: center;margin-top: 30px;">
+         <el-button type="primary" @click="submitForm()">提交</el-button>
+         <el-button @click="close()">返回</el-button>
+      </div>
    </div>
 </template>
 

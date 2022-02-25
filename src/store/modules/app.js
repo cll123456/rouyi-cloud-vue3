@@ -21,7 +21,7 @@ const state = {
   /**
    * 当前设备的字体大小
    */
-  size: Cookies.get('size') || 'medium'
+  size: Cookies.get('size') || 'default'
 }
 
 /**

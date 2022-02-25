@@ -4,7 +4,9 @@ import { ref, computed, getCurrentInstance, nextTick, onMounted, watch } from 'v
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { getNormalPath } from '../../../utils/ruoyi';
-
+import {
+  Close
+} from '@element-plus/icons-vue'
 /**
  * 是否右键打开菜单选项
  */
@@ -12,7 +14,7 @@ const visible = ref(false);
 /**
  * 获取当前的实例
  */
-const {proxy} = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 
 /**
  * 右键菜单距离顶部距离
@@ -314,11 +316,14 @@ watch(visible, (value) => {
         @contextmenu.prevent.native="openMenu(tag, $event)"
       >
         {{ tag.title }}
-        <span
+        
+        <el-icon
           v-if="!isAffix(tag)"
           class="el-icon-close"
           @click.prevent.stop="closeSelectedTag(tag)"
-        />
+        >
+          <close />
+        </el-icon>
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
@@ -419,7 +424,7 @@ watch(visible, (value) => {
     .el-icon-close {
       width: 16px;
       height: 16px;
-      vertical-align: 2px;
+      vertical-align: -1.3px;
       border-radius: 50%;
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);

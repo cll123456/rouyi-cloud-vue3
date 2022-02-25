@@ -9,6 +9,8 @@ import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRouter } from 'vue-router';
 import { roleMenuTreeselect, treeselect as menuTreeselect } from '../../../api/system/menu';
 import { treeselect as deptTreeselect, roleDeptTreeselect } from "../../../api/system/dept";
+import { CircleCheck, Delete, Edit, User, DArrowRight, Search, Refresh, Plus, Download } from '@element-plus/icons-vue'
+
 
 /**queryForm ref */
 const queryFormRef = ref(null);
@@ -278,7 +280,7 @@ const handleUpdate = (row) => {
    const roleMenu = getRoleMenuTreeselect(roleId);
    getRole(roleId).then(response => {
       operForm.value = response.data;
-      operForm.value.roleSort = Number(operForm.value.roleSort)
+      operForm.value.roleSort = +operForm.value.roleSort
       open.value = true;
       nextTick(() => {
          roleMenu.then(res => {
@@ -395,7 +397,6 @@ const handleDataScope = (row) => {
       nextTick(() => {
          roleDeptTreeselect.then(res => {
             nextTick(() => {
-               console.log(deptRef.value, '---=----deptRef.value')
                if (deptRef.value) {
                   deptRef.value.setCheckedKeys(res.checkedKeys);
                }
@@ -466,7 +467,7 @@ const cancelDataScope = () => {
             <el-date-picker
                v-model="dateRange"
                style="width: 240px"
-               value-format="yyyy-MM-dd"
+               value-format="YYYY-MM-DD"
                type="daterange"
                range-separator="-"
                start-placeholder="开始日期"
@@ -474,8 +475,8 @@ const cancelDataScope = () => {
             ></el-date-picker>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
       <!-- 按钮组 -->
@@ -484,7 +485,7 @@ const cancelDataScope = () => {
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:role:add']"
             >新增</el-button>
@@ -493,7 +494,7 @@ const cancelDataScope = () => {
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['system:role:edit']"
@@ -503,7 +504,7 @@ const cancelDataScope = () => {
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:role:remove']"
@@ -513,7 +514,7 @@ const cancelDataScope = () => {
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['system:role:export']"
             >导出</el-button>
@@ -525,10 +526,10 @@ const cancelDataScope = () => {
       <el-table v-loading="loading" :data="roleList" @selection-change="handleSelectionChange">
          <el-table-column type="selection" width="55" align="center" />
          <el-table-column label="角色编号" prop="roleId" width="120" />
-         <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
-         <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true" width="150" />
-         <el-table-column label="显示顺序" prop="roleSort" width="100" />
-         <el-table-column label="状态" align="center" width="100">
+         <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true"  />
+         <el-table-column label="权限字符" prop="roleKey" :show-overflow-tooltip="true"  />
+         <el-table-column label="显示顺序" prop="roleSort"  />
+         <el-table-column label="状态" align="center" >
             <template #default="scope">
                <el-switch
                   v-model="scope.row.status"
@@ -543,19 +544,24 @@ const cancelDataScope = () => {
                <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
          </el-table-column>
-         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+         <el-table-column
+            label="操作"
+            width="200"
+            align="center"
+            class-name="small-padding fixed-width"
+         >
             <template #default="scope">
                <el-button
                   v-if="scope.row.roleId !== 1"
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:role:edit']"
                >修改</el-button>
                <el-button
                   v-if="scope.row.roleId !== 1"
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:role:remove']"
                >删除</el-button>
@@ -563,21 +569,28 @@ const cancelDataScope = () => {
                   v-if="scope.row.roleId !== 1"
                   @command="(command) => handleCommand(command, scope.row)"
                >
-                  <span class="el-dropdown-link" v-hasPermi="['system:role:edit']">
-                     <i class="el-icon-d-arrow-right el-icon--right"></i>更多
-                  </span>
+                  <el-button
+                     type="text"
+                     class="el-dropdown-link"
+                     :icon="DArrowRight"
+                     v-hasPermi="['system:role:edit']"
+                  >更多</el-button>
                   <template #dropdown>
                      <el-dropdown-menu>
-                        <el-dropdown-item
-                           command="handleDataScope"
-                           icon="el-icon-circle-check"
-                           v-hasPermi="['system:role:edit']"
-                        >数据权限</el-dropdown-item>
-                        <el-dropdown-item
-                           command="handleAuthUser"
-                           icon="el-icon-user"
-                           v-hasPermi="['system:role:edit']"
-                        >分配用户</el-dropdown-item>
+                        <el-dropdown-item command="handleDataScope">
+                           <span v-hasPermi="['system:role:edit']">
+                              <el-icon>
+                                 <circle-check></circle-check>
+                              </el-icon>数据权限
+                           </span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="handleAuthUser">
+                           <span v-hasPermi="['system:role:edit']">
+                              <el-icon>
+                                 <user></user>
+                              </el-icon>分配用户
+                           </span>
+                        </el-dropdown-item>
                      </el-dropdown-menu>
                   </template>
                </el-dropdown>
@@ -637,16 +650,18 @@ const cancelDataScope = () => {
                   v-model="operForm.menuCheckStrictly"
                   @change="handleCheckedTreeConnect($event, 'menu')"
                >父子联动</el-checkbox>
-               <el-tree
-                  class="tree-border"
-                  :data="menuOptions"
-                  show-checkbox
-                  ref="menuRef"
-                  node-key="id"
-                  :check-strictly="!operForm.menuCheckStrictly"
-                  empty-text="加载中，请稍后"
-                  :props="defaultProps"
-               ></el-tree>
+               <div style="width: 100%;">
+                  <el-tree
+                     class="tree-border"
+                     :data="menuOptions"
+                     show-checkbox
+                     ref="menuRef"
+                     node-key="id"
+                     :check-strictly="!operForm.menuCheckStrictly"
+                     empty-text="加载中，请稍后"
+                     :props="defaultProps"
+                  ></el-tree>
+               </div>
             </el-form-item>
             <el-form-item label="备注">
                <el-input v-model="operForm.remark" type="textarea" placeholder="请输入内容"></el-input>
@@ -692,17 +707,19 @@ const cancelDataScope = () => {
                   v-model="operForm.deptCheckStrictly"
                   @change="handleCheckedTreeConnect($event, 'dept')"
                >父子联动</el-checkbox>
-               <el-tree
-                  class="tree-border"
-                  :data="deptOptions"
-                  show-checkbox
-                  default-expand-all
-                  ref="deptRef"
-                  node-key="id"
-                  :check-strictly="!operForm.deptCheckStrictly"
-                  empty-text="加载中，请稍后"
-                  :props="defaultProps"
-               ></el-tree>
+               <div style="width: 100%;">
+                  <el-tree
+                     class="tree-border"
+                     :data="deptOptions"
+                     show-checkbox
+                     default-expand-all
+                     ref="deptRef"
+                     node-key="id"
+                     :check-strictly="!operForm.deptCheckStrictly"
+                     empty-text="加载中，请稍后"
+                     :props="defaultProps"
+                  ></el-tree>
+               </div>
             </el-form-item>
          </el-form>
          <template #footer>

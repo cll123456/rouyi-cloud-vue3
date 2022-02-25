@@ -7,7 +7,7 @@ import { useDict } from '../../../hooks/dict';
 import { parseTime } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
 import { listNotice, getNotice, delNotice, addNotice, updateNotice } from '../../../api/system/notice';
-
+import {  Search, Refresh, Plus, Delete, Edit } from '@element-plus/icons-vue';
 /***queryForm ref */
 const queryFormRef = ref(null);
 /**form ref */
@@ -190,8 +190,8 @@ getList();
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -200,7 +200,7 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['system:notice:add']"
             >新增</el-button>
@@ -209,7 +209,7 @@ getList();
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['system:notice:edit']"
@@ -219,7 +219,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['system:notice:remove']"
@@ -253,17 +253,17 @@ getList();
                <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
             </template>
          </el-table-column>
-         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+         <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['system:notice:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['system:notice:remove']"
                >删除</el-button>
@@ -317,7 +317,7 @@ getList();
                      <el-input
                         :rows="2"
                         type="textarea"
-                        placeholder="Please input"
+                        placeholder="请输入通知内容"
                         v-model="form.noticeContent"
                      />
                      <!-- <editor v-model="form.noticeContent" :min-height="192" /> -->

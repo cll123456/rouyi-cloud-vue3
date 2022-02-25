@@ -8,6 +8,7 @@ import { download, parseTime, selectDictLabel } from '../../../utils/ruoyi';
 import DictTag from './../../../components/DictTag/index.vue';
 import { listJob, getJob, delJob, addJob, updateJob, runJob, changeJobStatus, exportJob } from '../../../api/monitor/job';
 import { useRouter } from 'vue-router';
+import { View, Search, Refresh, Plus, Delete, Edit, DArrowRight, Download, Operation, CaretRight } from '@element-plus/icons-vue';
 
 /**queryForm ref */
 const queryFormRef = ref(null);
@@ -77,7 +78,7 @@ const getList = () => {
 }
 // 任务组名字典翻译
 const jobGroupFormat = (row, column) => {
-   return selectDictLabel(sys_job_group, row.jobGroup);
+   return selectDictLabel(sys_job_group.value, row.jobGroup);
 }
 // 取消按钮
 const cancel = () => {
@@ -287,8 +288,8 @@ getList();
             </el-select>
          </el-form-item>
          <el-form-item>
-            <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+            <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
          </el-form-item>
       </el-form>
 
@@ -297,7 +298,7 @@ getList();
             <el-button
                type="primary"
                plain
-               icon="el-icon-plus"
+               :icon="Plus"
                @click="handleAdd"
                v-hasPermi="['monitor:job:add']"
             >新增</el-button>
@@ -306,7 +307,7 @@ getList();
             <el-button
                type="success"
                plain
-               icon="el-icon-edit"
+               :icon="Edit"
                :disabled="single"
                @click="handleUpdate"
                v-hasPermi="['monitor:job:edit']"
@@ -316,7 +317,7 @@ getList();
             <el-button
                type="danger"
                plain
-               icon="el-icon-delete"
+               :icon="Delete"
                :disabled="multiple"
                @click="handleDelete"
                v-hasPermi="['monitor:job:remove']"
@@ -326,7 +327,7 @@ getList();
             <el-button
                type="warning"
                plain
-               icon="el-icon-download"
+               :icon="Download"
                @click="handleExport"
                v-hasPermi="['monitor:job:export']"
             >导出</el-button>
@@ -335,7 +336,7 @@ getList();
             <el-button
                type="info"
                plain
-               icon="el-icon-s-operation"
+               :icon="Operation"
                @click="handleJobLog"
                v-hasPermi="['monitor:job:query']"
             >日志</el-button>
@@ -374,44 +375,44 @@ getList();
                ></el-switch>
             </template>
          </el-table-column>
-         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+         <el-table-column
+            label="操作"
+            align="center"
+            width="200"
+            class-name="small-padding fixed-width"
+         >
             <template #default="scope">
                <el-button
                   type="text"
-                  icon="el-icon-edit"
+                  :icon="Edit"
                   @click="handleUpdate(scope.row)"
                   v-hasPermi="['monitor:job:edit']"
                >修改</el-button>
                <el-button
                   type="text"
-                  icon="el-icon-delete"
+                  :icon="Delete"
                   @click="handleDelete(scope.row)"
                   v-hasPermi="['monitor:job:remove']"
                >删除</el-button>
                <el-dropdown @command="(command) => handleCommand(command, scope.row)">
-                  <span
+                  <el-button
+                     type="text"
                      class="el-dropdown-link"
                      v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']"
-                  >
-                     <i class="el-icon-d-arrow-right el-icon--right"></i>更多
-                  </span>
+                     :icon="DArrowRight"
+                  >更多</el-button>
                   <template #dropdown>
                      <el-dropdown-menu>
-                        <el-dropdown-item
-                           command="handleRun"
-                           icon="el-icon-caret-right"
-                           v-hasPermi="['monitor:job:changeStatus']"
-                        >执行一次</el-dropdown-item>
-                        <el-dropdown-item
-                           command="handleView"
-                           icon="el-icon-view"
-                           v-hasPermi="['monitor:job:query']"
-                        >任务详细</el-dropdown-item>
-                        <el-dropdown-item
-                           command="handleJobLog"
-                           icon="el-icon-s-operation"
-                           v-hasPermi="['monitor:job:query']"
-                        >调度日志</el-dropdown-item>
+                        <el-dropdown-item command="handleRun">
+                           <span v-hasPermi="['monitor:job:changeStatus']" :icon="CaretRight">执行一次</span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="handleView">
+                           <span v-hasPermi="['monitor:job:query']" :icon="View">任务详细</span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="handleJobLog">
+                           <span v-hasPermi="['monitor:job:query']" :icon="Operation">调度日志</span>
+                           调度日志
+                        </el-dropdown-item>
                      </el-dropdown-menu>
                   </template>
                </el-dropdown>
@@ -522,7 +523,7 @@ getList();
       <div>32323</div>
          <crontab @hide="openCron = false" @fill="crontabFill" :expression="expression"></crontab> 
       </el-dialog>-->
- 
+
       <!-- 任务日志详细 -->
       <el-dialog title="任务详细" v-model="openView" width="700px" append-to-body>
          <el-form :model="form" label-width="120px">

@@ -11,6 +11,7 @@ import { useRouter } from 'vue-router';
 import { getToken } from '../../../utils/auth';
 import { PUBLIC_PATH } from '../../../config/commonConfig';
 import TreeSelect from './../../../components/TreeSelect/index.vue'
+import { Key, CircleCheck, Delete, Edit, DArrowRight, Search, Refresh, Plus, Download, Upload } from '@element-plus/icons-vue'
 
 const router = useRouter();
 /**
@@ -521,7 +522,7 @@ getList();
                   <el-date-picker
                      v-model="dateRange"
                      style="width: 240px"
-                     value-format="yyyy-MM-dd"
+                     value-format="YYYY-MM-DD"
                      type="daterange"
                      range-separator="-"
                      start-placeholder="开始日期"
@@ -529,8 +530,8 @@ getList();
                   ></el-date-picker>
                </el-form-item>
                <el-form-item>
-                  <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-                  <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
+                  <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
+                  <el-button :icon="Refresh" @click="resetQuery">重置</el-button>
                </el-form-item>
             </el-form>
 
@@ -540,7 +541,7 @@ getList();
                   <el-button
                      type="primary"
                      plain
-                     icon="el-icon-plus"
+                     :icon="Plus"
                      @click="handleAdd"
                      v-hasPermi="['system:user:add']"
                   >新增</el-button>
@@ -549,17 +550,17 @@ getList();
                   <el-button
                      type="success"
                      plain
-                     icon="el-icon-edit"
                      :disabled="single"
                      @click="handleUpdate"
                      v-hasPermi="['system:user:edit']"
+                     :icon="Edit"
                   >修改</el-button>
                </el-col>
                <el-col :span="1.5">
                   <el-button
                      type="danger"
                      plain
-                     icon="el-icon-delete"
+                     :icon="Delete"
                      :disabled="multiple"
                      @click="handleDelete"
                      v-hasPermi="['system:user:remove']"
@@ -569,7 +570,7 @@ getList();
                   <el-button
                      type="info"
                      plain
-                     icon="el-icon-upload2"
+                     :icon="Upload"
                      @click="handleImport"
                      v-hasPermi="['system:user:import']"
                   >导入</el-button>
@@ -578,7 +579,7 @@ getList();
                   <el-button
                      type="warning"
                      plain
-                     icon="el-icon-download"
+                     :icon="Download"
                      @click="handleExport"
                      v-hasPermi="['system:user:export']"
                   >导出</el-button>
@@ -655,46 +656,59 @@ getList();
                <el-table-column
                   label="操作"
                   align="center"
-                  width="160"
+                  width="180"
                   class-name="small-padding fixed-width"
                >
                   <template #default="scope">
                      <el-button
                         v-if="scope.row.userId !== 1"
                         type="text"
-                        icon="el-icon-edit"
                         @click="handleUpdate(scope.row)"
                         v-hasPermi="['system:user:edit']"
-                     >修改</el-button>
+                     >
+                        <el-icon>
+                           <edit />
+                        </el-icon>修改
+                     </el-button>
                      <el-button
                         v-if="scope.row.userId !== 1"
                         type="text"
-                        icon="el-icon-delete"
                         @click="handleDelete(scope.row)"
                         v-hasPermi="['system:user:remove']"
-                     >删除</el-button>
+                     >
+                        <el-icon>
+                           <delete />
+                        </el-icon>删除
+                     </el-button>
                      <el-dropdown
                         v-if="scope.row.userId !== 1"
                         @command="(command) => handleCommand(command, scope.row)"
                      >
-                        <span
+                        <el-button
+                           type="text"
                            class="el-dropdown-link"
                            v-hasPermi="['system:user:resetPwd', 'system:user:edit']"
                         >
-                           <i class="el-icon-d-arrow-right el-icon--right"></i>更多
-                        </span>
+                           <el-icon class="el-icon--right"> 
+                              <d-arrow-right />
+                           </el-icon>更多
+                        </el-button>
                         <template #dropdown>
                            <el-dropdown-menu>
-                              <el-dropdown-item
-                                 command="handleResetPwd"
-                                 icon="el-icon-key"
-                                 v-hasPermi="['system:user:resetPwd']"
-                              >重置密码</el-dropdown-item>
-                              <el-dropdown-item
-                                 command="handleAuthRole"
-                                 icon="el-icon-circle-check"
-                                 v-hasPermi="['system:user:edit']"
-                              >分配角色</el-dropdown-item>
+                              <el-dropdown-item command="handleResetPwd">
+                                 <span v-hasPermi="['system:user:resetPwd']">
+                                    <el-icon>
+                                       <key />
+                                    </el-icon>重置密码
+                                 </span>
+                              </el-dropdown-item>
+                              <el-dropdown-item command="handleAuthRole">
+                                 <span v-hasPermi="['system:user:edit']">
+                                    <el-icon>
+                                       <circle-check />
+                                    </el-icon>分配角色
+                                 </span>
+                              </el-dropdown-item>
                            </el-dropdown-menu>
                         </template>
                      </el-dropdown>
