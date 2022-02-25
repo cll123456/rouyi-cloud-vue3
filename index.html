@@ -6,6 +6,7 @@
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>若依V3</title>
+    [if lt IE 11]><script>window.location.href='./public/ie.html';</script>![endif]
   <style>
     html,
     body {
@@ -123,56 +124,58 @@
 
 <body>
   
-  <div id="loading-wrapper">
-    <div class="loader">
-      <svg class="loader-star star1" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-      <svg class="loader-star star2" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-      <svg class="loader-star star3" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-      <svg class="loader-star star4" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-      <svg class="loader-star star5" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-      <svg class="loader-star star6" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
-        viewBox="0 0 23.172 23.346" xml:space="preserve">
-        <polygon
-          points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
-        </polygon>
-      </svg>
-    </div>
-    <div class="text">
-      玩命加载中……
+ 
+  <div id="app">
+    <div id="loading-wrapper">
+      <div class="loader">
+        <svg class="loader-star star1" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+        <svg class="loader-star star2" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+        <svg class="loader-star star3" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+        <svg class="loader-star star4" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+        <svg class="loader-star star5" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+        <svg class="loader-star star6" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="35px" height="35px"
+          viewBox="0 0 23.172 23.346" xml:space="preserve">
+          <polygon
+            points="11.586,0 8.864,8.9 0,8.9 7.193,14.447 4.471,23.346 11.586,17.84 18.739,23.346 16.77,14.985 23.172,8.9 14.306,8.9">
+          </polygon>
+        </svg>
+      </div>
+      <div class="text">
+        玩命加载中……
+      </div>
     </div>
   </div>
-  <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
 </body>
 
