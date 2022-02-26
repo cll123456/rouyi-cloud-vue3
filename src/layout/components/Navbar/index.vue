@@ -46,7 +46,7 @@ const logout = () => {
 /**
  * 打开设置
  */
-const settingLayout = () => {
+const settingLayoutMethods = () => {
   emits('settingLayout');
 }
 </script>
@@ -95,7 +95,7 @@ const settingLayout = () => {
               <router-link to="/user/profile">
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
-              <el-dropdown-item @click.native="settingLayout">
+              <el-dropdown-item @click.native="settingLayoutMethods">
                 <span>布局设置</span>
               </el-dropdown-item>
               <el-dropdown-item divided @click.native="logout">

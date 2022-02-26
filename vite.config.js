@@ -28,7 +28,7 @@ export default {
   },
 
   server: {
-    port: 4000,//启动端口
+    port: 4001,//启动端口
     // open: true,
     proxy: {
       // 选项写法
@@ -37,11 +37,6 @@ export default {
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/api/, '')
       },
-      // '/api/prod-api': {
-      //   target: 'http://44.17.30.30:8846',//代理到官网地址
-      //   changeOrigin: true,
-      //   rewrite: (p) => p.replace(/^\/api\/prod-api/, '')
-      // },
       // 配置获取在线主题的网络请求
       '/onlineColor': {
         target: 'https://app.uibakery.io/',//代理到官网地址
