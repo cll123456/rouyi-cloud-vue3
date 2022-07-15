@@ -85,7 +85,7 @@ const reset = () => {
       status: "0",
       remark: undefined
    };
-   if(formRef.value){
+   if (formRef.value) {
       formRef.value.resetFields();
    }
 }
@@ -177,37 +177,19 @@ getList();
 </script>
 <template>
    <div class="app-container">
-      <el-form
-         :model="queryParams"
-         ref="queryFormRef"
-         :inline="true"
-         v-show="showSearch"
-         label-width="68px"
-      >
+      <el-form :model="queryParams" ref="queryFormRef" :inline="true" v-show="showSearch" label-width="68px">
          <el-form-item label="岗位编码" prop="postCode">
-            <el-input
-               v-model="queryParams.postCode"
-               placeholder="请输入岗位编码"
-               clearable
-               @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.postCode" placeholder="请输入岗位编码" clearable
+               @keyup.enter.native="handleQuery" />
          </el-form-item>
          <el-form-item label="岗位名称" prop="postName">
-            <el-input
-               v-model="queryParams.postName"
-               placeholder="请输入岗位名称"
-               clearable
-               @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.postName" placeholder="请输入岗位名称" clearable
+               @keyup.enter.native="handleQuery" />
          </el-form-item>
          <el-form-item label="状态" prop="status">
             <el-select v-model="queryParams.status" placeholder="岗位状态" clearable>
-               <el-option
-                  v-for="dict in sys_normal_disable"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
+                  :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item>
@@ -218,42 +200,20 @@ getList();
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
-            <el-button
-               type="primary"
-               plain
-               :icon="Plus"
-               @click="handleAdd"
-               v-hasPermi="['system:post:add']"
-            >新增</el-button>
+            <el-button type="primary" plain :icon="Plus" @click="handleAdd" v-hasPermi="['system:post:add']">新增
+            </el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="success"
-               plain
-               :icon="Edit"
-               :disabled="single"
-               @click="handleUpdate"
-               v-hasPermi="['system:post:edit']"
-            >修改</el-button>
+            <el-button type="success" plain :icon="Edit" :disabled="single" @click="handleUpdate"
+               v-hasPermi="['system:post:edit']">修改</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="danger"
-               plain
-               :icon="Delete"
-               :disabled="multiple"
-               @click="handleDelete"
-               v-hasPermi="['system:post:remove']"
-            >删除</el-button>
+            <el-button type="danger" plain :icon="Delete" :disabled="multiple" @click="handleDelete"
+               v-hasPermi="['system:post:remove']">删除</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="warning"
-               plain
-               :icon="Download"
-               @click="handleExport"
-               v-hasPermi="['system:post:export']"
-            >导出</el-button>
+            <el-button type="warning" plain :icon="Download" @click="handleExport" v-hasPermi="['system:post:export']">
+               导出</el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
@@ -276,29 +236,16 @@ getList();
          </el-table-column>
          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button
-                  type="text"
-                  :icon="Edit"
-                  @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:post:edit']"
-               >修改</el-button>
-               <el-button
-                  type="text"
-                  :icon="Delete"
-                  @click="handleDelete(scope.row)"
-                  v-hasPermi="['system:post:remove']"
-               >删除</el-button>
+               <el-button type="primary" link :icon="Edit" @click="handleUpdate(scope.row)"
+                  v-hasPermi="['system:post:edit']">修改</el-button>
+               <el-button type="primary" link :icon="Delete" @click="handleDelete(scope.row)"
+                  v-hasPermi="['system:post:remove']">删除</el-button>
             </template>
          </el-table-column>
       </el-table>
 
-      <pagination
-         v-show="total > 0"
-         :total="total"
-         v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize"
-         @pagination="getList"
-      />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+         v-model:limit="queryParams.pageSize" @pagination="getList" />
 
       <!-- 添加或修改岗位对话框 -->
       <el-dialog :title="title" v-model="open" width="500px" append-to-body>
@@ -314,11 +261,8 @@ getList();
             </el-form-item>
             <el-form-item label="岗位状态" prop="status">
                <el-radio-group v-model="form.status">
-                  <el-radio
-                     v-for="dict in sys_normal_disable"
-                     :key="dict.value"
-                     :label="dict.value"
-                  >{{ dict.label }}</el-radio>
+                  <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{ dict.label }}
+                  </el-radio>
                </el-radio-group>
             </el-form-item>
             <el-form-item label="备注" prop="remark">

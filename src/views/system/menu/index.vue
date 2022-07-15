@@ -119,7 +119,7 @@ const selected = (name) => {
 }
 // 关闭下拉图标框
 const onClickOutside = () => {
-  showChooseIcon.value = false;
+   showChooseIcon.value = false;
 }
 /** 搜索按钮操作 */
 const handleQuery = () => {
@@ -204,21 +204,13 @@ getList();
    <div class="app-container">
       <el-form :model="queryParams" ref="queryFormRef" :inline="true" v-show="showSearch">
          <el-form-item label="菜单名称" prop="menuName">
-            <el-input
-               v-model="queryParams.menuName"
-               placeholder="请输入菜单名称"
-               clearable
-               @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" clearable
+               @keyup.enter.native="handleQuery" />
          </el-form-item>
          <el-form-item label="状态" prop="status">
             <el-select v-model="queryParams.status" placeholder="菜单状态" clearable>
-               <el-option
-                  v-for="dict in sys_normal_disable"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
+                  :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item>
@@ -229,13 +221,8 @@ getList();
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
-            <el-button
-               type="primary"
-               plain
-               :icon="Plus"
-               @click="handleAdd"
-               v-hasPermi="['system:menu:add']"
-            >新增</el-button>
+            <el-button type="primary" plain :icon="Plus" @click="handleAdd" v-hasPermi="['system:menu:add']">新增
+            </el-button>
          </el-col>
          <el-col :span="1.5">
             <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">展开/折叠</el-button>
@@ -243,14 +230,8 @@ getList();
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
 
-      <el-table
-         v-if="refreshTable"
-         v-loading="loading"
-         :data="menuList"
-         row-key="menuId"
-         :default-expand-all="isExpandAll"
-         :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      >
+      <el-table v-if="refreshTable" v-loading="loading" :data="menuList" row-key="menuId"
+         :default-expand-all="isExpandAll" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
          <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
          <el-table-column prop="icon" label="图标" align="center" width="100">
             <template #default="scope">
@@ -270,31 +251,14 @@ getList();
                <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
          </el-table-column>
-         <el-table-column
-            label="操作"
-            align="center"
-            width="200"
-            class-name="small-padding fixed-width"
-         >
+         <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button
-                  type="text"
-                  :icon="Edit"
-                  @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:menu:edit']"
-               >修改</el-button>
-               <el-button
-                  type="text"
-                  :icon="Plus"
-                  @click="handleAdd(scope.row)"
-                  v-hasPermi="['system:menu:add']"
-               >新增</el-button>
-               <el-button
-                  type="text"
-                  :icon="Delete"
-                  @click="handleDelete(scope.row)"
-                  v-hasPermi="['system:menu:remove']"
-               >删除</el-button>
+               <el-button type="primary" link :icon="Edit" @click="handleUpdate(scope.row)"
+                  v-hasPermi="['system:menu:edit']">修改</el-button>
+               <el-button type="primary" link :icon="Plus" @click="handleAdd(scope.row)"
+                  v-hasPermi="['system:menu:add']">新增</el-button>
+               <el-button type="primary" link :icon="Delete" @click="handleDelete(scope.row)"
+                  v-hasPermi="['system:menu:remove']">删除</el-button>
             </template>
          </el-table-column>
       </el-table>
@@ -305,16 +269,11 @@ getList();
             <el-row>
                <el-col :span="24">
                   <el-form-item label="上级菜单">
-                     <tree-select
-                        v-model:value="form.parentId"
-                        :options="menuOptions"
-                        :objMap="{
-                           value: 'menuId',
-                           label: 'menuName',
-                           children: 'children'
-                        }"
-                        placeholder="选择上级菜单"
-                     />
+                     <tree-select v-model:value="form.parentId" :options="menuOptions" :objMap="{
+                        value: 'menuId',
+                        label: 'menuName',
+                        children: 'children'
+                     }" placeholder="选择上级菜单" />
                   </el-form-item>
                </el-col>
                <el-col :span="24">
@@ -328,29 +287,15 @@ getList();
                </el-col>
                <el-col :span="24" v-if="form.menuType != 'F'">
                   <el-form-item label="菜单图标">
-                     <el-popover
-                        placement="bottom-start"
-                        :width="540"
-                        v-model:visible="showChooseIcon"
-                        trigger="click"
-                        @show="showSelectIcon"
-                     >
+                     <el-popover placement="bottom-start" :width="540" v-model:visible="showChooseIcon" trigger="click"
+                        @show="showSelectIcon">
                         <icon-select ref="iconSelectRef" @selected="selected" />
                         <template #reference>
-                           <el-input
-                              v-model="form.icon"
-                              placeholder="点击选择图标"
-                              readonly
-                              @click="showChooseIcon = true"
-                              v-click-outside="onClickOutside"
-                           >
+                           <el-input v-model="form.icon" placeholder="点击选择图标" readonly @click="showChooseIcon = true"
+                              v-click-outside="onClickOutside">
                               <template #prefix>
-                                 <svg-icon
-                                    v-if="form.icon"
-                                    :icon-class="form.icon"
-                                    class="el-input__icon"
-                                    style="height: 32px;width: 16px;"
-                                 />
+                                 <svg-icon v-if="form.icon" :icon-class="form.icon" class="el-input__icon"
+                                    style="height: 32px;width: 16px;" />
                                  <el-icon v-else class="el-input__icon">
                                     <Search></Search>
                                  </el-icon>
@@ -389,10 +334,7 @@ getList();
                   <el-form-item prop="path">
                      <template #label>
                         <span>
-                           <el-tooltip
-                              content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
-                              placement="top"
-                           >
+                           <el-tooltip content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头" placement="top">
                               <i class="el-icon-question"></i>
                            </el-tooltip>路由地址
                         </span>
@@ -404,10 +346,7 @@ getList();
                   <el-form-item prop="component">
                      <template #label>
                         <span>
-                           <el-tooltip
-                              content="访问的组件路径，如：`system/user/index`，默认在`views`目录下"
-                              placement="top"
-                           >
+                           <el-tooltip content="访问的组件路径，如：`system/user/index`，默认在`views`目录下" placement="top">
                               <i class="el-icon-question"></i>
                            </el-tooltip>组件路径
                         </span>
@@ -420,10 +359,8 @@ getList();
                      <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
                      <template #label>
                         <span>
-                           <el-tooltip
-                              content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)"
-                              placement="top"
-                           >
+                           <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)"
+                              placement="top">
                               <i class="el-icon-question"></i>
                            </el-tooltip>权限字符
                         </span>
@@ -446,10 +383,7 @@ getList();
                   <el-form-item>
                      <template #label>
                         <span>
-                           <el-tooltip
-                              content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致"
-                              placement="top"
-                           >
+                           <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
                               <i class="el-icon-question"></i>
                            </el-tooltip>是否缓存
                         </span>
@@ -470,11 +404,8 @@ getList();
                         </span>
                      </template>
                      <el-radio-group v-model="form.visible">
-                        <el-radio
-                           v-for="dict in sys_show_hide"
-                           :key="dict.value"
-                           :label="dict.value"
-                        >{{ dict.label }}</el-radio>
+                        <el-radio v-for="dict in sys_show_hide" :key="dict.value" :label="dict.value">{{ dict.label }}
+                        </el-radio>
                      </el-radio-group>
                   </el-form-item>
                </el-col>
@@ -488,11 +419,8 @@ getList();
                         </span>
                      </template>
                      <el-radio-group v-model="form.status">
-                        <el-radio
-                           v-for="dict in sys_normal_disable"
-                           :key="dict.value"
-                           :label="dict.value"
-                        >{{ dict.label }}</el-radio>
+                        <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{ dict.label
+                        }}</el-radio>
                      </el-radio-group>
                   </el-form-item>
                </el-col>

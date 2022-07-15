@@ -9,7 +9,7 @@ import DictTag from './../../../components/DictTag/index.vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { listJobLog, delJobLog, cleanJobLog, exportJobLog } from '../../../api/monitor/jobLog';
-import { View, Search, Refresh, Delete,DeleteFilled, Close, Download } from '@element-plus/icons-vue';
+import { View, Search, Refresh, Delete, DeleteFilled, Close, Download } from '@element-plus/icons-vue';
 
 // 遮罩层
 const loading = ref(true);
@@ -129,62 +129,24 @@ getList();
 </script>
 <template>
    <div class="app-container">
-      <el-form
-         :model="queryParams"
-         ref="queryFormRef"
-         :inline="true"
-         v-show="showSearch"
-         label-width="68px"
-      >
+      <el-form :model="queryParams" ref="queryFormRef" :inline="true" v-show="showSearch" label-width="68px">
          <el-form-item label="任务名称" prop="jobName">
-            <el-input
-               v-model="queryParams.jobName"
-               placeholder="请输入任务名称"
-               clearable
-               style="width: 240px"
-               @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.jobName" placeholder="请输入任务名称" clearable style="width: 240px"
+               @keyup.enter.native="handleQuery" />
          </el-form-item>
          <el-form-item label="任务组名" prop="jobGroup">
-            <el-select
-               v-model="queryParams.jobGroup"
-               placeholder="请任务组名"
-               clearable
-               style="width: 240px"
-            >
-               <el-option
-                  v-for="dict in sys_job_group"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+            <el-select v-model="queryParams.jobGroup" placeholder="请任务组名" clearable style="width: 240px">
+               <el-option v-for="dict in sys_job_group" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item label="执行状态" prop="status">
-            <el-select
-               v-model="queryParams.status"
-               placeholder="请选择执行状态"
-               clearable
-               style="width: 240px"
-            >
-               <el-option
-                  v-for="dict in sys_common_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+            <el-select v-model="queryParams.status" placeholder="请选择执行状态" clearable style="width: 240px">
+               <el-option v-for="dict in sys_common_status" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item label="执行时间">
-            <el-date-picker
-               v-model="dateRange"
-               style="width: 240px"
-               value-format="YYYY-MM-DD"
-               type="daterange"
-               range-separator="-"
-               start-placeholder="开始日期"
-               end-placeholder="结束日期"
-            ></el-date-picker>
+            <el-date-picker v-model="dateRange" style="width: 240px" value-format="YYYY-MM-DD" type="daterange"
+               range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
          </el-form-item>
          <el-form-item>
             <el-button type="primary" :icon="Search" @click="handleQuery">搜索</el-button>
@@ -194,32 +156,16 @@ getList();
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
-            <el-button
-               type="danger"
-               plain
-               :icon="Delete"
-               :disabled="multiple"
-               @click="handleDelete"
-               v-hasPermi="['monitor:job:remove']"
-            >删除</el-button>
+            <el-button type="danger" plain :icon="Delete" :disabled="multiple" @click="handleDelete"
+               v-hasPermi="['monitor:job:remove']">删除</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="danger"
-               plain
-               :icon="DeleteFilled"
-               @click="handleClean"
-               v-hasPermi="['monitor:job:remove']"
-            >清空</el-button>
+            <el-button type="danger" plain :icon="DeleteFilled" @click="handleClean"
+               v-hasPermi="['monitor:job:remove']">清空</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="warning"
-               plain
-               :icon="Download"
-               @click="handleExport"
-               v-hasPermi="['monitor:job:export']"
-            >导出</el-button>
+            <el-button type="warning" plain :icon="Download" @click="handleExport" v-hasPermi="['monitor:job:export']">
+               导出</el-button>
          </el-col>
          <el-col :span="1.5">
             <el-button type="warning" plain :icon="Close" @click="handleClose">关闭</el-button>
@@ -236,18 +182,8 @@ getList();
                <dict-tag :options="sys_job_group" :value="scope.row.jobGroup" />
             </template>
          </el-table-column>
-         <el-table-column
-            label="调用目标字符串"
-            align="center"
-            prop="invokeTarget"
-            :show-overflow-tooltip="true"
-         />
-         <el-table-column
-            label="日志信息"
-            align="center"
-            prop="jobMessage"
-            :show-overflow-tooltip="true"
-         />
+         <el-table-column label="调用目标字符串" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
+         <el-table-column label="日志信息" align="center" prop="jobMessage" :show-overflow-tooltip="true" />
          <el-table-column label="执行状态" align="center" prop="status">
             <template #default="scope">
                <dict-tag :options="sys_common_status" :value="scope.row.status" />
@@ -260,23 +196,14 @@ getList();
          </el-table-column>
          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button
-                  type="text"
-                  :icon="View"
-                  @click="handleView(scope.row)"
-                  v-hasPermi="['monitor:job:query']"
-               >详细</el-button>
+               <el-button type="primary" link :icon="View" @click="handleView(scope.row)"
+                  v-hasPermi="['monitor:job:query']">详细</el-button>
             </template>
          </el-table-column>
       </el-table>
 
-      <pagination
-         v-show="total > 0"
-         :total="total"
-         v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize"
-         @pagination="getList"
-      />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+         v-model:limit="queryParams.pageSize" @pagination="getList" />
 
       <!-- 调度日志详细 -->
       <el-dialog title="调度日志详细" v-model="open" width="700px" append-to-body>

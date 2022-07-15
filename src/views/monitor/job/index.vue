@@ -252,39 +252,18 @@ getList();
 </script>
 <template>
    <div class="app-container">
-      <el-form
-         :model="queryParams"
-         ref="queryFormRef"
-         :inline="true"
-         v-show="showSearch"
-         label-width="68px"
-      >
+      <el-form :model="queryParams" ref="queryFormRef" :inline="true" v-show="showSearch" label-width="68px">
          <el-form-item label="任务名称" prop="jobName">
-            <el-input
-               v-model="queryParams.jobName"
-               placeholder="请输入任务名称"
-               clearable
-               @keyup.enter.native="handleQuery"
-            />
+            <el-input v-model="queryParams.jobName" placeholder="请输入任务名称" clearable @keyup.enter.native="handleQuery" />
          </el-form-item>
          <el-form-item label="任务组名" prop="jobGroup">
             <el-select v-model="queryParams.jobGroup" placeholder="请选择任务组名" clearable>
-               <el-option
-                  v-for="dict in sys_job_group"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+               <el-option v-for="dict in sys_job_group" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item label="任务状态" prop="status">
             <el-select v-model="queryParams.status" placeholder="请选择任务状态" clearable>
-               <el-option
-                  v-for="dict in sys_job_status"
-                  :key="dict.value"
-                  :label="dict.label"
-                  :value="dict.value"
-               />
+               <el-option v-for="dict in sys_job_status" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item>
@@ -295,51 +274,24 @@ getList();
 
       <el-row :gutter="10" class="mb8">
          <el-col :span="1.5">
-            <el-button
-               type="primary"
-               plain
-               :icon="Plus"
-               @click="handleAdd"
-               v-hasPermi="['monitor:job:add']"
-            >新增</el-button>
+            <el-button type="primary" plain :icon="Plus" @click="handleAdd" v-hasPermi="['monitor:job:add']">新增
+            </el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="success"
-               plain
-               :icon="Edit"
-               :disabled="single"
-               @click="handleUpdate"
-               v-hasPermi="['monitor:job:edit']"
-            >修改</el-button>
+            <el-button type="success" plain :icon="Edit" :disabled="single" @click="handleUpdate"
+               v-hasPermi="['monitor:job:edit']">修改</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="danger"
-               plain
-               :icon="Delete"
-               :disabled="multiple"
-               @click="handleDelete"
-               v-hasPermi="['monitor:job:remove']"
-            >删除</el-button>
+            <el-button type="danger" plain :icon="Delete" :disabled="multiple" @click="handleDelete"
+               v-hasPermi="['monitor:job:remove']">删除</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="warning"
-               plain
-               :icon="Download"
-               @click="handleExport"
-               v-hasPermi="['monitor:job:export']"
-            >导出</el-button>
+            <el-button type="warning" plain :icon="Download" @click="handleExport" v-hasPermi="['monitor:job:export']">
+               导出</el-button>
          </el-col>
          <el-col :span="1.5">
-            <el-button
-               type="info"
-               plain
-               :icon="Operation"
-               @click="handleJobLog"
-               v-hasPermi="['monitor:job:query']"
-            >日志</el-button>
+            <el-button type="info" plain :icon="Operation" @click="handleJobLog" v-hasPermi="['monitor:job:query']">日志
+            </el-button>
          </el-col>
          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
@@ -353,54 +305,23 @@ getList();
                <dict-tag :options="sys_job_group" :value="scope.row.jobGroup" />
             </template>
          </el-table-column>
-         <el-table-column
-            label="调用目标字符串"
-            align="center"
-            prop="invokeTarget"
-            :show-overflow-tooltip="true"
-         />
-         <el-table-column
-            label="cron执行表达式"
-            align="center"
-            prop="cronExpression"
-            :show-overflow-tooltip="true"
-         />
+         <el-table-column label="调用目标字符串" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
+         <el-table-column label="cron执行表达式" align="center" prop="cronExpression" :show-overflow-tooltip="true" />
          <el-table-column label="状态" align="center">
             <template #default="scope">
-               <el-switch
-                  v-model="scope.row.status"
-                  active-value="0"
-                  inactive-value="1"
-                  @change="handleStatusChange(scope.row)"
-               ></el-switch>
+               <el-switch v-model="scope.row.status" active-value="0" inactive-value="1"
+                  @change="handleStatusChange(scope.row)"></el-switch>
             </template>
          </el-table-column>
-         <el-table-column
-            label="操作"
-            align="center"
-            width="200"
-            class-name="small-padding fixed-width"
-         >
+         <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
             <template #default="scope">
-               <el-button
-                  type="text"
-                  :icon="Edit"
-                  @click="handleUpdate(scope.row)"
-                  v-hasPermi="['monitor:job:edit']"
-               >修改</el-button>
-               <el-button
-                  type="text"
-                  :icon="Delete"
-                  @click="handleDelete(scope.row)"
-                  v-hasPermi="['monitor:job:remove']"
-               >删除</el-button>
+               <el-button type="primary" link :icon="Edit" @click="handleUpdate(scope.row)"
+                  v-hasPermi="['monitor:job:edit']">修改</el-button>
+               <el-button type="primary" link :icon="Delete" @click="handleDelete(scope.row)"
+                  v-hasPermi="['monitor:job:remove']">删除</el-button>
                <el-dropdown @command="(command) => handleCommand(command, scope.row)">
-                  <el-button
-                     type="text"
-                     class="el-dropdown-link"
-                     v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']"
-                     :icon="DArrowRight"
-                  >更多</el-button>
+                  <el-button type="primary" link class="el-dropdown-link"
+                     v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']" :icon="DArrowRight">更多</el-button>
                   <template #dropdown>
                      <el-dropdown-menu>
                         <el-dropdown-item command="handleRun">
@@ -420,13 +341,8 @@ getList();
          </el-table-column>
       </el-table>
 
-      <pagination
-         v-show="total > 0"
-         :total="total"
-         v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize"
-         @pagination="getList"
-      />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
+         v-model:limit="queryParams.pageSize" @pagination="getList" />
 
       <!-- 添加或修改定时任务对话框 -->
       <el-dialog :title="title" v-model="open" width="800px" append-to-body>
@@ -440,12 +356,8 @@ getList();
                <el-col :span="12">
                   <el-form-item label="任务分组" prop="jobGroup">
                      <el-select v-model="form.jobGroup" placeholder="请选择">
-                        <el-option
-                           v-for="dict in sys_job_group"
-                           :key="dict.value"
-                           :label="dict.label"
-                           :value="dict.value"
-                        ></el-option>
+                        <el-option v-for="dict in sys_job_group" :key="dict.value" :label="dict.label"
+                           :value="dict.value"></el-option>
                      </el-select>
                   </el-form-item>
                </el-col>
@@ -501,11 +413,8 @@ getList();
                <el-col :span="12">
                   <el-form-item label="状态">
                      <el-radio-group v-model="form.status">
-                        <el-radio
-                           v-for="dict in sys_job_status"
-                           :key="dict.value"
-                           :label="dict.value"
-                        >{{ dict.label }}</el-radio>
+                        <el-radio v-for="dict in sys_job_status" :key="dict.value" :label="dict.value">{{ dict.label }}
+                        </el-radio>
                      </el-radio-group>
                   </el-form-item>
                </el-col>
