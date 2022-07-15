@@ -23,7 +23,7 @@ specifiers:
   vite-plugin-svg-icons: ^2.0.1
   vitepress: 1.0.0-alpha.4
   vue: ^3.2.37
-  vue-cropper: ^0.5.8
+  vue-cropper: ^1.0.4
   vue-router: ^4.1.2
   vuex: ^4.0.2
 
@@ -38,7 +38,7 @@ dependencies:
   jsencrypt: 3.2.1
   nprogress: 0.2.0
   vue: 3.2.37
-  vue-cropper: 0.5.8
+  vue-cropper: 1.0.4
   vue-router: 4.1.2_vue@3.2.37
   vuex: 4.0.2_vue@3.2.37
 
@@ -2980,8 +2980,8 @@ packages:
     resolution: {integrity: sha512-Uw5ooOQxRASHgu6C7GVvUxisKXfSgW4oFlO+aa+PAkgmH89O3CXxEEzNRNtHSqtXFTl0nAC1uYj0GMSH27uwtQ==}
     dev: true
 
-  /vue-cropper/0.5.8:
-    resolution: {integrity: sha512-Xgi/aLQCcNCiBTUdovy/i4LWx0G7fQnAENBpDWA3J4i87Zlk9DJRksXrClsQ6nnaFRfQVkMimij5GEvAMaXdYw==}
+  /vue-cropper/1.0.4:
+    resolution: {integrity: sha512-tzsx6iBAjIJpqoFXcNtmCWmVNAJkv6VtQE16zRlnZGyl4lIrGYZAhLkvJAMM41quJ0UzAWiMapNtF0oZ3cWYXw==}
     dev: false
 
   /vue-demi/0.13.4_vue@3.2.37:

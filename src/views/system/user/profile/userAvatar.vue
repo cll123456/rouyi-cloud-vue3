@@ -2,10 +2,10 @@
 import { ref, getCurrentInstance } from 'vue';
 import { useStore } from 'vuex';
 import avatar from './../../../../assets/images/profile.jpg'
-import 'vue-cropper/dist/index.css'
 import { VueCropper } from "vue-cropper";
+import 'vue-cropper/dist/index.css'
 import { uploadAvatar } from "@/api/system/user";
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import { Plus, Upload, Minus, RefreshLeft, RefreshRight } from '@element-plus/icons-vue';
 
 //获取当前组件实例 可获$refs
@@ -108,27 +108,13 @@ const closeDialog = () => {
   <div class="user-info-head" @click="editCropper()">
     <img :src="options.img" title="点击上传头像" class="img-circle img-lg" />
   </div>
-  <el-dialog
-    :title="dialogInfo.title"
-    v-model="dialogInfo.open"
-    width="800px"
-    append-to-body
-    @opened="modalOpened"
-    @close="closeDialog"
-  >
+  <el-dialog :title="dialogInfo.title" v-model="dialogInfo.open" width="800px" append-to-body @opened="modalOpened"
+    @close="closeDialog">
     <el-row>
       <el-col :xs="24" :md="12" :style="{ height: '350px' }">
-        <vue-cropper
-          ref="cropper"
-          :img="options.img"
-          :info="true"
-          :autoCrop="options.autoCrop"
-          :autoCropWidth="options.autoCropWidth"
-          :autoCropHeight="options.autoCropHeight"
-          :fixedBox="options.fixedBox"
-          @realTime="realTime"
-          v-if="options.isCropper"
-        />
+        <vue-cropper ref="cropper" :img="options.img" :info="true" :autoCrop="options.autoCrop"
+          :autoCropWidth="options.autoCropWidth" :autoCropHeight="options.autoCropHeight" :fixedBox="options.fixedBox"
+          @realTime="realTime" v-if="options.isCropper" />
       </el-col>
       <el-col :xs="24" :md="12" :style="{ height: '350px' }">
         <div class="avatar-upload-preview">
@@ -139,12 +125,7 @@ const closeDialog = () => {
     <br />
     <el-row>
       <el-col :lg="2" :md="2">
-        <el-upload
-          action="#"
-          :http-request="requestUpload"
-          :show-file-list="false"
-          :before-upload="beforeUpload"
-        >
+        <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
           <el-button>
             选择
             <i :icon="Upload" class="el-icon--right"></i>

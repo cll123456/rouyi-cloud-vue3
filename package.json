@@ -21,7 +21,7 @@
     "jsencrypt": "^3.2.1",
     "nprogress": "^0.2.0",
     "vue": "^3.2.37",
-    "vue-cropper": "^0.5.8",
+    "vue-cropper": "^1.0.4",
     "vue-router": "^4.1.2",
     "vuex": "^4.0.2"
   },
@@ -39,14 +39,14 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vitepress": "1.0.0-alpha.4"
   },
-  "pnpm": { 
-   "peerDependencyRules": { 
-     "ignoreMissing": [ 
-       "@algolia/client-search", 
-       "react", 
-       "react-dom", 
-       "@types/react" 
-     ] 
-   } 
- } 
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "react",
+        "react-dom",
+        "@types/react"
+      ]
+    }
+  }
 }
