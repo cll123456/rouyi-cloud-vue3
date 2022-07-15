@@ -3,11 +3,9 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import viteCompression from 'vite-plugin-compression';
-
+import AutoImport from 'unplugin-auto-import/vite'
 // import Components from 'unplugin-vue-components/vite'
 // import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import OptimizationPersist from 'vite-plugin-optimize-persist'
-import PkgConfig from 'vite-plugin-package-config'
 const pathSrc = path.resolve(__dirname, 'src')
 
 // https://vitejs.dev/config/
@@ -16,14 +14,16 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       // Components({
+      //   dirs: ['src/components'],
       //   resolvers: [
       //     ElementPlusResolver({
       //       importStyle: 'sass',
       //     }),
       //   ],
       // }),
-      PkgConfig(),
-      OptimizationPersist(),
+      AutoImport({
+        imports: ['vue', 'vue-router'],
+      }),
       // 这里已经将src/icons/svg/下的svg全部导入，无需再单独导入
       createSvgIconsPlugin({
         // 配置路劲在你的src里的svg存放文件

@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  document.getElementById('loading-wrapper').remove();
+  document.getElementById('loading-wrapper') && document.getElementById('loading-wrapper').remove();
 })
 </script>
 
